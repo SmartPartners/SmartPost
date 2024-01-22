@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPost.Service\SmartPost.Service.csproj">
+      <Project>{84c17d30-128e-46e8-b0b4-7c6fbf40511e}</Project>
+      <Name>SmartPost.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

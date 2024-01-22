@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPost.Domain\SmartPost.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

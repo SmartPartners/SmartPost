@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartPost.DataAccess\SmartPost.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
