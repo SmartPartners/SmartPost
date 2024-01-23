@@ -20,7 +20,7 @@ namespace SmartPost.Domain.Entities.Users
         public string PhoneNumber { get; set; } 
         public string ImagePath { get; set; }
 
-        public IEnumerable<StokProduct> stokProducts { get; set; }
+        public IEnumerable<StokProduct> StokProducts { get; set; }
         public IEnumerable<Card> Cards { get; set; }
     }
 }
