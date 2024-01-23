@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SmartPost.WPF
+namespace SmartPost.WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for History.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class History : Page
     {
-        public MainWindow()
+        public History()
         {
             InitializeComponent();
         }

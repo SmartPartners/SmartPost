@@ -1,0 +1,178 @@
+﻿<Window x:Class="SmartPost.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartPost.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="800" 
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Width="1400">
+    <Border Background="Blue"
+            CornerRadius="30">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0"
+                  Background="#FFF7D4"
+                  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250"/>
+                    <RowDefinition Height="101"/>
+                    <RowDefinition Height="449"/>
+
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" >
+                    <Label Content="Administrator"
+                           Foreground="Black"
+                           FontSize="35"
+                           FontFamily="JetBrains Mono"
+                           Margin="60 100"/>
+                    <Label Content="User name"
+                           Foreground="Black"
+                           FontSize="35"
+                           FontFamily="JetBrains Mono"
+                           FontWeight="SemiBold"
+                           Margin="60 60"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.RowSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <RadioButton Grid.Row="0"
+                                 x:Name="rbDashboard"
+                                 Checked="rbDashboard_Checked"
+                                 Content="Dashboard"
+                                 FontFamily="JetBrains Mono"
+                                 FontSize="25"
+                                 FontWeight="SemiBold"
+                                 VerticalAlignment="Center">
+                        <RadioButton.ToolTip>
+                            <TextBlock>Dashboard</TextBlock>
+                        </RadioButton.ToolTip>
+                    </RadioButton>
+
+                    <RadioButton 
+                        Grid.Row="1"
+                        x:Name="rbSklad"
+                        Content="Sklad"
+                        Checked="rbSklad_Checked"
+                        FontFamily="JetBrains Mono"
+                        FontSize="25"
+                        FontWeight="SemiBold"
+                        VerticalAlignment="Center"
+                        >
+                        <RadioButton.ToolTip>
+                            <TextBlock>Sklad</TextBlock>
+                        </RadioButton.ToolTip>
+                        
+                    </RadioButton>
+
+                    <RadioButton 
+                        Grid.Row="2"
+                        x:Name="rbDokonda"
+                        Content="Dokonda"
+                        Checked="rbDokonda_Checked"
+                        Click="rbDokonda_Click"
+                        FontSize="25"
+                        FontFamily="JetBrains Mono"
+                        FontWeight="SemiBold"
+                        VerticalAlignment="Center">
+                        <RadioButton.ToolTip>
+                            <TextBlock>Dokonda</TextBlock>
+                        </RadioButton.ToolTip>
+
+                    </RadioButton>
+
+                    <RadioButton 
+                        Grid.Row="3"
+                        x:Name="rbHistory"
+                        Content="History"
+                        Checked="rbHistory_Checked"
+                        FontSize="25"
+                        FontFamily="JetBrains Mono"
+                        FontWeight="SemiBold"
+                        VerticalAlignment="Center">
+                        <RadioButton.ToolTip>
+                            <TextBlock>History</TextBlock>
+                        </RadioButton.ToolTip>
+                        
+                    </RadioButton>
+
+                    <RadioButton Grid.Row="4"
+                                 x:Name="rbSettings"
+                                 Content="Settings"
+                                 Checked="rbSettings_Checked"
+                                 FontSize="25"
+                                 FontFamily="JetBrains Mono"
+                                 FontWeight="SemiBold"
+                                 VerticalAlignment="Center">
+                        <RadioButton.ToolTip>
+                            <TextBlock>Settings</TextBlock>
+                        </RadioButton.ToolTip>
+                        
+                    </RadioButton>
+
+
+                    <RadioButton
+                        x:Name="rbSignOut"
+                        Click="rbSignOut_Click"
+                        Grid.Row="6"
+                        Foreground="Black"
+                        FontSize="25"
+                        FontFamily="JetBrains Mono"
+                        FontWeight="SemiBold"
+                        
+                        Content="Chiqish">
+                    </RadioButton>
+
+
+                </Grid>
+                
+            </Grid>
+
+            <Grid Grid.Column="1" 
+                  Background="#EEC759"
+                  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            >
+                    <Button x:Name="btnMinimize" Click="btnMinimize_Click" Style="{DynamicResource MinimizedButton}"/>
+                    <Button x:Name="btnMaximize" Click="btnMaximize_Click" Style="{DynamicResource MaximizedButton}"/>
+                    <Button x:Name="btnClose" Click="btnClose_Click" Style="{DynamicResource CloseButton}" />
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Frame x:Name="PageNavigator" 
+                        NavigationUIVisibility="Hidden" Padding="10"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                        ScrollViewer.CanContentScroll="True" />
+                    <WrapPanel x:Name="wrpLoading" Visibility="Visible"
+            Height="250" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+
+    </Border>
+</Window>
