@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartPost.WPFUi"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" 
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Height="800" 
+        Width="1400">
+    <Border Background="#182127"
+             CornerRadius="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="br" Cursor="SizeAll" Background="#182127" Width="auto" Height="auto" Grid.Row="0" MouseDown="br_MouseDown"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal"
+                        Margin="0 0 10 0" HorizontalAlignment="Right">
+                <Button x:Name="btnMinimize" Click="btnMinimize_Click" Style="{DynamicResource MinimizedButton}"/>
+                <Button x:Name="btnMaximize" Click="btnMaximize_Click" Style="{DynamicResource MaximizedButton}"/>
+                <Button x:Name="btnClose" Click="btnClose_Click" Style="{DynamicResource CloseButton}"/>
+            </StackPanel>
+        </Grid>
+        
+    </Border>
 </Window>
