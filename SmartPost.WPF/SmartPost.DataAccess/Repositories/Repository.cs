@@ -18,29 +18,15 @@ namespace SmartPost.DataAccess.Repositories
 
         public void Delete(TEntity entity, Guid id)
         {
-            try
-            {
-
-                var model = _dbSet.Remove(entity);
-            }
-            catch
-            {
-
-            }
-
+            var model = _dbSet.Remove(entity);
         }
 
         public IEnumerable<TEntity> GetAll() => _dbSet;
 
-
         public TEntity GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+            => _dbSet.FirstOrDefault(x => x.id == id)!;
 
         public void Update(TEntity entity, Guid id)
-        {
-            throw new NotImplementedException();
-        }
+           => _dbSet.Update(entity);
     }
 }
