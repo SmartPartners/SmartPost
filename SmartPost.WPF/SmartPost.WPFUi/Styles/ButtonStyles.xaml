@@ -116,21 +116,22 @@
                               Stretch="Fill"
                               HorizontalAlignment="Left" Margin="10 0"/>
 
-                            <Label x:Name="Lbl" Grid.Column="1" Content="{TemplateBinding Content}" Foreground="{DynamicResource lblFirstNameAnswerColor}"
-                               FontSize="18" FontFamily="{TemplateBinding FontFamily}"
+                            <Label x:Name="Lbl" Grid.Column="1" Content="{TemplateBinding Content}" Foreground="#fdfcdc"
+                                   FontFamily="JetBrains Mono"
+                               FontSize="18" 
                                VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter TargetName="B" Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="{DynamicResource lblFirstNameAnswerColor}" TargetName="Lbl"/>
+                            <Setter Property="Foreground" Value="#fdfcdc" TargetName="Lbl"/>
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <!--<Setter TargetName="B" Property="Background" Value="{DynamicResource RadioBUttonMouseOverBackground}"/>-->
                             <Setter TargetName="B" Property="Background" Value="blue"/>
-                            <Setter Property="Foreground" Value="{DynamicResource profexINFObackgr}" TargetName="Lbl"/>
+                            <Setter Property="Foreground" Value="#212529" TargetName="Lbl"/>
 
                         </Trigger>
                         <!--<Trigger Property="IsChecked" Value="True">

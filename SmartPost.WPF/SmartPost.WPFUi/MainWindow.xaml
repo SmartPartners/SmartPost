@@ -51,6 +51,57 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+
+
+
+
+
+                        <RadioButton x:Name="rbDashboard" Grid.Row="0"
+                                     Checked="rbDashboard_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource Dashboard2}"
+                                     Content="Dashboard"
+>
+                            <RadioButton.ToolTip>
+                                <TextBlock>Dashboard</TextBlock>
+                            </RadioButton.ToolTip>
+                        </RadioButton>
+
+                        <RadioButton x:Name="rbSklad" Grid.Row="1"
+                                     Checked="rbSklad_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource cash}"
+                                     Content="Sklad"
+                                     >
+                            <RadioButton.ToolTip>
+                                <TextBlock>Sklad</TextBlock>
+                            </RadioButton.ToolTip>
+                        </RadioButton>
+
+
+                        <RadioButton Grid.Row="2"
+                            x:Name="rbDokon" Checked="rbDokon_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource cash}"
+                                     Content="Do'kon">
+                            <RadioButton.ToolTip>
+                                <TextBlock>Do'kon</TextBlock>
+                            </RadioButton.ToolTip>
+                            
+                        </RadioButton>
+
+                        <RadioButton Grid.Row="3"
+                                     x:Name="rbTarix"
+                                     Checked="rbTarix_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource cash}"
+                                     Content="Tarix"
+                                     >
+                            <RadioButton.ToolTip>
+                                <TextBlock>Tarix</TextBlock>
+                            </RadioButton.ToolTip>
+                        </RadioButton>
+                        
                     </Grid>
                     
                 </Border>
