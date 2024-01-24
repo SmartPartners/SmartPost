@@ -47,5 +47,25 @@ namespace SmartPost.WPFUi
         {
             Application.Current.Shutdown();
         }
+
+        private void rbDashboard_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbSklad_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbDokon_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbTarix_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
