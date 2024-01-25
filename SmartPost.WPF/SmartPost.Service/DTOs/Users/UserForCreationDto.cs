@@ -1,4 +1,4 @@
-﻿namespace SmartPost.Service.DTOs.Users;
+﻿    namespace SmartPost.Service.DTOs.Users;
 
 public record UserForCreationDto
 {

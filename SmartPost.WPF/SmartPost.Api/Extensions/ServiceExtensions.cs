@@ -1,8 +1,12 @@
 ﻿using SmartPost.DataAccess.Interfaces;
+using SmartPost.DataAccess.Interfaces.Categories;
 using SmartPost.DataAccess.Interfaces.Users;
 using SmartPost.DataAccess.Repositories;
+using SmartPost.DataAccess.Repositories.Categories;
 using SmartPost.DataAccess.Repositories.Users;
+using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.Users;
+using SmartPost.Service.Services.Categories;
 using SmartPost.Service.Services.Users;
 
 namespace SmartPost.Api.Extensions
@@ -14,9 +18,11 @@ namespace SmartPost.Api.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            
         }
     }
 }
