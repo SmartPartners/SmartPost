@@ -1,4 +1,5 @@
-﻿using SmartPost.Domain.Entities.Users;
+﻿using SmartPost.Domain.Commons;
+using SmartPost.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace SmartPost.Domain.Entities.Cards
 {
     public class Card : Auditable
     {
-        public Guid UserId { get; set; }
+        public long UserId { get; set; }
         public User Users { get; set; }
 
         public string TransNo { get; set; }

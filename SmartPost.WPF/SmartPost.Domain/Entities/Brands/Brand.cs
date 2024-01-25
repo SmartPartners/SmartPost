@@ -1,4 +1,5 @@
-﻿using SmartPost.Domain.Entities.InventoryLists;
+﻿using SmartPost.Domain.Commons;
+using SmartPost.Domain.Entities.InventoryLists;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Domain.Entities.StorageProducts;
 using System;

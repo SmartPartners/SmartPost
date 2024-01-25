@@ -1,32 +1,54 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Data;
 using SmartPost.DataAccess.Interfaces;
+using SmartPost.Domain.Commons;
 using SmartPost.Domain.Entities;
 
 namespace SmartPost.DataAccess.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity>
-        where TEntity : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditable
     {
-        private DbSet<TEntity> _dbSet;
+        protected readonly AppDbContext _dbContext;
+        protected readonly DbSet<TEntity> _dbSet;
 
-        public Repository(AppDb app)
+        public Repository(AppDbContext dbContext)
         {
-            this._dbSet = app.Set<TEntity>();
-        }
-        public void Add(TEntity entity) => _dbSet.Add(entity);
-
-        public void Delete(TEntity entity, Guid id)
-        {
-            var model = _dbSet.Remove(entity);
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
-        public IEnumerable<TEntity> GetAll() => _dbSet;
 
-        public TEntity GetById(Guid id)
-            => _dbSet.FirstOrDefault(x => x.id == id)!;
+        public async Task<TEntity> InsertAsync(TEntity entity)
+        {
+            var entry = await _dbSet.AddAsync(entity);
 
-        public void Update(TEntity entity, Guid id)
-           => _dbSet.Update(entity);
+            await _dbContext.SaveChangesAsync();
+
+            return entry.Entity;
+        }
+
+
+        public async Task<bool> DeleteAsync(long id)
+        {
+            var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id.Equals(id));
+            _dbSet.Remove(entity);
+
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+
+        public IQueryable<TEntity> SelectAll()
+            => _dbSet;
+
+        public async Task<TEntity> SelectByIdAsync(long id)
+            => await _dbSet.FirstOrDefaultAsync(e => e.Id.Equals(id));
+
+        public async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            var entry = _dbContext.Update(entity);
+            await _dbContext.SaveChangesAsync();
+
+            return entry.Entity;
+        }
     }
 }

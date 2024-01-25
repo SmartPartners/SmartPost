@@ -1,19 +1,12 @@
-﻿using SmartPost.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartPost.Domain.Commons;
 
-namespace SmartPost.DataAccess.Interfaces
+namespace SmartPost.DataAccess.Interfaces;
+
+public interface IRepository<TEntity> where TEntity : Auditable
 {
-    public interface IRepository<TEntity> 
-        where TEntity : BaseEntity 
-    {
-        void Add(TEntity entity);
-        void Delete(TEntity entity, Guid id);
-        void Update(TEntity entity, Guid id);
-        IEnumerable<TEntity> GetAll();
-        TEntity GetById(Guid id);
-    }
+    Task<bool> DeleteAsync(long id);
+    IQueryable<TEntity> SelectAll();
+    Task<TEntity> SelectByIdAsync(long id);
+    Task<TEntity> InsertAsync(TEntity entity);
+    Task<TEntity> UpdateAsync(TEntity entity);
 }
