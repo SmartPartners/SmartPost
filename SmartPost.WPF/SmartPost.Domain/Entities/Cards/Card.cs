@@ -1,10 +1,5 @@
 ﻿using SmartPost.Domain.Commons;
 using SmartPost.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartPost.Domain.Entities.Cards
 {
@@ -16,11 +11,11 @@ namespace SmartPost.Domain.Entities.Cards
         public string TransNo { get; set; }
         public string ProductName { get; set; }
         public string BarCode { get; set; }
-        public int PCode { get; set; }
-        public double Price { get; set; }
-        public double TotalPrice { get; set; }
-        public double DiscPercent { get; set; }
-        public int Quantity { get; set; }
+        public long PCode { get; set; }
+        public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; }
+        public decimal DiscPercent { get; set; }
+        public decimal Quantity { get; set; }
         public string Status { get; set; }
     }
 }

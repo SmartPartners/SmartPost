@@ -16,7 +16,7 @@ public class UsersController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> InsertAsync([FromBody] UserForCreationDto dto)
+    public async Task<IActionResult> InsertAsync([FromForm] UserForCreationDto dto)
         => Ok(await _userService.CreateAsync(dto));
 
     [HttpGet]
@@ -32,7 +32,7 @@ public class UsersController : BaseController
         => Ok(await _userService.RemoveAsync(id));
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAsync([FromRoute] long id, [FromBody] UserForUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync([FromRoute] long id, [FromForm] UserForUpdateDto dto)
         => Ok(await _userService.ModifyAsync(id, dto));
 
     [HttpPut("change-password")]

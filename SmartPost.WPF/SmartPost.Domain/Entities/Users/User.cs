@@ -7,7 +7,6 @@ namespace SmartPost.Domain.Entities.Users
 {
     public class User : Auditable
     {
-        public long RoleId { get; set; }
         public UserRole Role { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
