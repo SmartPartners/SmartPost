@@ -1,8 +1,8 @@
 ﻿using SmartPost.DataAccess.Data;
-using SmartPost.DataAccess.Interfaces.Cards;
-using SmartPost.Domain.Entities.Cards;
+using SmartPost.DataAccess.Interfaces.CancelOrders;
+using SmartPost.Domain.Entities.CancelOrders;
 
-namespace SmartPost.DataAccess.Repositories.Cards;
+namespace SmartPost.DataAccess.Repositories.CancelOrders;
 
 /// <summary>
 /// Genric repositorydagidan boshqa method qoshish kerak bo'lsa
@@ -12,9 +12,9 @@ namespace SmartPost.DataAccess.Repositories.Cards;
 /// 
 /// Keyingi bosqich DTO yaratish
 /// </summary>
-public class CardRepository : Repository<Card>, ICardRepository
+public class CancelOrderRepository : Repository<CancelOrder>, ICancelOrderRepository
 {
-    public CardRepository(AppDbContext dbContext) : base(dbContext)
+    public CancelOrderRepository(AppDbContext dbContext) : base(dbContext)
     {
     }
 }

@@ -34,7 +34,5 @@ namespace SmartPost.Api.Controllers.Categories
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute (Name = "id")]long id)
             =>Ok(await _categoryService.ReamoveAsync(id));
-
-
     }
 }
