@@ -1,0 +1,6 @@
+@SmartPost.Api_HostAddress = http://localhost:5126
+
+GET {{SmartPost.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

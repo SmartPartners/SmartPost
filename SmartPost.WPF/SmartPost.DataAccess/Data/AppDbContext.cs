@@ -4,20 +4,18 @@ using SmartPost.Domain.Entities.CancelOrders;
 using SmartPost.Domain.Entities.Cards;
 using SmartPost.Domain.Entities.Categories;
 using SmartPost.Domain.Entities.InventoryLists;
-using SmartPost.Domain.Entities.RoleUsers;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Domain.Entities.Users;
 
 namespace SmartPost.DataAccess.Data
 {
-    public class AppDb : DbContext
+    public class AppDbContext : DbContext
     {
-        public AppDb(DbContextOptions<AppDb> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         { }
 
-        public DbSet<RoleUser> RoleUsers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -29,15 +27,6 @@ namespace SmartPost.DataAccess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
-            {
-                // harif lardagi o'zgaruvchilar modelning nomi
-                entity.HasOne(u => u.RoleUsers)
-                      .WithMany(r => r.Users)
-                      .HasForeignKey(u => u.RoleId)
-                      .OnDelete(DeleteBehavior.Cascade);
-            });
-
             modelBuilder.Entity<StorageProduct>(entity =>
             {
                 entity.HasOne(s => s.Brand)
@@ -92,7 +81,7 @@ namespace SmartPost.DataAccess.Data
 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectionString = "Host=localhost;" +
                                       "Database=ShopMarket;" +
@@ -100,6 +89,6 @@ namespace SmartPost.DataAccess.Data
                                       "Password=1234;Port=5432;";
 
             optionsBuilder.UseNpgsql(connectionString);
-        }
+        }*/
     }
 }

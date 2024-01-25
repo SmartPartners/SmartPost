@@ -1,4 +1,5 @@
-﻿using SmartPost.Domain.Entities.Brands;
+﻿using SmartPost.Domain.Commons;
+using SmartPost.Domain.Entities.Brands;
 using SmartPost.Domain.Entities.Categories;
 using SmartPost.Domain.Entities.Users;
 using System;
@@ -11,13 +12,13 @@ namespace SmartPost.Domain.Entities.StokProducts
 {
     public class StokProduct : Auditable
     {
-        public Guid BrandId { get; set; }
+        public long BrandId { get; set; }
         public Brand Brand { get; set; }
 
-        public Guid CategoryId { get; set; }
+        public long CategoryId { get; set; }
         public Category Category { get; set; }
 
-        public Guid UserId { get; set; }
+        public long UserId { get; set; }
         public User Users { get; set; }
 
         public string ProductName { get; set; }

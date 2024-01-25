@@ -1,4 +1,5 @@
-﻿using SmartPost.Domain.Entities.Brands;
+﻿using SmartPost.Domain.Commons;
+using SmartPost.Domain.Entities.Brands;
 using SmartPost.Domain.Entities.Categories;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace SmartPost.Domain.Entities.StorageProducts
 {
     public class StorageProduct : Auditable
     {
-        public Guid BrandId { get; set; }
+        public long BrandId { get; set; }
         public Brand Brand { get; set; }
 
-        public Guid CategoryId { get; set; }
+        public long CategoryId { get; set; }
         public Category Category { get; set; }
 
         public string ProductName { get; set; }
