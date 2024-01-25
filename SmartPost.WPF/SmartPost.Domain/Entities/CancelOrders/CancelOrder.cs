@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SmartPost.Domain.Commons;
+﻿using SmartPost.Domain.Commons;
 
 namespace SmartPost.Domain.Entities.CancelOrders
 {
@@ -13,10 +8,10 @@ namespace SmartPost.Domain.Entities.CancelOrders
         public string TransNo { get; set; }
         public string ProductName { get; set; }
         public string BarCode { get; set; }
-        public int PCode { get; set; }
-        public double Price { get; set; }
-        public double TotalPrice { get; set; }
-        public int Quantity { get; set; }
+        public long PCode { get; set; }
+        public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; }
+        public decimal Quantity { get; set; }
         public string CanceledBy { get; set; }
         public string Reason { get; set; }
         public string Action { get; set; }

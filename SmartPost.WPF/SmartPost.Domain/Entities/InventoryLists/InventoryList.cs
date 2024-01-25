@@ -14,9 +14,9 @@ namespace SmartPost.Domain.Entities.InventoryLists
 
         public string ProductName { get; set; }
         public string BarCode { get; set; }
-        public int PCode { get; set; }
-        public double Price { get; set; }
-        public double TotalPrice { get; set; }
-        public int Quantity { get; set; }
+        public long PCode { get; set; }
+        public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; }
+        public decimal Quantity { get; set; }
     }
 }
