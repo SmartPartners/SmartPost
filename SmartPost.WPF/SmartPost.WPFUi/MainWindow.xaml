@@ -25,6 +25,7 @@
                 <Button x:Name="btnMinimize" Click="btnMinimize_Click" Style="{DynamicResource MinimizedButton}"/>
                 <Button x:Name="btnMaximize" Click="btnMaximize_Click" Style="{DynamicResource MaximizedButton}"/>
                 <Button x:Name="btnClose" Click="btnClose_Click" Style="{DynamicResource CloseButton}"/>
+                
             </StackPanel>
 
 
@@ -100,6 +101,30 @@
                             <RadioButton.ToolTip>
                                 <TextBlock>Tarix</TextBlock>
                             </RadioButton.ToolTip>
+                        </RadioButton>
+
+
+                        <RadioButton Grid.Row="4"
+                                     x:Name="rbSettings"
+                                     Checked="rbSettings_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource Settings}"
+                                     Content="Sozlamalar">
+                            <RadioButton.ToolTip>
+                                <TextBlock>Sozlamalar</TextBlock>
+                            </RadioButton.ToolTip>
+                        </RadioButton>
+
+                        <RadioButton Grid.Row="8"
+                                     x:Name="rbLogOut"
+                                     Checked="rbLogOut_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource SignOut}"
+                                     Content="Chiqish">
+                            <RadioButton.ToolTip>
+                                <TextBlock>Chiqish</TextBlock>
+                            </RadioButton.ToolTip>
+                            
                         </RadioButton>
                         
                     </Grid>
