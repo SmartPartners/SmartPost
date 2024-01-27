@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPost.Service", "SmartP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPost.WPFUi", "SmartPost.WPFUi\SmartPost.WPFUi.csproj", "{6524E8B4-282C-40E3-968E-BE29FBF58F90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPost.Api", "SmartPost.Api\SmartPost.Api.csproj", "{2B73A8F6-955F-44EE-80D7-7727D666D0FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPost.Api", "SmartPost.Api\SmartPost.Api.csproj", "{2B73A8F6-955F-44EE-80D7-7727D666D0FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
