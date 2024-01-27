@@ -31,8 +31,8 @@ namespace SmartPost.Api.Controllers.Products
             =>Ok(await _productService.DeleteAsync(id));
 
         [HttpPut]
-        public async Task<IActionResult> ModifyAsync([FromBody]ProductForUpdateDto productForUpdate)
-            =>Ok(await _productService.UpdateAsync(productForUpdate));
+        public async Task<IActionResult> ModifyAsync(long id,[FromBody]ProductForUpdateDto productForUpdate)
+            =>Ok(await _productService.UpdateAsync(id,productForUpdate));
 
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] ProductForCreationDto productForCreationDto)

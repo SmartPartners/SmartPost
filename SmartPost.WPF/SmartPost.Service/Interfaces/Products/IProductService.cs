@@ -8,7 +8,7 @@ public  interface IProductService
     Task<ProductForResultDto>GetByIdAsync(long id);
     Task<IEnumerable<ProductForResultDto>> GetAllAsync();
     public Task<ProductForResultDto> GetByName(string name);
-    Task<ProductForResultDto> UpdateAsync(ProductForUpdateDto productForUpdateDto);
+    Task<ProductForResultDto> UpdateAsync(long id,ProductForUpdateDto productForUpdateDto);
     Task<ProductForResultDto> CreateAsync(ProductForCreationDto productForCreationDto);
 
 }

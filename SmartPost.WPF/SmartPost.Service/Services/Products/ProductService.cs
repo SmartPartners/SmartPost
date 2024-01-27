@@ -6,7 +6,7 @@ using SmartPost.Service.Interfaces.Products;
 using SmartPost.DataAccess.Interfaces.Barnds;
 using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.Domain.Entities.StorageProducts;
-using SmartPost.DataAccess.Interfaces.Categories;
+using SmartPost.Service.Interfaces.Categories;
 
 namespace SmartPost.Service.Services.Products;
 
@@ -15,22 +15,20 @@ public class ProductService : IProductService
     private readonly IMapper _mapper;
     private readonly IBrandRepository _brandRepository;
     private readonly IProductRepository _productRepository;
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly ICategoryService _categoryService;
 
-    public ProductService(IMapper mapper, IProductRepository productRepository, ICategoryRepository categoryRepository, IBrandRepository brandRepository)
+    public ProductService(IMapper mapper, IProductRepository productRepository, ICategoryService categoryService, IBrandRepository brandRepository)
     {
         this._mapper = mapper;
+        this._brandRepository = brandRepository;
+        this._categoryService = categoryService;
         this._productRepository = productRepository;
-        this._categoryRepository = categoryRepository;
-        _brandRepository = brandRepository;
     }
 
     public async Task<ProductForResultDto> CreateAsync(ProductForCreationDto productForCreationDto)
     {
-        var category = await _categoryRepository.SelectAll()
-           .Where(c => c.Id == productForCreationDto.CategoryId)
-           .AsNoTracking()
-           .FirstOrDefaultAsync();
+        var category = await _categoryService.RetrieveByIdAsync(productForCreationDto.CategoryId);
+           
 
         if (category is null)
             throw new CustomException(404, "Category is not found");
@@ -94,12 +92,9 @@ public class ProductService : IProductService
     }
 
 
-    public async Task<ProductForResultDto> UpdateAsync(ProductForUpdateDto productForUpdateDto)
+    public async Task<ProductForResultDto> UpdateAsync(long id,ProductForUpdateDto productForUpdateDto)
     {
-        var category = await _categoryRepository.SelectAll()
-           .Where(c => c.Id == productForUpdateDto.CategoryId)
-           .AsNoTracking()
-           .FirstOrDefaultAsync();
+        var category = await _categoryService.RetrieveByIdAsync(productForUpdateDto.CategoryId);
 
         if (category is null)
             throw new CustomException(404, "Category is not found");
@@ -112,7 +107,7 @@ public class ProductService : IProductService
             throw new CustomException(404, "Brand is not found");
 
         var product = await _productRepository.SelectAll()
-             .Where(p => p.Id == productForUpdateDto.Id)
+             .Where(p => p.Id == id)
              .AsNoTracking()
              .FirstOrDefaultAsync();
 
