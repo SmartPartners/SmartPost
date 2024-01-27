@@ -9,7 +9,7 @@ public record CategoryForResultDto
     public long Id { get; set; }
     public string Name { get; set; }
 
-    public ICollection<StorageProduct> StorageProducts { get; set; }
+    public ICollection<Product> StorageProducts { get; set; }
     public ICollection<StokProduct> StokProducts { get; set; }
     public ICollection<InventoryList> InventoryLists { get; set; }
 }
