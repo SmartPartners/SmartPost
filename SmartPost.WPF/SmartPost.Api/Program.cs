@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SmartPost.Api.Extensions;
 using SmartPost.DataAccess.Data;
 using SmartPost.Service.Mappers;
@@ -21,6 +22,13 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddCustomServices();
 
+        /// Fix the Cycle
+        builder.Services.AddControllers()
+             .AddNewtonsoftJson(options =>
+             {
+                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+             });
+
         //Set Database Configuration
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
@@ -34,6 +42,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
 
         app.UseHttpsRedirection();
 

@@ -2,10 +2,12 @@
 using SmartPost.Domain.Entities.CancelOrders;
 using SmartPost.Domain.Entities.Cards;
 using SmartPost.Domain.Entities.Categories;
+using SmartPost.Domain.Entities.InventoryLists;
 using SmartPost.Domain.Entities.Users;
 using SmartPost.Service.DTOs.CancelOrders;
 using SmartPost.Service.DTOs.Cards;
 using SmartPost.Service.DTOs.Categories;
+using SmartPost.Service.DTOs.InventoryLists;
 using SmartPost.Service.DTOs.Users;
 
 namespace SmartPost.Service.Mappers;
@@ -36,5 +38,10 @@ public class MapperProfile : Profile
         CreateMap<CancelOrder, CancelOrderForResultDto>().ReverseMap();
         CreateMap<CancelOrder, CancelOrderForUpdateDto>().ReverseMap();
         CreateMap<CancelOrder, CancelOrderForCreationDto>().ReverseMap();
+
+        // InventoryList
+        CreateMap<InventoryList, InventoryListForResultDto>().ReverseMap();
+        CreateMap<InventoryList, InventoryListForUpdateDto>().ReverseMap();
+        CreateMap<InventoryList, InventoryListForCreationDto>().ReverseMap();
     }
 }

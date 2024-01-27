@@ -6,6 +6,7 @@ using SmartPost.Domain.Entities.CancelOrders;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.CancelOrders;
+using SmartPost.Service.DTOs.InventoryLists;
 using SmartPost.Service.Interfaces.CancelOrders;
 
 namespace SmartPost.Service.Services.CancelOrders;
@@ -26,6 +27,17 @@ public class CancelOrderService : ICancelOrderService
 
     public async Task<CancelOrderForResultDto> CreateAsync(CancelOrderForCreationDto dto)
     {
+        var cancel = await _cancelOrderRepository.SelectAll()
+            .Where(c => c.ProductName == dto.ProductName)
+            .FirstOrDefaultAsync();
+
+        if (cancel != null)
+        {
+            cancel.Quantity += dto.Quantity;
+            await _cancelOrderRepository.UpdateAsync(cancel);
+
+            return _mapper.Map<CancelOrderForResultDto>(cancel);
+        }
         var mappedCancelOrder = _mapper.Map<CancelOrder>(dto);
         mappedCancelOrder.CreatedAt = DateTime.UtcNow;
 
