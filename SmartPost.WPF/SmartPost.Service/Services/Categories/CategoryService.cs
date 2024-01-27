@@ -69,7 +69,7 @@ public class CategoryService : ICategoryService
     public async Task<IEnumerable<CategoryForResultDto>> RetrieveAllAsync(PaginationParams @params)
     {
         var categories = await _categoryRepository.SelectAll()
-                .Include(c => c.StorageProducts)
+                .Include(c => c.Products)
                 .Include(c => c.StokProducts)
                 .Include(c => c.InventoryLists)
                 .AsNoTracking()
@@ -83,7 +83,7 @@ public class CategoryService : ICategoryService
     {
         var category = await _categoryRepository.SelectAll()
                 .Where(c => c.Id == id)
-                .Include(c => c.StorageProducts)
+                .Include(c => c.Products)
                 .Include(c => c.StokProducts)
                 .Include(c => c.InventoryLists)
                 .AsNoTracking()
