@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartPost.Domain.Configurations;
 using SmartPost.Service.DTOs.StockProducts;
 using SmartPost.Service.Interfaces.StockProducts;
 
@@ -21,16 +22,16 @@ namespace SmartPost.Api.Controllers.StockProducts
             => Ok(await _stockProductService.GetByIdAsync(id));
 
         [HttpGet]
-        public async Task<IActionResult> GeAllAsync()
-            => Ok(await _stockProductService.GetAllAsync());
+        public async Task<IActionResult> GeAllAsync([FromQuery]PaginationParams @params)
+            => Ok(await _stockProductService.GetAllAsync(@params));
 
         [HttpPost]
         public async Task<IActionResult>AddAsync([FromBody] StockProductForCreationDto stockProductForCreation)
             =>Ok(await _stockProductService.CreateAsync(stockProductForCreation));
 
-        [HttpPut]
-        public async Task<IActionResult> ModifyAsync([FromBody] StockProductForUpdateDto stockProductForUpdate)
-            =>Ok(await _stockProductService.UpdateAsync(stockProductForUpdate));
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ModifyAsync(long id,[FromBody] StockProductForUpdateDto stockProductForUpdate)
+            =>Ok(await _stockProductService.UpdateAsync(id,stockProductForUpdate));
 
         [HttpDelete("{id}")]
         public async Task<IActionResult>DeleteAsync(long  id)

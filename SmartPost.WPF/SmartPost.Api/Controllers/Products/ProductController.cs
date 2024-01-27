@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartPost.Domain.Configurations;
 using SmartPost.Service.DTOs.Products;
 using SmartPost.Service.Interfaces.Products;
 using System.ComponentModel.DataAnnotations;
@@ -18,8 +19,8 @@ namespace SmartPost.Api.Controllers.Products
 
 
         [HttpGet]
-        public async Task<IActionResult>GetAllAsync()
-            =>Ok(await _productService.GetAllAsync());
+        public async Task<IActionResult>GetAllAsync([FromQuery]PaginationParams @params)
+            =>Ok(await _productService.GetAllAsync(@params));
 
 
         [HttpGet("{id}")]
@@ -31,8 +32,8 @@ namespace SmartPost.Api.Controllers.Products
             =>Ok(await _productService.DeleteAsync(id));
 
         [HttpPut]
-        public async Task<IActionResult> ModifyAsync([FromBody]ProductForUpdateDto productForUpdate)
-            =>Ok(await _productService.UpdateAsync(productForUpdate));
+        public async Task<IActionResult> ModifyAsync(long id,[FromBody]ProductForUpdateDto productForUpdate)
+            =>Ok(await _productService.UpdateAsync(id,productForUpdate));
 
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] ProductForCreationDto productForCreationDto)
