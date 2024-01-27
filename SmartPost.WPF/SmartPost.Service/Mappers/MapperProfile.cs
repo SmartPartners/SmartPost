@@ -34,7 +34,7 @@ public class MapperProfile : Profile
         CreateMap<Category, CategoryForResultDto>().ReverseMap();
         CreateMap<Category, CategoryForUpdateDto>().ReverseMap();
         CreateMap<Category, CategoryForCreationDto>().ReverseMap();
-        
+
         // Brand
         CreateMap<Brand, BrandForCreationDto>().ReverseMap();
         CreateMap<Brand, BrandForResultDto>().ReverseMap();
@@ -54,7 +54,7 @@ public class MapperProfile : Profile
         CreateMap<InventoryList, InventoryListForResultDto>().ReverseMap();
         CreateMap<InventoryList, InventoryListForUpdateDto>().ReverseMap();
         CreateMap<InventoryList, InventoryListForCreationDto>().ReverseMap();
-        
+
         //Products
         CreateMap<Product, ProductForResultDto>().ReverseMap();
         CreateMap<Product, ProductForUpdateDto>().ReverseMap();

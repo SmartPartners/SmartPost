@@ -2,6 +2,6 @@
 
 namespace SmartPost.DataAccess.Interfaces.Products;
 
-public  interface IProductRepository : IRepository<Product>
+public interface IProductRepository : IRepository<Product>
 {
 }

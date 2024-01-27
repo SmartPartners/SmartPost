@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Configurations;
-using SmartPost.Service.Interfaces.Brands;
+using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.StockProducts;
-using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Service.Interfaces.Brands;
 using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.StockProducts;
-using SmartPost.DataAccess.Interfaces.StockProducts;
+using SmartPost.Service.Interfaces.Users;
 
 namespace SmartPost.Service.Services.StockProducts;
 
@@ -16,61 +17,82 @@ public class StockProductService : IStockProductService
 {
     private readonly IMapper _mapper;
     private readonly IBrandService _brandService;
+    private readonly IUserService _userService;
     private readonly ICategoryService _categoryService;
-    private readonly IStockProductRepository _stockProductRepository; 
+    private readonly IStockProductRepository _stockProductRepository;
 
 
-    public StockProductService(IMapper mapper, 
-                               IStockProductRepository stockProductRepository, 
-                               IBrandService brandService, 
-                               ICategoryService categoryService)
+    public StockProductService(IMapper mapper,
+                               IStockProductRepository stockProductRepository,
+                               IBrandService brandService,
+                               ICategoryService categoryService,
+                               IUserService userService)
     {
         _mapper = mapper;
         _brandService = brandService;
         _categoryService = categoryService;
         _stockProductRepository = stockProductRepository;
+        _userService = userService;
     }
 
     public async Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto)
     {
-
         var category = await _categoryService.RetrieveByIdAsync(createDto.CategoryId);
-
-        if (category is null)
-            throw new CustomException(404, "Category is not found");
 
         var brand = await _brandService.RetrieveByIdAsync(createDto.BrandId);
 
-        if (brand is null)
-            throw new CustomException(404, "Brand is not found");
-        
+        var user = await _userService.RetrieveByIdAsync(createDto.UserId);
+
+
+        var product = await _stockProductRepository.SelectAll()
+            .Where(p => p.PCode.ToUpper() == createDto.PCode.ToUpper() && p.BarCode == createDto.BarCode)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+        if (product is not null)
+        {
+            product.Quantity += createDto.Quantity;
+            await _stockProductRepository.UpdateAsync(product);
+            throw new CustomException(200, "Bu turdagi mahsulot bazada mavjudligi uchun uning soniga qo'shib qo'yildi.");
+        }
+
         var stockProduct = await _stockProductRepository.SelectAll()
-            .Where(s => s.PCode == createDto.PCode || s.ProductName == createDto.ProductName || s.BarCode == createDto.BarCode)
+            .Where(s => s.PCode == createDto.PCode)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
         if (stockProduct is not null)
-            throw new CustomException(409,"StockProduct is already exists");
-       
+            throw new CustomException(409, $"{stockProduct.PCode} - bu kod bazada mavjud.");
+
+
+        var stockProduct2 = await _stockProductRepository.SelectAll()
+            .Where(s => s.BarCode == createDto.BarCode)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        if (stockProduct2 is not null)
+            throw new CustomException(409, $"{stockProduct2.BarCode} - bu kod bazada mavjud.");
+
+
         var mappedStockProduct = _mapper.Map<StokProduct>(createDto);
         mappedStockProduct.CreatedAt = DateTime.UtcNow;
         return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.InsertAsync(mappedStockProduct));
-       
+
     }
 
     public async Task<bool> DeleteAsymc(long id)
     {
         var StockProduct = await _stockProductRepository.SelectAll()
-            .Where(s=>s.Id == id)
+            .Where(s => s.Id == id)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
         if (StockProduct is null)
-            throw new CustomException(404, "StockProduct is not found");
+            throw new CustomException(404, "Bu mahsulot topilmadi.");
 
-         return await _stockProductRepository.DeleteAsync(id);
+        return await _stockProductRepository.DeleteAsync(id);
     }
-       
+
 
     public async Task<IEnumerable<StockProductsForResultDto>> GetAllAsync(PaginationParams @params)
     {
@@ -81,7 +103,7 @@ public class StockProductService : IStockProductService
 
         return _mapper.Map<IEnumerable<StockProductsForResultDto>>(StockProducts);
     }
-   
+
 
     public async Task<StockProductsForResultDto> GetByIdAsync(long id)
     {
@@ -91,23 +113,17 @@ public class StockProductService : IStockProductService
            .FirstOrDefaultAsync();
 
         if (StockProduct is null)
-            throw new CustomException(404, "StockProduct is not found");
+            throw new CustomException(404, "Bu mahsulot topilmadi.");
 
         return _mapper.Map<StockProductsForResultDto>(StockProduct);
     }
-   
 
-    public async Task<StockProductsForResultDto> UpdateAsync(long id ,StockProductForUpdateDto updateDto)
+
+    public async Task<StockProductsForResultDto> UpdateAsync(long id, StockProductForUpdateDto updateDto)
     {
         var category = await _categoryService.RetrieveByIdAsync(updateDto.CategoryId);
 
-        if (category is null)
-            throw new CustomException(404, "Category is not found");
-
         var brand = await _brandService.RetrieveByIdAsync(updateDto.BrandId);
-
-        if (brand is null)
-            throw new CustomException(404, "Brand is not found");
 
         var stockProduct = await _stockProductRepository.SelectAll()
             .Where(s => s.Id == id)
@@ -115,16 +131,15 @@ public class StockProductService : IStockProductService
             .FirstOrDefaultAsync();
 
         if (stockProduct is null)
-            throw new CustomException(404, "StockProduct is not found");
+            throw new CustomException(404, "Bu mahsulot topilmadi.");
 
-        var mappedStockProduct = _mapper.Map<StokProduct>(updateDto);
-        mappedStockProduct.Id = id;
+        var mappedStockProduct = _mapper.Map(updateDto, stockProduct);
         mappedStockProduct.UpdatedAt = DateTime.UtcNow;
 
         return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.UpdateAsync(mappedStockProduct));
     }
 
-    public async Task<StockProductsForResultDto>AddQuentityToStockProduct(long id, decimal quantity)
+    public async Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity)
     {
         var stockProduct = await _stockProductRepository.SelectAll()
             .Where(s => s.Id == id)

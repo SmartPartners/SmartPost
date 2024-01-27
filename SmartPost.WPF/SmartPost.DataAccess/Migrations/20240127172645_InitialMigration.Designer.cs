@@ -12,8 +12,8 @@ using SmartPost.DataAccess.Data;
 namespace SmartPost.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240127002805_FixPSCodeMigrations")]
-    partial class FixPSCodeMigrations
+    [Migration("20240127172645_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,15 +39,10 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long?>("ProductId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Brands");
                 });
@@ -72,8 +67,8 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("PCode")
-                        .HasColumnType("bigint");
+                    b.Property<string>("PCode")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
@@ -91,6 +86,9 @@ namespace SmartPost.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SaleBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Size")
                         .HasColumnType("text");
 
                     b.Property<decimal>("TotalPrice")
@@ -124,8 +122,8 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<decimal>("DiscPercent")
                         .HasColumnType("numeric");
 
-                    b.Property<long>("PCode")
-                        .HasColumnType("bigint");
+                    b.Property<string>("PCode")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
@@ -135,6 +133,9 @@ namespace SmartPost.DataAccess.Migrations
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .HasColumnType("text");
@@ -172,15 +173,10 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long?>("ProductId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Categories");
                 });
@@ -205,8 +201,8 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("PCode")
-                        .HasColumnType("bigint");
+                    b.Property<string>("PCode")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
@@ -216,6 +212,9 @@ namespace SmartPost.DataAccess.Migrations
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("numeric");
@@ -263,6 +262,9 @@ namespace SmartPost.DataAccess.Migrations
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -313,6 +315,9 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Size")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -362,13 +367,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SmartPost.Domain.Entities.Brands.Brand", b =>
-                {
-                    b.HasOne("SmartPost.Domain.Entities.StorageProducts.Product", null)
-                        .WithMany("Brands")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("SmartPost.Domain.Entities.Cards.Card", b =>
                 {
                     b.HasOne("SmartPost.Domain.Entities.Users.User", "Users")
@@ -378,13 +376,6 @@ namespace SmartPost.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("SmartPost.Domain.Entities.Categories.Category", b =>
-                {
-                    b.HasOne("SmartPost.Domain.Entities.StorageProducts.Product", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("SmartPost.Domain.Entities.InventoryLists.InventoryList", b =>
@@ -468,13 +459,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.Navigation("Products");
 
                     b.Navigation("StokProducts");
-                });
-
-            modelBuilder.Entity("SmartPost.Domain.Entities.StorageProducts.Product", b =>
-                {
-                    b.Navigation("Brands");
-
-                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("SmartPost.Domain.Entities.Users.User", b =>

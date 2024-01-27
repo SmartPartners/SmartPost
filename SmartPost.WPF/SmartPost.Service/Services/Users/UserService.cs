@@ -28,7 +28,7 @@ public class UserService : IUserService
             .Where(u => u.PhoneNumber == dto.PhoneNumber)
             .FirstOrDefaultAsync();
         if (user is not null)
-            throw new CustomException(403, "User is already exists");
+            throw new CustomException(403, "Bunday foydalanuvchi mavjud.");
 
         var hasherResult = PasswordHelper.Hash(dto.Password);
         var mapped = _mapper.Map<User>(dto);
@@ -49,7 +49,7 @@ public class UserService : IUserService
              .FirstOrDefaultAsync();
 
         if (user is null)
-            throw new CustomException(404, "User is not found!");
+            throw new CustomException(404, "Foydalanuvchi topilmadi.");
 
         var mapped = _mapper.Map(dto, user);
         mapped.UpdatedAt = DateTime.UtcNow;
@@ -67,7 +67,7 @@ public class UserService : IUserService
               .FirstOrDefaultAsync();
 
         if (user is null)
-            throw new CustomException(404, "User is not found!");
+            throw new CustomException(404, "Foydalanuvchi topilmadi.");
 
         await _userRepository.DeleteAsync(id);
         return true;
@@ -95,7 +95,7 @@ public class UserService : IUserService
              .FirstOrDefaultAsync();
 
         if (user is null)
-            throw new CustomException(404, "User is not found!");
+            throw new CustomException(404, "Foydalanuvchi topilmadi.");
 
         return _mapper.Map<UserForResultDto>(user);
     }
@@ -106,9 +106,9 @@ public class UserService : IUserService
             .Where(u => u.Id == id)
             .FirstOrDefaultAsync();
         if (user is null || !PasswordHelper.Verify(dto.OldPassword, user.PasswordSalt, user.Password))
-            throw new CustomException(404, "User or Password is incorrect");
+            throw new CustomException(404, "Eski parol xato!");
         else if (dto.NewPassword != dto.ConfirmPassword)
-            throw new CustomException(400, "New password and confir password aren't equal");
+            throw new CustomException(400, "Yangi parol va tasdiqlash paroli bir xil emas!\nXatolikni to'g'rilang!");
 
         var hash = PasswordHelper.Hash(dto.ConfirmPassword);
         user.PasswordSalt = hash.Salt;

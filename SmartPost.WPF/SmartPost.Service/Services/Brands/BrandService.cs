@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Barnds;
 using SmartPost.Domain.Configurations;
@@ -11,7 +6,6 @@ using SmartPost.Domain.Entities.Brands;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.Brands;
-using SmartPost.Service.DTOs.Categories;
 using SmartPost.Service.Interfaces.Brands;
 
 namespace SmartPost.Service.Services.Brands
@@ -30,15 +24,15 @@ namespace SmartPost.Service.Services.Brands
         public async Task<BrandForResultDto> CreateAsync(BrandForCreationDto dto)
         {
             var brand = await _brandRepository.SelectAll()
-                .Where(c => c.Name == dto.Name)
+                .Where(c => c.Name.ToLower() == dto.Name.ToLower())
                 .FirstOrDefaultAsync();
             if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+                throw new CustomException(403, "Ushbu brend bazada mavjud.");
 
-            var mapperCatigory = _mapper.Map<Brand>(dto);
-            mapperCatigory.CreatedAt = DateTime.UtcNow;
+            var mapped = _mapper.Map<Brand>(dto);
+            mapped.CreatedAt = DateTime.UtcNow;
 
-            var result = await _brandRepository.InsertAsync(mapperCatigory);
+            var result = await _brandRepository.InsertAsync(mapped);
 
             return _mapper.Map<BrandForResultDto>(result);
         }
@@ -46,12 +40,12 @@ namespace SmartPost.Service.Services.Brands
         public async Task<BrandForResultDto> ModifyAsync(long id, BrandForUpdateDto dto)
         {
             var brand = await _brandRepository.SelectAll()
-                .Where(c => c.Name == dto.Name)
+                .Where(c => c.Id == id)
                 .FirstOrDefaultAsync();
-            if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+            if (brand is null)
+                throw new CustomException(404, "Brend topilmadi.");
 
-            var mapperBrand = _mapper.Map<Brand>(dto);
+            var mapperBrand = _mapper.Map(dto, brand);
             mapperBrand.CreatedAt = DateTime.UtcNow;
 
             var result = await _brandRepository.UpdateAsync(mapperBrand);
@@ -64,8 +58,8 @@ namespace SmartPost.Service.Services.Brands
             var brand = await _brandRepository.SelectAll()
                 .Where(c => c.Id == id)
                 .FirstOrDefaultAsync();
-            if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+            if (brand is null)
+                throw new CustomException(404, "Brend topilmadi.");
 
             await _brandRepository.DeleteAsync(id);
             return true;
@@ -93,8 +87,8 @@ namespace SmartPost.Service.Services.Brands
                  .Include(c => c.InventoryLists)
                  .AsNoTracking()
                  .FirstOrDefaultAsync();
-            if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+            if (brand is null)
+                throw new CustomException(404, "Brend topilmadi.");
 
             return _mapper.Map<BrandForResultDto>(brand);
         }

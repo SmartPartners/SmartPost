@@ -2,7 +2,6 @@
 using SmartPost.DataAccess.Data;
 using SmartPost.DataAccess.Interfaces;
 using SmartPost.Domain.Commons;
-using SmartPost.Domain.Entities;
 
 namespace SmartPost.DataAccess.Repositories
 {

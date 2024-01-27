@@ -6,6 +6,7 @@ using SmartPost.Domain.Entities.InventoryLists;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.InventoryLists;
+using SmartPost.Service.Interfaces.Brands;
 using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.InventoryLists;
 
@@ -15,20 +16,24 @@ public class InventoryListService : IInventoryListService
 {
     private readonly IInventoryListRepository _inventoryListRepository;
     private readonly ICategoryService _categoryService;
+    private readonly IBrandService _brandService;
     private readonly IMapper _mapper;
 
     public InventoryListService(
         IInventoryListRepository inventoryListRepository,
         IMapper mapper,
-        ICategoryService categoryService)
+        ICategoryService categoryService,
+        IBrandService brandService)
     {
         _mapper = mapper;
         _inventoryListRepository = inventoryListRepository;
         _categoryService = categoryService;
+        _brandService = brandService;
     }
 
     public async Task<InventoryListForResultDto> CreateAsync(InventoryListForCreationDto dto)
     {
+        var brand = await _brandService.RetrieveByIdAsync(dto.BrandId);
         var category = await _categoryService.RetrieveByIdAsync(dto.CategoryId);
 
         var existingInventory = await _inventoryListRepository.SelectAll()
@@ -60,6 +65,9 @@ public class InventoryListService : IInventoryListService
         if (inventory is null)
             throw new CustomException(404, "Inventory list is not found");
 
+        var brand = await _brandService.RetrieveByIdAsync(dto.BrandId);
+        var category = await _categoryService.RetrieveByIdAsync(dto.CategoryId);
+
         var mapped = _mapper.Map(dto, inventory);
         mapped.UpdatedAt = DateTime.UtcNow;
 
@@ -74,7 +82,7 @@ public class InventoryListService : IInventoryListService
             .Where(c => c.Id == id)
             .FirstOrDefaultAsync();
         if (inventory is null)
-            throw new CustomException(404, "Category is not found");
+            throw new CustomException(404, "Inventory list is not found");
 
         await _inventoryListRepository.DeleteAsync(id);
 
