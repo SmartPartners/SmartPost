@@ -60,6 +60,8 @@ public class InventoryListService : IInventoryListService
         if (inventory is null)
             throw new CustomException(404, "Inventory list is not found");
 
+        var category = await _categoryService.RetrieveByIdAsync(dto.CategoryId);
+
         var mapped = _mapper.Map(dto, inventory);
         mapped.UpdatedAt = DateTime.UtcNow;
 
