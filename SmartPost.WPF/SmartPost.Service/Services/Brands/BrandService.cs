@@ -33,7 +33,7 @@ namespace SmartPost.Service.Services.Brands
                 .Where(c => c.Name.ToLower() == dto.Name.ToLower())
                 .FirstOrDefaultAsync();
             if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+                throw new CustomException(403, "Ushbu brend bazada mavjud.");
 
             var mapped = _mapper.Map<Brand>(dto);
             mapped.CreatedAt = DateTime.UtcNow;
@@ -49,9 +49,9 @@ namespace SmartPost.Service.Services.Brands
                 .Where(c => c.Id == id)
                 .FirstOrDefaultAsync();
             if (brand is null)
-                throw new CustomException(404, "Brand is not found");
+                throw new CustomException(404, "Brend topilmadi.");
 
-            var mapperBrand = _mapper.Map<Brand>(dto);
+            var mapperBrand = _mapper.Map(dto, brand);
             mapperBrand.CreatedAt = DateTime.UtcNow;
 
             var result = await _brandRepository.UpdateAsync(mapperBrand);
@@ -65,7 +65,7 @@ namespace SmartPost.Service.Services.Brands
                 .Where(c => c.Id == id)
                 .FirstOrDefaultAsync();
             if (brand is null)
-                throw new CustomException(404, "Brand is not found");
+                throw new CustomException(404, "Brend topilmadi.");
 
             await _brandRepository.DeleteAsync(id);
             return true;
@@ -94,7 +94,7 @@ namespace SmartPost.Service.Services.Brands
                  .AsNoTracking()
                  .FirstOrDefaultAsync();
             if (brand is null)
-                throw new CustomException(404, "Brand is not found");
+                throw new CustomException(404, "Brend topilmadi.");
 
             return _mapper.Map<BrandForResultDto>(brand);
         }

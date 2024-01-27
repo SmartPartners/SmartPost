@@ -27,7 +27,7 @@ public class CategoryService : ICategoryService
             .Where(c => c.Name.ToLower() == dto.Name.ToLower())
             .FirstOrDefaultAsync();
         if (category is not null)
-            throw new CustomException(403, "Category is already exists");
+            throw new CustomException(403, "Bu kategoriya bazada mavjud.");
 
         var mappedCategory = _mapper.Map<Category>(dto);
         mappedCategory.CreatedAt = DateTime.UtcNow;
@@ -43,7 +43,7 @@ public class CategoryService : ICategoryService
             .Where(c => c.Id == id)
             .FirstOrDefaultAsync();
         if (category is null)
-            throw new CustomException(404, "Category is not found");
+            throw new CustomException(404, "Kategoriya topilmadi.");
 
         var mappedCategory = _mapper.Map(dto, category);
         mappedCategory.UpdatedAt = DateTime.UtcNow;
@@ -59,7 +59,7 @@ public class CategoryService : ICategoryService
             .Where(c => c.Id == id)
             .FirstOrDefaultAsync();
         if (category is null)
-            throw new CustomException(404, "Category is not found");
+            throw new CustomException(404, "Kategoriya topilmadi.");
 
         await _categoryRepository.DeleteAsync(id);
 
@@ -89,7 +89,7 @@ public class CategoryService : ICategoryService
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         if (category is null)
-            throw new CustomException(404, "Category is not found");
+            throw new CustomException(404, "Kategoriya topilmadi.");
 
         return _mapper.Map<CategoryForResultDto>(category);
     }

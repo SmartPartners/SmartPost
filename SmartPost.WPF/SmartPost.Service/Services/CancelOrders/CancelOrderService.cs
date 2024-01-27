@@ -28,7 +28,8 @@ public class CancelOrderService : ICancelOrderService
     public async Task<CancelOrderForResultDto> CreateAsync(CancelOrderForCreationDto dto)
     {
         var cancel = await _cancelOrderRepository.SelectAll()
-            .Where(c => c.ProductName.ToLower() == dto.ProductName.ToLower())
+            .Where(c => c.PCode.ToLower() == dto.PCode.ToLower()
+            && c.BarCode == dto.BarCode)
             .FirstOrDefaultAsync();
 
         if (cancel != null)
@@ -36,6 +37,7 @@ public class CancelOrderService : ICancelOrderService
             cancel.Quantity += dto.Quantity;
             await _cancelOrderRepository.UpdateAsync(cancel);
 
+            //throw new CustomException(200, "Bu turdagi mahsulot bazada mavjudligi uchun uning soniga qo'shib qo'yildi.");
             return _mapper.Map<CancelOrderForResultDto>(cancel);
         }
         var mappedCancelOrder = _mapper.Map<CancelOrder>(dto);
@@ -52,7 +54,7 @@ public class CancelOrderService : ICancelOrderService
            .Where(c => c.Id == id)
            .FirstOrDefaultAsync();
         if (cancelOrder is null)
-            throw new CustomException(404, "Cancel order is not found");
+            throw new CustomException(404, "Bekor qilingan buyurtma topilmadi.");
 
         var mappedOrder = _mapper.Map(dto, cancelOrder);
         mappedOrder.UpdatedAt = DateTime.UtcNow;
@@ -68,7 +70,7 @@ public class CancelOrderService : ICancelOrderService
             .Where(c => c.Id == id)
             .FirstOrDefaultAsync();
         if (order is null)
-            throw new CustomException(404, "Cancel order is not found");
+            throw new CustomException(404, "Bekor qilingan buyurtma topilmadi.");
 
         await _cancelOrderRepository.DeleteAsync(id);
 
@@ -92,7 +94,7 @@ public class CancelOrderService : ICancelOrderService
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         if (order is null)
-            throw new CustomException(404, "Category is not found");
+            throw new CustomException(404, "Bekor qilingan buyurtma topilmadi.");
 
         return _mapper.Map<CancelOrderForResultDto>(order);
     }
