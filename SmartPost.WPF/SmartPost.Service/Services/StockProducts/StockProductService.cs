@@ -98,9 +98,7 @@ public class StockProductService : IStockProductService
 
     public async Task<StockProductsForResultDto> UpdateAsync(long id ,StockProductForUpdateDto updateDto)
     {
-
         var category = await _categoryService.RetrieveByIdAsync(updateDto.CategoryId);
-         
 
         if (category is null)
             throw new CustomException(404, "Category is not found");
@@ -121,6 +119,7 @@ public class StockProductService : IStockProductService
             throw new CustomException(404, "StockProduct is not found");
 
         var mappedStockProduct = _mapper.Map<StokProduct>(updateDto);
+        mappedStockProduct.Id = id;
         mappedStockProduct.UpdatedAt = DateTime.UtcNow;
 
         return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.UpdateAsync(mappedStockProduct));

@@ -119,6 +119,7 @@ public class ProductService : IProductService
             throw new CustomException(404, "Product is not found");
 
         var mappedProduct = _mapper.Map<Product>(productForUpdateDto);
+        mappedProduct.Id = id;
         mappedProduct.UpdatedAt = DateTime.UtcNow;
 
         return _mapper.Map<ProductForResultDto>(await _productRepository.UpdateAsync(mappedProduct));
