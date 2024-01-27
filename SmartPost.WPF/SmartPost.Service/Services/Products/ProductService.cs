@@ -7,6 +7,8 @@ using SmartPost.DataAccess.Interfaces.Barnds;
 using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Interfaces.Categories;
+using SmartPost.Domain.Configurations;
+using SmartPost.Service.Commons.Extensions;
 
 namespace SmartPost.Service.Services.Products;
 
@@ -71,8 +73,15 @@ public class ProductService : IProductService
         return await _productRepository.DeleteAsync(id);
     }
 
-    public async Task<IEnumerable<ProductForResultDto>> GetAllAsync()
-       => _mapper.Map<IEnumerable<ProductForResultDto>>(await _productRepository.SelectAll().AsNoTracking().ToListAsync());
+    public async Task<IEnumerable<ProductForResultDto>> GetAllAsync(PaginationParams @params)
+    {
+        var products = await _productRepository.SelectAll()
+            .AsNoTracking()
+            .ToPagedList(@params)
+            .ToListAsync();
+        
+        return _mapper.Map<IEnumerable<ProductForResultDto>>(products); 
+    }
 
 
 

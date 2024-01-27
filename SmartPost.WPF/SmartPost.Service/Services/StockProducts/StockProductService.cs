@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Barnds;
-using SmartPost.DataAccess.Interfaces.Categories;
 using SmartPost.DataAccess.Interfaces.StockProducts;
+using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Service.Commons.Exceptions;
+using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.StockProducts;
 using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.StockProducts;
@@ -72,8 +73,15 @@ public class StockProductService : IStockProductService
     }
        
 
-    public async Task<IEnumerable<StockProductsForResultDto>> GetAllAsync()
-        => _mapper.Map<IEnumerable<StockProductsForResultDto>>(await _stockProductRepository.SelectAll().AsNoTracking().ToListAsync());
+    public async Task<IEnumerable<StockProductsForResultDto>> GetAllAsync(PaginationParams @params)
+    {
+        var StockProducts = await _stockProductRepository.SelectAll()
+            .AsNoTracking()
+            .ToPagedList(@params)
+            .ToListAsync();
+
+        return _mapper.Map<IEnumerable<StockProductsForResultDto>>(StockProducts);
+    }
    
 
     public async Task<StockProductsForResultDto> GetByIdAsync(long id)
