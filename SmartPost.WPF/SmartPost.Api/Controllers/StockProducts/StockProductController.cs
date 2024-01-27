@@ -28,9 +28,9 @@ namespace SmartPost.Api.Controllers.StockProducts
         public async Task<IActionResult>AddAsync([FromBody] StockProductForCreationDto stockProductForCreation)
             =>Ok(await _stockProductService.CreateAsync(stockProductForCreation));
 
-        [HttpPut]
-        public async Task<IActionResult> ModifyAsync([FromBody] StockProductForUpdateDto stockProductForUpdate)
-            =>Ok(await _stockProductService.UpdateAsync(stockProductForUpdate));
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ModifyAsync(long id,[FromBody] StockProductForUpdateDto stockProductForUpdate)
+            =>Ok(await _stockProductService.UpdateAsync(id,stockProductForUpdate));
 
         [HttpDelete("{id}")]
         public async Task<IActionResult>DeleteAsync(long  id)

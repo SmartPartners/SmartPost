@@ -2,7 +2,6 @@
 
 public  class StockProductForUpdateDto
 {
-    public long Id { get; set; }
     public long UserId { get; set; }
     public long BrandId { get; set; }
     public decimal Price { get; set; }

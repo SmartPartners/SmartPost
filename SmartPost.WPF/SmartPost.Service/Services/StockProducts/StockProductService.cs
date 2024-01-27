@@ -6,6 +6,7 @@ using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.DTOs.StockProducts;
+using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.StockProducts;
 
 namespace SmartPost.Service.Services.StockProducts;
@@ -14,25 +15,22 @@ public class StockProductService : IStockProductService
 {
     private readonly IMapper _mapper;
     private readonly IBrandRepository _brandRepository;
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly ICategoryService _categoryService;
     private readonly IStockProductRepository _stockProductRepository; 
 
 
-    public StockProductService(IMapper mapper, IStockProductRepository stockProductRepository, IBrandRepository brandRepository, ICategoryRepository categoryRepository)
+    public StockProductService(IMapper mapper, IStockProductRepository stockProductRepository, IBrandRepository brandRepository, ICategoryService categoryService)
     {
         _mapper = mapper;
         _brandRepository = brandRepository;
-        _categoryRepository = categoryRepository;
+        _categoryService = categoryService;
         _stockProductRepository = stockProductRepository;
     }
 
     public async Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto)
     {
 
-        var category = await _categoryRepository.SelectAll()
-           .Where(c => c.Id == createDto.CategoryId)
-           .AsNoTracking()
-           .FirstOrDefaultAsync();
+        var category = await _categoryService.RetrieveByIdAsync(createDto.CategoryId);
 
         if (category is null)
             throw new CustomException(404, "Category is not found");
@@ -92,13 +90,11 @@ public class StockProductService : IStockProductService
     }
    
 
-    public async Task<StockProductsForResultDto> UpdateAsync(StockProductForUpdateDto updateDto)
+    public async Task<StockProductsForResultDto> UpdateAsync(long id ,StockProductForUpdateDto updateDto)
     {
 
-        var category = await _categoryRepository.SelectAll()
-          .Where(c => c.Id == updateDto.CategoryId)
-          .AsNoTracking()
-          .FirstOrDefaultAsync();
+        var category = await _categoryService.RetrieveByIdAsync(updateDto.CategoryId);
+         
 
         if (category is null)
             throw new CustomException(404, "Category is not found");
@@ -111,7 +107,7 @@ public class StockProductService : IStockProductService
             throw new CustomException(404, "Brand is not found");
 
         var stockProduct = await _stockProductRepository.SelectAll()
-            .Where(s => s.Id == updateDto.Id)
+            .Where(s => s.Id == id)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
