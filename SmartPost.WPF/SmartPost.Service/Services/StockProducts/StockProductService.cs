@@ -1,29 +1,32 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SmartPost.DataAccess.Interfaces.Barnds;
-using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Configurations;
-using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Service.Interfaces.Brands;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.StockProducts;
+using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.StockProducts;
+using SmartPost.DataAccess.Interfaces.StockProducts;
 
 namespace SmartPost.Service.Services.StockProducts;
 
 public class StockProductService : IStockProductService
 {
     private readonly IMapper _mapper;
-    private readonly IBrandRepository _brandRepository;
+    private readonly IBrandService _brandService;
     private readonly ICategoryService _categoryService;
     private readonly IStockProductRepository _stockProductRepository; 
 
 
-    public StockProductService(IMapper mapper, IStockProductRepository stockProductRepository, IBrandRepository brandRepository, ICategoryService categoryService)
+    public StockProductService(IMapper mapper, 
+                               IStockProductRepository stockProductRepository, 
+                               IBrandService brandService, 
+                               ICategoryService categoryService)
     {
         _mapper = mapper;
-        _brandRepository = brandRepository;
+        _brandService = brandService;
         _categoryService = categoryService;
         _stockProductRepository = stockProductRepository;
     }
@@ -36,9 +39,7 @@ public class StockProductService : IStockProductService
         if (category is null)
             throw new CustomException(404, "Category is not found");
 
-        var brand = await _brandRepository.SelectAll()
-             .Where(b => b.Id == createDto.BrandId)
-        .FirstOrDefaultAsync();
+        var brand = await _brandService.RetrieveByIdAsync(createDto.BrandId);
 
         if (brand is null)
             throw new CustomException(404, "Brand is not found");
@@ -103,9 +104,7 @@ public class StockProductService : IStockProductService
         if (category is null)
             throw new CustomException(404, "Category is not found");
 
-        var brand = await _brandRepository.SelectAll()
-             .Where(b => b.Id == updateDto.BrandId)
-             .FirstOrDefaultAsync();
+        var brand = await _brandService.RetrieveByIdAsync(updateDto.BrandId);
 
         if (brand is null)
             throw new CustomException(404, "Brand is not found");

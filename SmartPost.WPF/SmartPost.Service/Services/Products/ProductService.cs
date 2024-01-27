@@ -9,20 +9,24 @@ using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Domain.Configurations;
 using SmartPost.Service.Commons.Extensions;
+using SmartPost.Service.Interfaces.Brands;
 
 namespace SmartPost.Service.Services.Products;
 
 public class ProductService : IProductService
 {
     private readonly IMapper _mapper;
-    private readonly IBrandRepository _brandRepository;
+    private readonly IBrandService _brandService;
     private readonly IProductRepository _productRepository;
     private readonly ICategoryService _categoryService;
 
-    public ProductService(IMapper mapper, IProductRepository productRepository, ICategoryService categoryService, IBrandRepository brandRepository)
+    public ProductService(IMapper mapper,
+                          IProductRepository productRepository, 
+                           ICategoryService categoryService, 
+                           IBrandService brandService)
     {
         this._mapper = mapper;
-        this._brandRepository = brandRepository;
+        this._brandService = brandService;
         this._categoryService = categoryService;
         this._productRepository = productRepository;
     }
@@ -31,13 +35,10 @@ public class ProductService : IProductService
     {
         var category = await _categoryService.RetrieveByIdAsync(productForCreationDto.CategoryId);
            
-
         if (category is null)
             throw new CustomException(404, "Category is not found");
 
-        var brand = await _brandRepository.SelectAll()
-             .Where(b => b.Id == productForCreationDto.BrandId)
-             .FirstOrDefaultAsync();
+        var brand = await _brandService.RetrieveByIdAsync(productForCreationDto.BrandId);
 
         if (brand is null)
             throw new CustomException(404, "Brand is not found");
@@ -103,9 +104,7 @@ public class ProductService : IProductService
         if (category is null)
             throw new CustomException(404, "Category is not found");
 
-        var brand = await _brandRepository.SelectAll()
-             .Where(b => b.Id == productForUpdateDto.BrandId)
-             .FirstOrDefaultAsync();
+        var brand = await _brandService.RetrieveByIdAsync(productForUpdateDto.BrandId);
 
         if (brand is null)
             throw new CustomException(404, "Brand is not found");
