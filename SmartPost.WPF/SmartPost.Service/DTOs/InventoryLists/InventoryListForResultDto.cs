@@ -13,4 +13,6 @@ public record InventoryListForResultDto
     public decimal Price { get; set; }
     public decimal TotalPrice { get; set; }
     public decimal Quantity { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

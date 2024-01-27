@@ -36,7 +36,7 @@ public class CardService : ICardService
         var user = await _userService.RetrieveByIdAsync(dto.UserId);
 
         var card = await _cardRepository.SelectAll()
-            .Where(c => c.ProductName == dto.ProductName)
+            .Where(c => c.ProductName.ToLower() == dto.ProductName.ToLower())
             .FirstOrDefaultAsync();
 
         if (card != null)

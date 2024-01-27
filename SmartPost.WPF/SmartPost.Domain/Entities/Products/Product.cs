@@ -13,6 +13,7 @@ public class Product : Auditable
     public Category Category { get; set; }
 
     public string ProductName { get; set; }
+    public string Size { get; set; }
     public string BarCode { get; set; }
     public string  PCode { get; set; }
     public decimal Price { get; set; }

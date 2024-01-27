@@ -1,11 +1,6 @@
-﻿using SmartPost.Domain.Entities.Brands;
-using SmartPost.Domain.Entities.Categories;
-using SmartPost.Domain.Entities.Users;
-using SmartPost.Domain.Enums;
+﻿namespace SmartPost.Service.DTOs.StockProducts;
 
-namespace SmartPost.Service.DTOs.StockProducts;
-
-public  class StockProductsForResultDto
+public class StockProductsForResultDto
 {
     public long Id { get; set; }
     public long BrandId { get; set; }
@@ -14,7 +9,7 @@ public  class StockProductsForResultDto
 
     public string ProductName { get; set; }
     public string BarCode { get; set; }
-    public string  PCode { get; set; }
+    public string PCode { get; set; }
     public decimal Price { get; set; }
     public decimal Quantity { get; set; }
     public DateTime CreatedAt { get; set; }

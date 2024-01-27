@@ -30,15 +30,15 @@ namespace SmartPost.Service.Services.Brands
         public async Task<BrandForResultDto> CreateAsync(BrandForCreationDto dto)
         {
             var brand = await _brandRepository.SelectAll()
-                .Where(c => c.Name == dto.Name)
+                .Where(c => c.Name.ToLower() == dto.Name.ToLower())
                 .FirstOrDefaultAsync();
             if (brand is not null)
                 throw new CustomException(403, "Brand is already exists");
 
-            var mapperCatigory = _mapper.Map<Brand>(dto);
-            mapperCatigory.CreatedAt = DateTime.UtcNow;
+            var mapped = _mapper.Map<Brand>(dto);
+            mapped.CreatedAt = DateTime.UtcNow;
 
-            var result = await _brandRepository.InsertAsync(mapperCatigory);
+            var result = await _brandRepository.InsertAsync(mapped);
 
             return _mapper.Map<BrandForResultDto>(result);
         }
@@ -46,10 +46,10 @@ namespace SmartPost.Service.Services.Brands
         public async Task<BrandForResultDto> ModifyAsync(long id, BrandForUpdateDto dto)
         {
             var brand = await _brandRepository.SelectAll()
-                .Where(c => c.Name == dto.Name)
+                .Where(c => c.Id == id)
                 .FirstOrDefaultAsync();
-            if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+            if (brand is null)
+                throw new CustomException(404, "Brand is not found");
 
             var mapperBrand = _mapper.Map<Brand>(dto);
             mapperBrand.CreatedAt = DateTime.UtcNow;
@@ -64,8 +64,8 @@ namespace SmartPost.Service.Services.Brands
             var brand = await _brandRepository.SelectAll()
                 .Where(c => c.Id == id)
                 .FirstOrDefaultAsync();
-            if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+            if (brand is null)
+                throw new CustomException(404, "Brand is not found");
 
             await _brandRepository.DeleteAsync(id);
             return true;
@@ -93,8 +93,8 @@ namespace SmartPost.Service.Services.Brands
                  .Include(c => c.InventoryLists)
                  .AsNoTracking()
                  .FirstOrDefaultAsync();
-            if (brand is not null)
-                throw new CustomException(403, "Brand is already exists");
+            if (brand is null)
+                throw new CustomException(404, "Brand is not found");
 
             return _mapper.Map<BrandForResultDto>(brand);
         }

@@ -28,7 +28,7 @@ public class CancelOrderService : ICancelOrderService
     public async Task<CancelOrderForResultDto> CreateAsync(CancelOrderForCreationDto dto)
     {
         var cancel = await _cancelOrderRepository.SelectAll()
-            .Where(c => c.ProductName == dto.ProductName)
+            .Where(c => c.ProductName.ToLower() == dto.ProductName.ToLower())
             .FirstOrDefaultAsync();
 
         if (cancel != null)
