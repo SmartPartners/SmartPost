@@ -5,7 +5,9 @@ using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.Cards;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
+using SmartPost.Service.DTOs.CancelOrders;
 using SmartPost.Service.DTOs.Cards;
+using SmartPost.Service.DTOs.InventoryLists;
 using SmartPost.Service.Interfaces.Cards;
 using SmartPost.Service.Interfaces.Users;
 
@@ -32,6 +34,18 @@ public class CardService : ICardService
     public async Task<CardForResultDto> CreateAsync(CardForCreationDto dto)
     {
         var user = await _userService.RetrieveByIdAsync(dto.UserId);
+
+        var card = await _cardRepository.SelectAll()
+            .Where(c => c.ProductName == dto.ProductName)
+            .FirstOrDefaultAsync();
+
+        if (card != null)
+        {
+            card.Quantity += dto.Quantity;
+            await _cardRepository.UpdateAsync(card);
+
+            return _mapper.Map<CardForResultDto>(card);
+        }
 
         var mappedCard = _mapper.Map<Card>(dto);
         mappedCard.CreatedAt = DateTime.UtcNow;
