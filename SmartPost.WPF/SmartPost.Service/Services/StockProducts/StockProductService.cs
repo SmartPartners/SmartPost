@@ -48,15 +48,13 @@ public class StockProductService : IStockProductService
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
-        if (stockProduct is null)
-        {
-            var mappedStockProduct = _mapper.Map<StokProduct>(createDto);
-            mappedStockProduct.CreatedAt = DateTime.UtcNow;
-            return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.InsertAsync(mappedStockProduct));
-        }
-
-        stockProduct.Quantity += createDto.Quantity;
-        return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.UpdateAsync(stockProduct));
+        if (stockProduct is not null)
+            throw new CustomException(409,"StockProduct is already exists");
+       
+        var mappedStockProduct = _mapper.Map<StokProduct>(createDto);
+        mappedStockProduct.CreatedAt = DateTime.UtcNow;
+        return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.InsertAsync(mappedStockProduct));
+       
     }
 
     public async Task<bool> DeleteAsymc(long id)

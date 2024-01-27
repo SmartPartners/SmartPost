@@ -47,17 +47,12 @@ public class ProductService : IProductService
             .AsNoTracking()
             .FirstOrDefaultAsync();
 
+        if (product is not null)
+            throw new CustomException(409, "Product is already exists");
 
-        if (product is null )
-        {
-            var mappedProduct = _mapper.Map<Product>(productForCreationDto);
-            mappedProduct.CreatedAt = DateTime.UtcNow;
-            return _mapper.Map<ProductForResultDto>(await _productRepository.InsertAsync(mappedProduct));
-        }
-
-        product.Quantity += productForCreationDto.Quantity;
-        return _mapper.Map<ProductForResultDto>(await _productRepository.UpdateAsync(product));
-
+        var mappedProduct = _mapper.Map<Product>(productForCreationDto);
+        mappedProduct.CreatedAt = DateTime.UtcNow;
+        return _mapper.Map<ProductForResultDto>(await _productRepository.InsertAsync(mappedProduct));
     }
 
     public async Task<bool> DeleteAsync(long id)
@@ -133,8 +128,6 @@ public class ProductService : IProductService
     {
         var Product =await _productRepository.SelectAll()
             .Where(p=>p.ProductName == name)
-            .Include(s=>s.Brand)
-            .Include(s=>s.Category)
             .AsNoTracking()
             .FirstOrDefaultAsync();
 

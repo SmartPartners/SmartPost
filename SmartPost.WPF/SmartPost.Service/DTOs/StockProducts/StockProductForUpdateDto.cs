@@ -8,5 +8,4 @@ public  class StockProductForUpdateDto
     public long CategoryId { get; set; }
     public string ProductName { get; set; }
     public string BarCode { get; set; }
-    public string PCode { get; set; }
 }
