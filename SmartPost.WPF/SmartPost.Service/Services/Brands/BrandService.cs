@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Barnds;
 using SmartPost.Domain.Configurations;
@@ -11,7 +6,6 @@ using SmartPost.Domain.Entities.Brands;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.Brands;
-using SmartPost.Service.DTOs.Categories;
 using SmartPost.Service.Interfaces.Brands;
 
 namespace SmartPost.Service.Services.Brands

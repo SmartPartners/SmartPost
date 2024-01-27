@@ -1,11 +1,6 @@
-﻿using SmartPost.Domain.Entities.Brands;
-using SmartPost.Domain.Entities.Categories;
-using SmartPost.Service.DTOs.Brands;
-using SmartPost.Service.DTOs.Categories;
+﻿namespace SmartPost.Service.DTOs.Products;
 
-namespace SmartPost.Service.DTOs.Products;
-
-public  class ProductForResultDto
+public class ProductForResultDto
 {
     public long Id { get; set; }
     public string PCode { get; set; }
@@ -19,5 +14,5 @@ public  class ProductForResultDto
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 
-   
+
 }

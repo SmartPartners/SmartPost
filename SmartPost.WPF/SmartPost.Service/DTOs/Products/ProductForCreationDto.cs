@@ -1,6 +1,6 @@
 ﻿namespace SmartPost.Service.DTOs.Products;
 
-public  class ProductForCreationDto
+public class ProductForCreationDto
 {
     public long BrandId { get; set; }
     public string Size { get; set; }

@@ -2,6 +2,6 @@
 
 namespace SmartPost.DataAccess.Interfaces.StockProducts;
 
-public  interface IStockProductRepository : IRepository<StokProduct>
+public interface IStockProductRepository : IRepository<StokProduct>
 {
 }

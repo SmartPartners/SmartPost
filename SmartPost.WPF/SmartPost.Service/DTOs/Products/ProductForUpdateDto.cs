@@ -1,6 +1,6 @@
 ﻿namespace SmartPost.Service.DTOs.Products;
 
-public  class ProductForUpdateDto
+public class ProductForUpdateDto
 {
     public long BrandId { get; set; }
     public decimal Price { get; set; }

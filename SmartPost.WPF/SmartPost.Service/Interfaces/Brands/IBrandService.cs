@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SmartPost.Domain.Configurations;
+﻿using SmartPost.Domain.Configurations;
 using SmartPost.Service.DTOs.Brands;
-using SmartPost.Service.DTOs.Categories;
 
 namespace SmartPost.Service.Interfaces.Brands
 {

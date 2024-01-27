@@ -1,6 +1,6 @@
 ﻿namespace SmartPost.Service.DTOs.StockProducts;
 
-public  class StockProductForUpdateDto
+public class StockProductForUpdateDto
 {
     public long UserId { get; set; }
     public long BrandId { get; set; }

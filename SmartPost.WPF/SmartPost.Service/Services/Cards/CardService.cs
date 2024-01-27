@@ -5,9 +5,7 @@ using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.Cards;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
-using SmartPost.Service.DTOs.CancelOrders;
 using SmartPost.Service.DTOs.Cards;
-using SmartPost.Service.DTOs.InventoryLists;
 using SmartPost.Service.Interfaces.Cards;
 using SmartPost.Service.Interfaces.Users;
 

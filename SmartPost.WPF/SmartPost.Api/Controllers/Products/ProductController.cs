@@ -19,21 +19,21 @@ namespace SmartPost.Api.Controllers.Products
 
 
         [HttpGet]
-        public async Task<IActionResult>GetAllAsync([FromQuery]PaginationParams @params)
-            =>Ok(await _productService.GetAllAsync(@params));
+        public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
+            => Ok(await _productService.GetAllAsync(@params));
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync([Required] long id) 
-            =>Ok(await _productService.GetByIdAsync(id));
+        public async Task<IActionResult> GetByIdAsync([Required] long id)
+            => Ok(await _productService.GetByIdAsync(id));
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult>DeleteAsync([Required] long  id)
-            =>Ok(await _productService.DeleteAsync(id));
+        public async Task<IActionResult> DeleteAsync([Required] long id)
+            => Ok(await _productService.DeleteAsync(id));
 
         [HttpPut]
-        public async Task<IActionResult> ModifyAsync(long id,[FromBody]ProductForUpdateDto productForUpdate)
-            =>Ok(await _productService.UpdateAsync(id,productForUpdate));
+        public async Task<IActionResult> ModifyAsync(long id, [FromBody] ProductForUpdateDto productForUpdate)
+            => Ok(await _productService.UpdateAsync(id, productForUpdate));
 
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] ProductForCreationDto productForCreationDto)

@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SmartPost.Service.DTOs.Products;
-using SmartPost.Service.Commons.Exceptions;
-using SmartPost.Service.Interfaces.Products;
-using SmartPost.DataAccess.Interfaces.Barnds;
 using SmartPost.DataAccess.Interfaces.Products;
-using SmartPost.Domain.Entities.StorageProducts;
-using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Domain.Configurations;
+using SmartPost.Domain.Entities.StorageProducts;
+using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
+using SmartPost.Service.DTOs.Products;
 using SmartPost.Service.Interfaces.Brands;
+using SmartPost.Service.Interfaces.Categories;
+using SmartPost.Service.Interfaces.Products;
 
 namespace SmartPost.Service.Services.Products;
 
@@ -21,8 +20,8 @@ public class ProductService : IProductService
     private readonly ICategoryService _categoryService;
 
     public ProductService(IMapper mapper,
-                          IProductRepository productRepository, 
-                           ICategoryService categoryService, 
+                          IProductRepository productRepository,
+                           ICategoryService categoryService,
                            IBrandService brandService)
     {
         this._mapper = mapper;
@@ -38,7 +37,7 @@ public class ProductService : IProductService
         var brand = await _brandService.RetrieveByIdAsync(productForCreationDto.BrandId);
 
         var product = await _productRepository.SelectAll()
-            .Where(p => p.PCode.ToUpper() == productForCreationDto.PCode.ToUpper() 
+            .Where(p => p.PCode.ToUpper() == productForCreationDto.PCode.ToUpper()
             && p.BarCode == productForCreationDto.BarCode)
             .AsNoTracking()
             .FirstOrDefaultAsync();
@@ -93,8 +92,8 @@ public class ProductService : IProductService
             .AsNoTracking()
             .ToPagedList(@params)
             .ToListAsync();
-        
-        return _mapper.Map<IEnumerable<ProductForResultDto>>(products); 
+
+        return _mapper.Map<IEnumerable<ProductForResultDto>>(products);
     }
 
 
@@ -113,7 +112,7 @@ public class ProductService : IProductService
     }
 
 
-    public async Task<ProductForResultDto> UpdateAsync(long id,ProductForUpdateDto productForUpdateDto)
+    public async Task<ProductForResultDto> UpdateAsync(long id, ProductForUpdateDto productForUpdateDto)
     {
         var category = await _categoryService.RetrieveByIdAsync(productForUpdateDto.CategoryId);
 
@@ -135,7 +134,7 @@ public class ProductService : IProductService
 
     public async Task<ProductForResultDto> GetByName(string name)
     {
-        var Product =await _productRepository.SelectAll()
+        var Product = await _productRepository.SelectAll()
             .Where(p => p.ProductName == name)
             .AsNoTracking()
             .FirstOrDefaultAsync();

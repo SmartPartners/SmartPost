@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SmartPost.DataAccess.Interfaces.Barnds;
 using SmartPost.DataAccess.Interfaces.InventoryLists;
 using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.InventoryLists;
@@ -34,7 +33,7 @@ public class InventoryListService : IInventoryListService
 
     public async Task<InventoryListForResultDto> CreateAsync(InventoryListForCreationDto dto)
     {
-        var brand =  await _brandService.RetrieveByIdAsync(dto.BrandId);
+        var brand = await _brandService.RetrieveByIdAsync(dto.BrandId);
         var category = await _categoryService.RetrieveByIdAsync(dto.CategoryId);
 
         var existingInventory = await _inventoryListRepository.SelectAll()
@@ -65,7 +64,7 @@ public class InventoryListService : IInventoryListService
             .FirstOrDefaultAsync();
         if (inventory is null)
             throw new CustomException(404, "Inventory list is not found");
-        
+
         var brand = await _brandService.RetrieveByIdAsync(dto.BrandId);
         var category = await _categoryService.RetrieveByIdAsync(dto.CategoryId);
 

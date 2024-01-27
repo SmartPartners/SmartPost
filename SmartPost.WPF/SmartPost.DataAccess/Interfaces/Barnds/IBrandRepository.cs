@@ -2,6 +2,6 @@
 
 namespace SmartPost.DataAccess.Interfaces.Barnds;
 
-public  interface IBrandRepository : IRepository<Brand>
+public interface IBrandRepository : IRepository<Brand>
 {
 }

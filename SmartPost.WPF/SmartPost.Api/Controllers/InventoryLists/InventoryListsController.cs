@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartPost.Api.Controllers.Commons;
 using SmartPost.Domain.Configurations;
-using SmartPost.Service.DTOs.Categories;
 using SmartPost.Service.DTOs.InventoryLists;
 using SmartPost.Service.Interfaces.InventoryLists;
 

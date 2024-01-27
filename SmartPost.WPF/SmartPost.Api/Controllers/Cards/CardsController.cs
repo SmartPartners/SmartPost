@@ -2,7 +2,6 @@
 using SmartPost.Api.Controllers.Commons;
 using SmartPost.Domain.Configurations;
 using SmartPost.Service.DTOs.Cards;
-using SmartPost.Service.DTOs.Categories;
 using SmartPost.Service.Interfaces.Cards;
 
 namespace SmartPost.Api.Controllers.Cards

@@ -6,7 +6,6 @@ using SmartPost.Domain.Entities.CancelOrders;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.CancelOrders;
-using SmartPost.Service.DTOs.InventoryLists;
 using SmartPost.Service.Interfaces.CancelOrders;
 
 namespace SmartPost.Service.Services.CancelOrders;

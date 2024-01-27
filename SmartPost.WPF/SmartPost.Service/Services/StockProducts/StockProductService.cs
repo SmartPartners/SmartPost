@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Configurations;
-using SmartPost.Service.Interfaces.Brands;
+using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.StockProducts;
-using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Service.Interfaces.Brands;
 using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.StockProducts;
-using SmartPost.DataAccess.Interfaces.StockProducts;
-using SmartPost.Service.DTOs.Products;
 using SmartPost.Service.Interfaces.Users;
 
 namespace SmartPost.Service.Services.StockProducts;
@@ -78,7 +77,7 @@ public class StockProductService : IStockProductService
         var mappedStockProduct = _mapper.Map<StokProduct>(createDto);
         mappedStockProduct.CreatedAt = DateTime.UtcNow;
         return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.InsertAsync(mappedStockProduct));
-       
+
     }
 
     public async Task<bool> DeleteAsymc(long id)
@@ -91,9 +90,9 @@ public class StockProductService : IStockProductService
         if (StockProduct is null)
             throw new CustomException(404, "Bu mahsulot topilmadi.");
 
-         return await _stockProductRepository.DeleteAsync(id);
+        return await _stockProductRepository.DeleteAsync(id);
     }
-       
+
 
     public async Task<IEnumerable<StockProductsForResultDto>> GetAllAsync(PaginationParams @params)
     {
@@ -104,7 +103,7 @@ public class StockProductService : IStockProductService
 
         return _mapper.Map<IEnumerable<StockProductsForResultDto>>(StockProducts);
     }
-   
+
 
     public async Task<StockProductsForResultDto> GetByIdAsync(long id)
     {
@@ -118,9 +117,9 @@ public class StockProductService : IStockProductService
 
         return _mapper.Map<StockProductsForResultDto>(StockProduct);
     }
-   
 
-    public async Task<StockProductsForResultDto> UpdateAsync(long id ,StockProductForUpdateDto updateDto)
+
+    public async Task<StockProductsForResultDto> UpdateAsync(long id, StockProductForUpdateDto updateDto)
     {
         var category = await _categoryService.RetrieveByIdAsync(updateDto.CategoryId);
 
@@ -140,7 +139,7 @@ public class StockProductService : IStockProductService
         return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.UpdateAsync(mappedStockProduct));
     }
 
-    public async Task<StockProductsForResultDto>AddQuentityToStockProduct(long id, decimal quantity)
+    public async Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity)
     {
         var stockProduct = await _stockProductRepository.SelectAll()
             .Where(s => s.Id == id)
