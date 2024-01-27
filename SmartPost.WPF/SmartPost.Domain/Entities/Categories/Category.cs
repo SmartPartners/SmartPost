@@ -9,7 +9,7 @@ namespace SmartPost.Domain.Entities.Categories
     {
         public string Name { get; set; }
 
-        public IEnumerable<StorageProduct> StorageProducts { get; set; }
+        public IEnumerable<Product> Products { get; set; }
         public IEnumerable<StokProduct> StokProducts { get; set; }
         public IEnumerable<InventoryList> InventoryLists { get; set; }
     }
