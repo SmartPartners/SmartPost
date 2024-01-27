@@ -16,6 +16,7 @@ using SmartPost.DataAccess.Repositories.InventoryLists;
 using SmartPost.DataAccess.Repositories.Products;
 using SmartPost.DataAccess.Repositories.StockProducts;
 using SmartPost.DataAccess.Repositories.Users;
+using SmartPost.Service.Interfaces.Brands;
 using SmartPost.Service.Interfaces.CancelOrders;
 using SmartPost.Service.Interfaces.Cards;
 using SmartPost.Service.Interfaces.Categories;
@@ -23,6 +24,7 @@ using SmartPost.Service.Interfaces.InventoryLists;
 using SmartPost.Service.Interfaces.Products;
 using SmartPost.Service.Interfaces.StockProducts;
 using SmartPost.Service.Interfaces.Users;
+using SmartPost.Service.Services.Brands;
 using SmartPost.Service.Services.CancelOrders;
 using SmartPost.Service.Services.Cards;
 using SmartPost.Service.Services.Categories;
@@ -56,7 +58,7 @@ namespace SmartPost.Api.Extensions
             services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddScoped<IBrandRepository, BrandRepository>();
-            //services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IBrandService, BrandService>();
 
             services.AddScoped<IStockProductRepository, StockProductRepository>();
             services.AddScoped<IStockProductService, StockProductService>();

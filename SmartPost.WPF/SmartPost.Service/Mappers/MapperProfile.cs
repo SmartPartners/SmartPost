@@ -7,6 +7,7 @@ using SmartPost.Domain.Entities.InventoryLists;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Domain.Entities.Users;
+using SmartPost.Service.DTOs.Brands;
 using SmartPost.Service.DTOs.CancelOrders;
 using SmartPost.Service.DTOs.Cards;
 using SmartPost.Service.DTOs.Categories;
@@ -33,6 +34,11 @@ public class MapperProfile : Profile
         CreateMap<Category, CategoryForResultDto>().ReverseMap();
         CreateMap<Category, CategoryForUpdateDto>().ReverseMap();
         CreateMap<Category, CategoryForCreationDto>().ReverseMap();
+        
+        // Brand
+        CreateMap<Brand, BrandForCreationDto>().ReverseMap();
+        CreateMap<Brand, BrandForResultDto>().ReverseMap();
+        CreateMap<Brand, BrandForUpdateDto>().ReverseMap();
 
         // Cards
         CreateMap<Card, CardForResultDto>().ReverseMap();
