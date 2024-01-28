@@ -9,13 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Images\" />
+    <None Remove="Assets\Images\DefaultProfileImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Components\" />
     <Folder Include="Language\" />
     <Folder Include="Windows\" />
     <Folder Include="Themes\" />
     <Folder Include="TextStyles\" />
     <Folder Include="Pages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\DefaultProfileImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

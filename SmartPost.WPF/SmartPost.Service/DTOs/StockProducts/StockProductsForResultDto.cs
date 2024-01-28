@@ -12,6 +12,7 @@ public class StockProductsForResultDto
     public string PCode { get; set; }
     public decimal Price { get; set; }
     public decimal Quantity { get; set; }
+    public string Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 

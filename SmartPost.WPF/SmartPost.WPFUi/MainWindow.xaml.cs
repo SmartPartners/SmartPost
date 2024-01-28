@@ -52,10 +52,20 @@ namespace SmartPost.WPFUi
 
         private void rbDokon_Checked(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void rbTarix_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbSettings_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rbLogOut_Checked(object sender, RoutedEventArgs e)
         {
 
         }

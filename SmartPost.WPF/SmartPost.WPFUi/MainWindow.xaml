@@ -25,6 +25,7 @@
                 <Button x:Name="btnMinimize" Click="btnMinimize_Click" Style="{DynamicResource MinimizedButton}"/>
                 <Button x:Name="btnMaximize" Click="btnMaximize_Click" Style="{DynamicResource MaximizedButton}"/>
                 <Button x:Name="btnClose" Click="btnClose_Click" Style="{DynamicResource CloseButton}"/>
+                
             </StackPanel>
 
 
@@ -70,7 +71,7 @@
                         <RadioButton x:Name="rbSklad" Grid.Row="1"
                                      Checked="rbSklad_Checked"
                                      Style="{DynamicResource SideBarButton}"
-                                     Tag="{DynamicResource cash}"
+                                     Tag="{DynamicResource Requests}"
                                      Content="Sklad"
                                      >
                             <RadioButton.ToolTip>
@@ -94,17 +95,89 @@
                                      x:Name="rbTarix"
                                      Checked="rbTarix_Checked"
                                      Style="{DynamicResource SideBarButton}"
-                                     Tag="{DynamicResource cash}"
+                                     Tag="{DynamicResource SkillsIco}"
                                      Content="Tarix"
                                      >
                             <RadioButton.ToolTip>
                                 <TextBlock>Tarix</TextBlock>
                             </RadioButton.ToolTip>
                         </RadioButton>
+
+
+                        <RadioButton Grid.Row="4"
+                                     x:Name="rbSettings"
+                                     Checked="rbSettings_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource Settings}"
+                                     Content="Sozlamalar">
+                            <RadioButton.ToolTip>
+                                <TextBlock>Sozlamalar</TextBlock>
+                            </RadioButton.ToolTip>
+                        </RadioButton>
+
+                        <RadioButton Grid.Row="8"
+                                     x:Name="rbLogOut"
+                                     Checked="rbLogOut_Checked"
+                                     Style="{DynamicResource SideBarButton}"
+                                     Tag="{DynamicResource SignOut}"
+                                     Content="Chiqish">
+                            <RadioButton.ToolTip>
+                                <TextBlock>Chiqish</TextBlock>
+                            </RadioButton.ToolTip>
+                            
+                        </RadioButton>
+                        
+                        
                         
                     </Grid>
                     
                 </Border>
+                
+                
+                <Border Grid.Column="0" VerticalAlignment="Top" Height="1" Width="230"
+                        Margin="50 80 48 0" Background="Blue"/>
+
+
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+
+
+                    <Border Grid.Row="0" BorderBrush="Blue"
+                            BorderThickness="0,0,0,1" Margin="0 0 10 0">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="5" ShadowDepth="4" Color="Black" Opacity="0.7"
+                                              />
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="100"/>
+                                
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" x:Name="appName" Content="Asosiy" Style="{DynamicResource Asosiy}"/>
+                            <Label Grid.Column="1" x:Name="MyName" Style="{DynamicResource MyName}"/>
+                            <Label Grid.Column="1" Style="{DynamicResource OnlineMaster}"/>
+                                <Label Grid.Column="2" Style="{DynamicResource MyName}">
+                                <Border x:Name="B" BorderThickness="0" CornerRadius="35" Height="49" Width="60" Background="Pink">
+                                    <Ellipse>
+                                        <Ellipse.Fill>
+                                            <ImageBrush x:Name="MyPhoto" ImageSource="/Assets/Images/DefaultProfileImage.png"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                </Border>
+                            </Label>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+
             </Grid>
             
         </Grid>
