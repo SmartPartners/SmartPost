@@ -11,4 +11,6 @@ public class StockProductForUpdateDto
     public string BarCode { get; set; }
     public string PCode { get; set; }
     public decimal Quantity { get; set; }
+    public string Status { get; set; }
+
 }
