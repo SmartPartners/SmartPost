@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="Components\" />
     <Folder Include="Language\" />
-    <Folder Include="Windows\" />
     <Folder Include="Themes\" />
     <Folder Include="TextStyles\" />
     <Folder Include="Pages\" />
