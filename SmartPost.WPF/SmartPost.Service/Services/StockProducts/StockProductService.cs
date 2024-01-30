@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.StokProducts;
@@ -17,6 +18,7 @@ public class StockProductService : IStockProductService
 {
     private readonly IMapper _mapper;
     private readonly IBrandService _brandService;
+    private readonly IProductRepository _productRepository;
     private readonly IUserService _userService;
     private readonly ICategoryService _categoryService;
     private readonly IStockProductRepository _stockProductRepository;
@@ -26,16 +28,18 @@ public class StockProductService : IStockProductService
                                IStockProductRepository stockProductRepository,
                                IBrandService brandService,
                                ICategoryService categoryService,
-                               IUserService userService)
+                               IUserService userService,
+                               IProductRepository productRepository)
     {
         _mapper = mapper;
         _brandService = brandService;
         _categoryService = categoryService;
         _stockProductRepository = stockProductRepository;
         _userService = userService;
+        _productRepository = productRepository;
     }
 
-    public async Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto)
+    /*public async Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto)
     {
         var category = await _categoryService.RetrieveByIdAsync(createDto.CategoryId);
 
@@ -78,7 +82,7 @@ public class StockProductService : IStockProductService
         mappedStockProduct.CreatedAt = DateTime.UtcNow;
         return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.InsertAsync(mappedStockProduct));
 
-    }
+    }*/
 
     public async Task<bool> DeleteAsymc(long id)
     {
@@ -136,7 +140,9 @@ public class StockProductService : IStockProductService
         var mappedStockProduct = _mapper.Map(updateDto, stockProduct);
         mappedStockProduct.UpdatedAt = DateTime.UtcNow;
 
-        return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.UpdateAsync(mappedStockProduct));
+        var result = await _stockProductRepository.UpdateAsync(mappedStockProduct);
+
+        return _mapper.Map<StockProductsForResultDto>(result);
     }
 
     public async Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity)
