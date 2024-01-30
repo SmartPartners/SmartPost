@@ -2,7 +2,9 @@
 using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Commons.Exceptions;
+using SmartPost.Service.DTOs.StockProducts;
 
 namespace SmartPost.Service.Services.StockProducts;
 
@@ -11,102 +13,103 @@ public class ProductStockManagementService
     private readonly IProductRepository _productRepository;
     private readonly IStockProductRepository _stockProductRepository;
 
-    // Constructor to inject dependencies
     public ProductStockManagementService(IProductRepository productRepository, IStockProductRepository stockProductRepository)
     {
         _productRepository = productRepository;
         _stockProductRepository = stockProductRepository;
     }
 
-    // Method to move products from Product to StockProduct
-    public async Task<bool> MoveProductsToStockAsync(IEnumerable<long> productIds, long userId, decimal customQuantityToMove)
+    /// <summary>
+    /// Ombordan magazinga mahsulotni olib o'tish
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="userId"></param>
+    /// <param name="quantityToMove"></param>
+    /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
+    public async Task<bool> MoveProductToStockAsync(long id, long userId, decimal quantityToMove)
     {
-        // Fetch products from the database based on provided product IDs
-        var products = await _productRepository.SelectAll()
-            .Where(p => productIds.Contains(p.Id))
-            .ToListAsync();
+        var insufficientProduct = await _productRepository.SelectAll()
+            .Where(q => q.Id == id && q.Quantity < quantityToMove)
+            .FirstOrDefaultAsync();
 
-        // Check if any valid products are found
-        if (products.Count == 0)
+        if (insufficientProduct != null)
+            throw new CustomException(400, $"Omborda buncha mahsulot mavjud emas.\nOmborda {insufficientProduct.Quantity} ta mahsulot bor.");
+
+        if (quantityToMove == 0)
+            throw new CustomException(404, "Mahsulotni hajmini kiriting."); 
+
+        var product = await _productRepository.SelectAll()
+            .Where(p => p.Id == id)
+            .FirstOrDefaultAsync();
+
+        if (product == null || product.Quantity == 0)
+            throw new CustomException(404, "Bu turdagi mahsulot omborda mavjud emas.");
+
+
+        var stockProduct = new StokProduct
         {
-            throw new CustomException(404, "Mahsulotlarni kiritmadingiz.");
-        }
+            PCode = product.PCode,
+            BarCode = product.BarCode,
+            ProductName = product.ProductName,
+            Price = product.Price,
+            Brand = product.Brand,
+            Category = product.Category,
+            UserId = userId,
+            Status = "Kutilmoqda", 
+            Quantity = quantityToMove,
+            CreatedAt = DateTime.UtcNow
+        };
+        
+        var stokProducts = await _stockProductRepository.SelectAll()
+            .Where(p => p.PCode == product.PCode && p.BarCode == product.BarCode)
+            .FirstOrDefaultAsync();
 
-        // List to store StockProducts that will be added to the database
-        var stockProductsToAdd = new List<StokProduct>();
-
-        // Loop through each product to prepare StockProduct entities
-        foreach (var product in products)
+        if (stockProduct is not null)
         {
-            // Skip products with zero quantity
-            if (product.Quantity == 0)
-            {
-                continue;
-            }
+            stockProduct.Quantity += quantityToMove;
+            await _stockProductRepository.UpdateAsync(stockProduct);
 
-            // Determine the quantity to move based on user input 
-            decimal quantityToMove = customQuantityToMove;
-
-            if (quantityToMove <= 0)
-                throw new CustomException(400, "Mahsulotning hajmini kiriting");
-
-            // Create a new StockProduct entity with relevant information
-            var stockProduct = new StokProduct
-            {
-                CategoryId = product.CategoryId,
-                BrandId = product.BrandId,
-                UserId = userId,
-                PCode = product.PCode,
-                BarCode = product.BarCode,
-                ProductName = product.ProductName,
-                Size = product.Size,
-                Price = product.Price,
-                Quantity = quantityToMove,
-                Status = "Kutilmoqda", // Set the status to "Kutilmoqda" during accumulation
-                CreatedAt = DateTime.UtcNow
-            };
-
-            // Check if the requested quantity exceeds the available quantity in the product
-            if (quantityToMove > product.Quantity)
-                throw new CustomException(400, $"Buncha mahsulot omborhonada mavjud emas.\nSizda {product.Quantity} ta mahsulot mavjud");
-
-            // Deduct the moved quantity from the product's quantity
             product.Quantity -= quantityToMove;
-
-            // Add the StockProduct to the list for later insertion
-            stockProductsToAdd.Add(stockProduct);
-        }
-
-        // Update the quantities of all products in the database
-        foreach (var product in products)
-        {
             await _productRepository.UpdateAsync(product);
         }
 
-        // Insert all StockProducts into the StockProduct table
-        foreach (var stockProduct in stockProductsToAdd)
-        {
-            await _stockProductRepository.InsertAsync(stockProduct);
 
-            // After insertion, update the status to "Qo'shildi"
-            stockProduct.Status = "Qo'shildi";
-            await _stockProductRepository.UpdateAsync(stockProduct);
-        }
+        await _stockProductRepository.InsertAsync(stockProduct);
 
-        // Indicate that the process was successful
+        stockProduct.Status = "Qo'shildi";
+        await _stockProductRepository.UpdateAsync(stockProduct);
+
+        
+        product.Quantity -= quantityToMove;
+        await _productRepository.UpdateAsync(product);
+
         return true;
     }
 
-    public async Task<IEnumerable<StokProduct>> RetrieveAllWithDateTimeAsync(DateTime startDate, DateTime endDate)
+     /// <summary>
+     /// Ikkita vaqt oralig'idagi mahsulotlarni chiqarib beradi
+     /// </summary>
+     /// <param name="startDate"></param>
+     /// <param name="endDate"></param>
+     /// <returns></returns>
+    public async Task<IEnumerable<StokProduct>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
     {
-        // Use asynchronous method to retrieve data from the database
+        if (userId != null)
+        {
+            var product = await _stockProductRepository.SelectAll()
+                .Where(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate && p.UserId == userId)
+                .ToListAsync();
+        }
+
         var products = await _stockProductRepository.SelectAll()
             .Where(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate)
             .ToListAsync();
 
-        // Return the list of stock products within the specified date range
         return products;
     }
+
+
 
 }
 
