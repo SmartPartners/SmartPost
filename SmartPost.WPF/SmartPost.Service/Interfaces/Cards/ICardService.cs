@@ -9,7 +9,7 @@ public interface ICardService
 {
     Task<bool> ReamoveAsync(long id);
     Task<CardForResultDto> RetrieveByIdAsync(long id);
-    Task<CardForResultDto> CreateAsync(CardForCreationDto dto);
-    Task<CardForResultDto> ModifyAsync(long id, CardForUpdateDto dto);
+    //Task<CardForResultDto> CreateAsync(CardForCreationDto dto);
+    //Task<CardForResultDto> ModifyAsync(long id, CardForUpdateDto dto);
     Task<IEnumerable<CardForResultDto>> RetrieveAllAsync(PaginationParams @params);
 }

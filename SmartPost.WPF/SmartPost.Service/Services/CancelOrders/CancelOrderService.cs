@@ -24,7 +24,7 @@ public class CancelOrderService : ICancelOrderService
         _cancelOrderRepository = cancelOrderRepository;
     }
 
-    public async Task<CancelOrderForResultDto> CreateAsync(CancelOrderForCreationDto dto)
+   /* public async Task<CancelOrderForResultDto> CreateAsync(CancelOrderForCreationDto dto)
     {
         var cancel = await _cancelOrderRepository.SelectAll()
             .Where(c => c.PCode.ToLower() == dto.PCode.ToLower()
@@ -46,8 +46,8 @@ public class CancelOrderService : ICancelOrderService
 
         return _mapper.Map<CancelOrderForResultDto>(result);
     }
-
-    public async Task<CancelOrderForResultDto> ModifyAsync(long id, CancelOrderForUpdateDto dto)
+*/
+    /*public async Task<CancelOrderForResultDto> ModifyAsync(long id, CancelOrderForUpdateDto dto)
     {
         var cancelOrder = await _cancelOrderRepository.SelectAll()
            .Where(c => c.Id == id)
@@ -61,7 +61,7 @@ public class CancelOrderService : ICancelOrderService
         var result = await _cancelOrderRepository.UpdateAsync(mappedOrder);
 
         return _mapper.Map<CancelOrderForResultDto>(result);
-    }
+    }*/
 
     public async Task<bool> ReamoveAsync(long id)
     {

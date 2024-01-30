@@ -6,7 +6,6 @@ public class StockProductsForResultDto
     public long BrandId { get; set; }
     public long CategoryId { get; set; }
     public long UserId { get; set; }
-    public string Size { get; set; }
     public string ProductName { get; set; }
     public string BarCode { get; set; }
     public string PCode { get; set; }
