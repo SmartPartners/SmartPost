@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Cards;
 using SmartPost.DataAccess.Interfaces.StockProducts;
+using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.Cards;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Service.Commons.Exceptions;
+using System.Linq;
 
 namespace SmartPost.Service.Services.Cards;
 
@@ -85,9 +87,6 @@ public class CardManagementService
             existingCard.TotalPrice = existingCard.Price * existingCard.Quantity;
             await _cardRepository.UpdateAsync(existingCard);
 
-            card.Status = "Sotildi";
-            await _cardRepository.UpdateAsync(card);
-
             product.Quantity -= quantityToMove;
             await _stockProductRepository.UpdateAsync(product);
         }
@@ -163,6 +162,7 @@ public class CardManagementService
     {
         var result = await _cardRepository.SelectAll()
             .Where(c => c.Status == status)
+            .AsNoTracking()
             .ToListAsync();
 
         return result;
@@ -198,19 +198,45 @@ public class CardManagementService
     }*/
     #endregion
 
+    /// <summary>
+    /// sotilgan mahsulotlarni chiqarib beradi
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="startDate"></param>
+    /// <param name="endDate"></param>
+    /// <returns></returns>
     public async Task<IEnumerable<Card>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
     {
         if (userId != null)
         {
             var product = await _cardRepository.SelectAll()
                 .Where(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate && p.UserId == userId)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         var products = await _cardRepository.SelectAll()
             .Where(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate)
+            .AsNoTracking()
             .ToListAsync();
 
         return products;
     }
+
+    /// <summary>
+    /// Maximal sotilgan mahsulotlarni qaytaradi
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IEnumerable<Card>> RetrieveAllWithMaxSaledAsync(int takeMax)
+    {
+        var result = await _cardRepository.SelectAll()
+            .Where(c => c.Status == "Sotildi")
+            .OrderByDescending(c => c.Quantity)
+            .Take(takeMax)
+            .AsNoTracking()
+            .ToListAsync();
+
+        return result;
+    }
+
 }

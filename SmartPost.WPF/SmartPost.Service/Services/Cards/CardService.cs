@@ -29,7 +29,7 @@ public class CardService : ICardService
         _cardRepository = cardRepository;
     }
 
-    public async Task<CardForResultDto> CreateAsync(CardForCreationDto dto)
+/*    public async Task<CardForResultDto> CreateAsync(CardForCreationDto dto)
     {
         var user = await _userService.RetrieveByIdAsync(dto.UserId);
 
@@ -53,9 +53,9 @@ public class CardService : ICardService
         var result = await _cardRepository.InsertAsync(mappedCard);
 
         return _mapper.Map<CardForResultDto>(result);
-    }
+    }*/
 
-    public async Task<CardForResultDto> ModifyAsync(long id, CardForUpdateDto dto)
+    /*public async Task<CardForResultDto> ModifyAsync(long id, CardForUpdateDto dto)
     {
         var card = await _cardRepository.SelectAll()
             .Where(c => c.Id == id)
@@ -72,7 +72,7 @@ public class CardService : ICardService
         var result = await _cardRepository.UpdateAsync(mappedCard);
 
         return _mapper.Map<CardForResultDto>(result);
-    }
+    }*/
 
     public async Task<bool> ReamoveAsync(long id)
     {

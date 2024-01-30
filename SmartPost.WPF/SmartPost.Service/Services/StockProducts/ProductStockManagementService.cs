@@ -99,11 +99,13 @@ public class ProductStockManagementService
         {
             var product = await _stockProductRepository.SelectAll()
                 .Where(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate && p.UserId == userId)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         var products = await _stockProductRepository.SelectAll()
             .Where(p => p.CreatedAt >= startDate && p.CreatedAt <= endDate)
+            .AsNoTracking()
             .ToListAsync();
 
         return products;
