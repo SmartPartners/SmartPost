@@ -5,7 +5,7 @@
 /// </summary>
 public record CancelOrderForCreationDto
 {
-    public string SaleBy { get; set; }
+    public long SaleBy { get; set; }
     public string TransNo { get; set; }
     public string ProductName { get; set; }
     public string BarCode { get; set; }

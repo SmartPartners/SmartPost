@@ -12,8 +12,8 @@ using SmartPost.DataAccess.Data;
 namespace SmartPost.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240127172645_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240131120955_SecondMigration")]
+    partial class SecondMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,8 +55,8 @@ namespace SmartPost.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Action")
-                        .HasColumnType("text");
+                    b.Property<bool>("Action")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("BarCode")
                         .HasColumnType("text");
@@ -85,10 +85,10 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<DateTime>("ReturnDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("SaleBy")
-                        .HasColumnType("text");
+                    b.Property<long>("SaleBy")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("Size")
+                    b.Property<string>("Status")
                         .HasColumnType("text");
 
                     b.Property<decimal>("TotalPrice")
@@ -133,9 +133,6 @@ namespace SmartPost.DataAccess.Migrations
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("Size")
-                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .HasColumnType("text");
@@ -213,9 +210,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Size")
-                        .HasColumnType("text");
-
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("numeric");
 
@@ -263,7 +257,7 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Size")
+                    b.Property<string>("Status")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -315,9 +309,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
-                    b.Property<string>("Size")
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -343,6 +334,9 @@ namespace SmartPost.DataAccess.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");

@@ -1,23 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Cards;
 using SmartPost.DataAccess.Interfaces.StockProducts;
-using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.Cards;
 using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Domain.Entities.StorageProducts;
+using SmartPost.Service.Commons;
 using SmartPost.Service.Commons.Exceptions;
-using System.Linq;
+using SmartPost.Service.DTOs.Cards;
+using SmartPost.Service.Interfaces.Cards;
 
 namespace SmartPost.Service.Services.Cards;
 
-public class CardManagementService
+public class CardManagementService : ICardManagementService
 {
     private readonly IStockProductRepository _stockProductRepository;
     private readonly ICardRepository _cardRepository;
+    private readonly IMapper _mapper;
 
-    public CardManagementService(IStockProductRepository stockProductRepository, ICardRepository cardRepository)
+    public CardManagementService(IStockProductRepository stockProductRepository, ICardRepository cardRepository, IMapper mapper = null)
     {
         _stockProductRepository = stockProductRepository;
         _cardRepository = cardRepository;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -49,7 +54,8 @@ public class CardManagementService
         else if (product.Quantity == 0)
             throw new CustomException(404, "Hozirda bu mahsulotimiz tugagan.");
 
-        var cardList = new List<Card>();
+        //var cardList = new List<Card>();
+        var identity = IdentitySingleton.GetInstance();
 
         var transactionNumber = GenerateTransactionNumber();
 
@@ -65,32 +71,35 @@ public class CardManagementService
             TransNo = transactionNumber,
             CreatedAt = DateTime.UtcNow
         };
-
         card.TotalPrice = card.Price * card.Quantity;
 
-        cardList.Add(card);
+        identity.cardList.Add(card);
 
-        await UpdateCardAsync(card, product, quantityToMove);
+        //cardList.Add(card);
+
+        await UpdateCardAsync(new List<Card> { card }, product, quantityToMove);
 
         return true;
     }
 
-    public async Task<bool> UpdateCardAsync(Card card, StokProduct product, decimal quantityToMove)
+    public async Task<bool> UpdateCardAsync(List<Card> cards, StokProduct product, decimal quantityToMove)
     {
-        var existingCard = await _cardRepository.SelectAll()
-            .Where(p => p.TransNo == card.TransNo)
-            .FirstOrDefaultAsync();
+        /*var existingCard = await _cardRepository.SelectAll()
+            .Where(p => p.TransNo == cards.TransNo)
+            .FirstOrDefaultAsync();*/
 
-        if (existingCard != null)
-        {
-            existingCard.Quantity += quantityToMove;
-            existingCard.TotalPrice = existingCard.Price * existingCard.Quantity;
-            await _cardRepository.UpdateAsync(existingCard);
+        /* if (existingCard != null)
+         {
+             existingCard.Quantity += quantityToMove;
+             existingCard.TotalPrice = existingCard.Price * existingCard.Quantity;
+             await _cardRepository.UpdateAsync(existingCard);
 
-            product.Quantity -= quantityToMove;
-            await _stockProductRepository.UpdateAsync(product);
-        }
-        else
+             product.Quantity -= quantityToMove;
+             await _stockProductRepository.UpdateAsync(product);
+         }
+         else
+         {*/
+        foreach (var card in cards)
         {
             await _cardRepository.InsertAsync(card);
 
@@ -100,6 +109,10 @@ public class CardManagementService
             product.Quantity -= quantityToMove;
             await _stockProductRepository.UpdateAsync(product);
         }
+        //}
+        var identity = IdentitySingleton.GetInstance();
+
+        identity.cardList.Clear();
 
         return true;
     }
@@ -146,26 +159,28 @@ public class CardManagementService
         return true;
     }
 
-    public async Task<bool> GetByBarCodeAsync(string barCode)
+    public async Task<IEnumerable<CardForResultDto>> GetByBarCodeAsync(string barCode)
     {
-        var code = await _stockProductRepository.SelectAll()
+        var codes = await _cardRepository.SelectAll()
             .Where(c => c.BarCode == barCode)
-            .FirstOrDefaultAsync();
-        if (code is null)
+            .ToListAsync();
+        if (codes is null)
             throw new CustomException(404, "Mahsulot topilmadi.");
 
 
-        return true;
+        return _mapper.Map<IEnumerable<CardForResultDto>>(codes);
     }
 
-    public async Task<IEnumerable<Card>> SvetUchgandaAsync(string status)
+    public async Task<IEnumerable<CardForResultDto>> SvetUchgandaAsync(string status)
     {
         var result = await _cardRepository.SelectAll()
-            .Where(c => c.Status == status)
+            .Where(c => c.Status.ToLower() == status.ToLower())
             .AsNoTracking()
             .ToListAsync();
+        if (result is null)
+            throw new CustomException(404, "Mahsulot topilmadi.");
 
-        return result;
+        return _mapper.Map<IEnumerable<CardForResultDto>>(result);
     }
 
 
@@ -205,7 +220,7 @@ public class CardManagementService
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Card>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<CardForResultDto>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
     {
         if (userId != null)
         {
@@ -220,14 +235,14 @@ public class CardManagementService
             .AsNoTracking()
             .ToListAsync();
 
-        return products;
+        return _mapper.Map<IEnumerable<CardForResultDto>>(products);
     }
 
     /// <summary>
     /// Maximal sotilgan mahsulotlarni qaytaradi
     /// </summary>
     /// <returns></returns>
-    public async Task<IEnumerable<Card>> RetrieveAllWithMaxSaledAsync(int takeMax)
+    public async Task<IEnumerable<CardForResultDto>> RetrieveAllWithMaxSaledAsync(int takeMax)
     {
         var result = await _cardRepository.SelectAll()
             .Where(c => c.Status == "Sotildi")
@@ -236,7 +251,7 @@ public class CardManagementService
             .AsNoTracking()
             .ToListAsync();
 
-        return result;
+        return _mapper.Map<IEnumerable<CardForResultDto>>(result);
     }
 
 }
