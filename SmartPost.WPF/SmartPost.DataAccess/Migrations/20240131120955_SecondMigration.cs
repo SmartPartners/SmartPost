@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -6,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SmartPost.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class SecondMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,10 +33,9 @@ namespace SmartPost.DataAccess.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    SaleBy = table.Column<string>(type: "text", nullable: true),
+                    SaleBy = table.Column<long>(type: "bigint", nullable: false),
                     TransNo = table.Column<string>(type: "text", nullable: true),
                     ProductName = table.Column<string>(type: "text", nullable: true),
-                    Size = table.Column<string>(type: "text", nullable: true),
                     BarCode = table.Column<string>(type: "text", nullable: true),
                     PCode = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
@@ -43,7 +43,8 @@ namespace SmartPost.DataAccess.Migrations
                     Quantity = table.Column<decimal>(type: "numeric", nullable: false),
                     CanceledBy = table.Column<string>(type: "text", nullable: true),
                     Reason = table.Column<string>(type: "text", nullable: true),
-                    Action = table.Column<string>(type: "text", nullable: true),
+                    Action = table.Column<bool>(type: "boolean", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: true),
                     ReturnDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
@@ -78,6 +79,7 @@ namespace SmartPost.DataAccess.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: true),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     PasswordSalt = table.Column<string>(type: "text", nullable: true),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -97,7 +99,6 @@ namespace SmartPost.DataAccess.Migrations
                     BrandId = table.Column<long>(type: "bigint", nullable: false),
                     CategoryId = table.Column<long>(type: "bigint", nullable: false),
                     ProductName = table.Column<string>(type: "text", nullable: true),
-                    Size = table.Column<string>(type: "text", nullable: true),
                     BarCode = table.Column<string>(type: "text", nullable: true),
                     PCode = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
@@ -132,7 +133,6 @@ namespace SmartPost.DataAccess.Migrations
                     BrandId = table.Column<long>(type: "bigint", nullable: false),
                     CategoryId = table.Column<long>(type: "bigint", nullable: false),
                     ProductName = table.Column<string>(type: "text", nullable: true),
-                    Size = table.Column<string>(type: "text", nullable: true),
                     BarCode = table.Column<string>(type: "text", nullable: true),
                     PCode = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
@@ -166,7 +166,6 @@ namespace SmartPost.DataAccess.Migrations
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     TransNo = table.Column<string>(type: "text", nullable: true),
                     ProductName = table.Column<string>(type: "text", nullable: true),
-                    Size = table.Column<string>(type: "text", nullable: true),
                     BarCode = table.Column<string>(type: "text", nullable: true),
                     PCode = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
@@ -198,11 +197,11 @@ namespace SmartPost.DataAccess.Migrations
                     CategoryId = table.Column<long>(type: "bigint", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     ProductName = table.Column<string>(type: "text", nullable: true),
-                    Size = table.Column<string>(type: "text", nullable: true),
                     BarCode = table.Column<string>(type: "text", nullable: true),
                     PCode = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     Quantity = table.Column<decimal>(type: "numeric", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },

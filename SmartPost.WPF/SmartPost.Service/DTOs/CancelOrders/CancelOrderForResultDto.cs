@@ -6,7 +6,7 @@ public record CancelOrderForResultDto
 {
     public long Id { get; set; }
     public string ProductName { get; set; }
-    public string SaleBy { get; set; }
+    public long SaleBy { get; set; }
     public string TransNo { get; set; }
     public string BarCode { get; set; }
     public string PCode { get; set; }

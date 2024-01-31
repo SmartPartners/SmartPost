@@ -4,6 +4,7 @@ using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.StockProducts;
@@ -39,50 +40,66 @@ public class StockProductService : IStockProductService
         _productRepository = productRepository;
     }
 
-    /*public async Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto)
+   /* public async Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto)
     {
         var category = await _categoryService.RetrieveByIdAsync(createDto.CategoryId);
-
         var brand = await _brandService.RetrieveByIdAsync(createDto.BrandId);
-
         var user = await _userService.RetrieveByIdAsync(createDto.UserId);
 
+        StokProduct mappedStockProduct = null;
 
-        var product = await _stockProductRepository.SelectAll()
+        var existingProduct = await _stockProductRepository.SelectAll()
             .Where(p => p.PCode.ToUpper() == createDto.PCode.ToUpper() && p.BarCode == createDto.BarCode)
-                .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        if (existingProduct != null)
+        {
+            existingProduct.Quantity += createDto.Quantity;
+            await _stockProductRepository.UpdateAsync(existingProduct);
+
+            var existingMappedProduct = await _productRepository.SelectAll()
+                .Where(p => p.PCode == createDto.PCode)
                 .FirstOrDefaultAsync();
 
-        if (product is not null)
+            if (existingMappedProduct != null)
+            {
+                existingMappedProduct.Quantity -= createDto.Quantity;
+                await _productRepository.UpdateAsync(existingMappedProduct);
+            }
+        }
+        else
         {
-            product.Quantity += createDto.Quantity;
-            await _stockProductRepository.UpdateAsync(product);
-            throw new CustomException(200, "Bu turdagi mahsulot bazada mavjudligi uchun uning soniga qo'shib qo'yildi.");
+            var stockProductByPCode = await _stockProductRepository.SelectAll()
+                .Where(s => s.PCode == createDto.PCode)
+                .FirstOrDefaultAsync();
+
+            if (stockProductByPCode != null)
+                throw new CustomException(409, $"{stockProductByPCode.PCode} - bu kod bazada mavjud.");
+
+            var stockProductByBarCode = await _stockProductRepository.SelectAll()
+                .Where(s => s.BarCode == createDto.BarCode)
+                .FirstOrDefaultAsync();
+
+            if (stockProductByBarCode != null)
+                throw new CustomException(409, $"{stockProductByBarCode.BarCode} - bu kod bazada mavjud.");
+
+            mappedStockProduct = _mapper.Map<StokProduct>(createDto);
+            mappedStockProduct.CreatedAt = DateTime.UtcNow;
+
+            await _stockProductRepository.InsertAsync(mappedStockProduct);
+
+            mappedStockProduct.Status = "Qo'shildi";
+            await _stockProductRepository.UpdateAsync(mappedStockProduct);
+
+            var newMappedProduct = _mapper.Map<Product>(createDto);
+            newMappedProduct.Quantity -= createDto.Quantity;
+            await _productRepository.UpdateAsync(newMappedProduct);
         }
 
-        var stockProduct = await _stockProductRepository.SelectAll()
-            .Where(s => s.PCode == createDto.PCode)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
-
-        if (stockProduct is not null)
-            throw new CustomException(409, $"{stockProduct.PCode} - bu kod bazada mavjud.");
-
-
-        var stockProduct2 = await _stockProductRepository.SelectAll()
-            .Where(s => s.BarCode == createDto.BarCode)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
-
-        if (stockProduct2 is not null)
-            throw new CustomException(409, $"{stockProduct2.BarCode} - bu kod bazada mavjud.");
-
-
-        var mappedStockProduct = _mapper.Map<StokProduct>(createDto);
-        mappedStockProduct.CreatedAt = DateTime.UtcNow;
-        return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.InsertAsync(mappedStockProduct));
-
+        return _mapper.Map<StockProductsForResultDto>(mappedStockProduct);
     }*/
+
+
 
     public async Task<bool> DeleteAsymc(long id)
     {

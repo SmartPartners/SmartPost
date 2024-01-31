@@ -1,33 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.CancelOrders;
 using SmartPost.DataAccess.Interfaces.Cards;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Entities.CancelOrders;
-using SmartPost.Domain.Entities.Cards;
 using SmartPost.Service.Commons.Exceptions;
+using SmartPost.Service.DTOs.CancelOrders;
+using SmartPost.Service.Interfaces.CancelOrders;
 
 namespace SmartPost.Service.Services.CancelOrders;
 
-public class CanceledProductsService
+public class CanceledProductsService : ICanceledProductsService
 {
     private readonly ICancelOrderRepository _cancelOrderRepository;
     private readonly ICardRepository _cardRepository;
     private readonly IStockProductRepository _stockProductRepository;
+    private readonly IMapper _mapper;
 
     public CanceledProductsService(
-        ICancelOrderRepository cancelOrderRepository, 
+        ICancelOrderRepository cancelOrderRepository,
         ICardRepository cardRepository,
-        IStockProductRepository stockProductRepository)
+        IStockProductRepository stockProductRepository,
+        IMapper mapper = null)
     {
         _cancelOrderRepository = cancelOrderRepository;
         _cardRepository = cardRepository;
         _stockProductRepository = stockProductRepository;
+        _mapper = mapper;
     }
 
-    public async Task<bool> CanceledProductsAsync(long id, decimal quantity, string canceledBy, string reason, bool action)
+    public async Task<bool> CanceledProductsAsync(string transNo, decimal quantity, string canceledBy, string reason, bool action)
     {
         var card = await _cardRepository.SelectAll()
-            .Where(c => c.Id == id && c.Quantity < quantity)
+            .Where(c => c.TransNo == transNo && c.Quantity < quantity)
             .FirstOrDefaultAsync();
 
         if (card is not null)
@@ -85,7 +90,7 @@ public class CanceledProductsService
     /// <param name="endDate"></param>
     /// <returns></returns>
 
-    public async Task<IEnumerable<CancelOrder>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<CancelOrderForResultDto>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
     {
         if (userId != null)
         {
@@ -100,7 +105,7 @@ public class CanceledProductsService
             .AsNoTracking()
             .ToListAsync();
 
-        return products;
+        return _mapper.Map<IEnumerable<CancelOrderForResultDto>>(products);
     }
 
     /// <summary>
@@ -108,7 +113,7 @@ public class CanceledProductsService
     /// </summary>
     /// <returns></returns>
 
-    public async Task<IEnumerable<CancelOrder>> RetrieveAllWithMaxSaledAsync(DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<CancelOrderForResultDto>> RetrieveAllWithMaxSaledAsync(DateTime startDate, DateTime endDate)
     {
         var result = await _cancelOrderRepository.SelectAll()
             .Where(c => c.CreatedAt >= startDate && c.CreatedAt <= endDate)
@@ -116,6 +121,6 @@ public class CanceledProductsService
             .AsNoTracking()
             .ToListAsync();
 
-        return result;
+        return _mapper.Map<IEnumerable<CancelOrderForResultDto>>(result);
     }
 }

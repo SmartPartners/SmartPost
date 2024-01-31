@@ -1,22 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Entities.StokProducts;
-using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.DTOs.StockProducts;
+using SmartPost.Service.Interfaces.StockProducts;
 
 namespace SmartPost.Service.Services.StockProducts;
 
-public class ProductStockManagementService
+public class ProductStockManagementService : IProductStockManagementService
 {
     private readonly IProductRepository _productRepository;
     private readonly IStockProductRepository _stockProductRepository;
+    private readonly IMapper _mapper;
 
-    public ProductStockManagementService(IProductRepository productRepository, IStockProductRepository stockProductRepository)
+    public ProductStockManagementService(IProductRepository productRepository, IStockProductRepository stockProductRepository, IMapper mapper)
     {
         _productRepository = productRepository;
         _stockProductRepository = stockProductRepository;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -37,7 +40,7 @@ public class ProductStockManagementService
             throw new CustomException(400, $"Omborda buncha mahsulot mavjud emas.\nOmborda {insufficientProduct.Quantity} ta mahsulot bor.");
 
         if (quantityToMove == 0)
-            throw new CustomException(404, "Mahsulotni hajmini kiriting."); 
+            throw new CustomException(404, "Mahsulotni hajmini kiriting.");
 
         var product = await _productRepository.SelectAll()
             .Where(p => p.Id == id)
@@ -46,54 +49,55 @@ public class ProductStockManagementService
         if (product == null || product.Quantity == 0)
             throw new CustomException(404, "Bu turdagi mahsulot omborda mavjud emas.");
 
-
         var stockProduct = new StokProduct
         {
             PCode = product.PCode,
             BarCode = product.BarCode,
             ProductName = product.ProductName,
             Price = product.Price,
-            Brand = product.Brand,
-            Category = product.Category,
+            BrandId = product.BrandId,
+            CategoryId = product.CategoryId,
             UserId = userId,
-            Status = "Kutilmoqda", 
+            Status = "Kutilmoqda",
             Quantity = quantityToMove,
             CreatedAt = DateTime.UtcNow
         };
-        
+
         var stokProducts = await _stockProductRepository.SelectAll()
             .Where(p => p.PCode == product.PCode && p.BarCode == product.BarCode)
             .FirstOrDefaultAsync();
 
-        if (stockProduct is not null)
+        if (stokProducts is not null)
         {
-            stockProduct.Quantity += quantityToMove;
-            await _stockProductRepository.UpdateAsync(stockProduct);
+            stokProducts.Quantity += quantityToMove;
+            stokProducts.Status = "Qo'shildi";
+            await _stockProductRepository.UpdateAsync(stokProducts);
 
             product.Quantity -= quantityToMove;
             await _productRepository.UpdateAsync(product);
-        }
 
+            return true;
+        }
 
         await _stockProductRepository.InsertAsync(stockProduct);
 
         stockProduct.Status = "Qo'shildi";
         await _stockProductRepository.UpdateAsync(stockProduct);
 
-        
+
         product.Quantity -= quantityToMove;
         await _productRepository.UpdateAsync(product);
 
         return true;
     }
 
-     /// <summary>
-     /// Ikkita vaqt oralig'idagi mahsulotlarni chiqarib beradi
-     /// </summary>
-     /// <param name="startDate"></param>
-     /// <param name="endDate"></param>
-     /// <returns></returns>
-    public async Task<IEnumerable<StokProduct>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
+    /// <summary>
+    /// Ikkita vaqt oralig'idagi mahsulotlarni chiqarib beradi
+    /// </summary>
+    /// <param name="startDate"></param>
+    /// <param name="endDate"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<StockProductsForResultDto>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate)
     {
         if (userId != null)
         {
@@ -108,7 +112,7 @@ public class ProductStockManagementService
             .AsNoTracking()
             .ToListAsync();
 
-        return products;
+        return  _mapper.Map<IEnumerable<StockProductsForResultDto>>(products);
     }
 
 
