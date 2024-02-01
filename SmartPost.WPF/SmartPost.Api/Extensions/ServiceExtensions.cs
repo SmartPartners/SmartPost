@@ -52,7 +52,9 @@ namespace SmartPost.Api.Extensions
             services.AddScoped<ICardService, CardService>();
             services.AddScoped<ICancelOrderService, CancelOrderService>();
             services.AddScoped<IInventoryListService, InventoryListService>();
-
+            services.AddScoped<IProductStockManagementService, ProductStockManagementService>();
+            services.AddScoped<ICardManagementService, CardManagementService>();
+            services.AddScoped<ICanceledProductsService, CanceledProductesService>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepository, ProductRepository>();
