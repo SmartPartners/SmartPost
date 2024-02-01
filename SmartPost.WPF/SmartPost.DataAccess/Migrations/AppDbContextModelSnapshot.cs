@@ -58,8 +58,8 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<string>("BarCode")
                         .HasColumnType("text");
 
-                    b.Property<string>("CanceledBy")
-                        .HasColumnType("text");
+                    b.Property<long>("CanceledBy")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");

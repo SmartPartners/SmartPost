@@ -10,32 +10,27 @@ using SmartPost.Service.Interfaces.CancelOrders;
 
 namespace SmartPost.Service.Services.CancelOrders;
 
-public class CanceledProductsService : ICanceledProductsService
+public class CanceledProductesService : ICanceledProductsService
 {
     private readonly ICancelOrderRepository _cancelOrderRepository;
-    private readonly ICardRepository _cardRepository;
     private readonly IStockProductRepository _stockProductRepository;
     private readonly IMapper _mapper;
+    private readonly ICardRepository _cardRepository;
 
-    public CanceledProductsService(
-        ICancelOrderRepository cancelOrderRepository,
-        ICardRepository cardRepository,
-        IStockProductRepository stockProductRepository,
-        IMapper mapper = null)
+    public CanceledProductesService(ICancelOrderRepository cancelOrderRepository, IMapper mapper, ICardRepository cardRepository, IStockProductRepository stockProductRepository)
     {
         _cancelOrderRepository = cancelOrderRepository;
+        _mapper = mapper;
         _cardRepository = cardRepository;
         _stockProductRepository = stockProductRepository;
-        _mapper = mapper;
     }
 
-    public async Task<bool> CanceledProductsAsync(string transNo, decimal quantity, string canceledBy, string reason, bool action)
+    public async Task<bool> CanceledProductsAsync(long id, decimal quantity, long canceledBy, string reason, bool action)
     {
         var card = await _cardRepository.SelectAll()
-            .Where(c => c.TransNo == transNo && c.Quantity < quantity)
+            .Where(c => c.Id == id)
             .FirstOrDefaultAsync();
-
-        if (card is not null)
+        if (card is not null && card.Quantity < quantity)
             throw new CustomException(404, $"Noto'g'ri son kirityabsiz, sotilgan yuklar soni: {card.Quantity}");
 
 
@@ -52,7 +47,8 @@ public class CanceledProductsService : ICanceledProductsService
             CanceledBy = canceledBy,
             Reason = reason,
             Action = action,
-            ReturnDate = DateTime.UtcNow
+            ReturnDate = DateTime.UtcNow,
+            CreatedAt = DateTime.UtcNow
         };
 
         await _cancelOrderRepository.InsertAsync(canceledOrder);
@@ -70,17 +66,23 @@ public class CanceledProductsService : ICanceledProductsService
 
                 canceledOrder.Status = "Yaroqli";
                 await _cancelOrderRepository.UpdateAsync(canceledOrder);
+
+                card.Quantity -= quantity;
+                await _cardRepository.UpdateAsync(card);
             }
         }
         else
         {
             canceledOrder.Status = "Yaroqsiz";
             await _cancelOrderRepository.UpdateAsync(canceledOrder);
+
+            card.Quantity -= quantity;
+            await _cardRepository.UpdateAsync(card);
         }
 
 
         return true;
-    }
+}
 
     /// <summary>
     /// Cancel qilingan mahsulotlarni chiqarib beradi
@@ -124,3 +126,4 @@ public class CanceledProductsService : ICanceledProductsService
         return _mapper.Map<IEnumerable<CancelOrderForResultDto>>(result);
     }
 }
+

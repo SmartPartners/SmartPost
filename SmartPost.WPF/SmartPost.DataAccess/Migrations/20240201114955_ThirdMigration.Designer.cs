@@ -12,8 +12,8 @@ using SmartPost.DataAccess.Data;
 namespace SmartPost.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240131120955_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20240201114955_ThirdMigration")]
+    partial class ThirdMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,8 +61,8 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<string>("BarCode")
                         .HasColumnType("text");
 
-                    b.Property<string>("CanceledBy")
-                        .HasColumnType("text");
+                    b.Property<long>("CanceledBy")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");

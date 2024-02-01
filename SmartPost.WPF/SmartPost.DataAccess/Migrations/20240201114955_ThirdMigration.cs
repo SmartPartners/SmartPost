@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SmartPost.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SecondMigration : Migration
+    public partial class ThirdMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +41,7 @@ namespace SmartPost.DataAccess.Migrations
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "numeric", nullable: false),
                     Quantity = table.Column<decimal>(type: "numeric", nullable: false),
-                    CanceledBy = table.Column<string>(type: "text", nullable: true),
+                    CanceledBy = table.Column<long>(type: "bigint", nullable: false),
                     Reason = table.Column<string>(type: "text", nullable: true),
                     Action = table.Column<bool>(type: "boolean", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: true),

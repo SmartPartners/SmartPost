@@ -33,7 +33,7 @@ public class CardManagementService : ICardManagementService
     /// <param name="quantityToMove"></param>
     /// <returns></returns>
     /// <exception cref="CustomException"></exception>
-    public async Task<bool> MoveProductToStockAsync(long id, long userId, decimal quantityToMove)
+    public async Task<bool> MoveProductToStockAsync(long id, long userId, decimal quantityToMove, string trnasNo)
     {
         var insufficientProduct = await _stockProductRepository.SelectAll()
             .Where(q => q.Id == id && q.Quantity < quantityToMove)
@@ -54,11 +54,6 @@ public class CardManagementService : ICardManagementService
         else if (product.Quantity == 0)
             throw new CustomException(404, "Hozirda bu mahsulotimiz tugagan.");
 
-        //var cardList = new List<Card>();
-        var identity = IdentitySingleton.GetInstance();
-
-        var transactionNumber = GenerateTransactionNumber();
-
         var card = new Card
         {
             UserId = userId,
@@ -68,71 +63,81 @@ public class CardManagementService : ICardManagementService
             Price = product.Price,
             Quantity = quantityToMove,
             Status = "Kutilmoqda",
-            TransNo = transactionNumber,
+            TransNo = trnasNo,
             CreatedAt = DateTime.UtcNow
         };
         card.TotalPrice = card.Price * card.Quantity;
 
-        identity.cardList.Add(card);
+        var existingCard = await _cardRepository.SelectAll()
+            .Where(p => p.TransNo == card.TransNo && p.BarCode == card.BarCode)
+            .FirstOrDefaultAsync();
 
-        //cardList.Add(card);
-
-        await UpdateCardAsync(new List<Card> { card }, product, quantityToMove);
-
-        return true;
-    }
-
-    public async Task<bool> UpdateCardAsync(List<Card> cards, StokProduct product, decimal quantityToMove)
-    {
-        /*var existingCard = await _cardRepository.SelectAll()
-            .Where(p => p.TransNo == cards.TransNo)
-            .FirstOrDefaultAsync();*/
-
-        /* if (existingCard != null)
-         {
-             existingCard.Quantity += quantityToMove;
-             existingCard.TotalPrice = existingCard.Price * existingCard.Quantity;
-             await _cardRepository.UpdateAsync(existingCard);
-
-             product.Quantity -= quantityToMove;
-             await _stockProductRepository.UpdateAsync(product);
-         }
-         else
-         {*/
-        foreach (var card in cards)
+        if (existingCard != null)
+        {
+            existingCard.Quantity += quantityToMove;
+            existingCard.TotalPrice = existingCard.Price * existingCard.Quantity;
+            await _cardRepository.UpdateAsync(existingCard);
+        }
+        else
         {
             await _cardRepository.InsertAsync(card);
-
-            card.Status = "Sotildi";
-            await _cardRepository.UpdateAsync(card);
-
-            product.Quantity -= quantityToMove;
-            await _stockProductRepository.UpdateAsync(product);
         }
-        //}
-        var identity = IdentitySingleton.GetInstance();
-
-        identity.cardList.Clear();
 
         return true;
     }
+
+    public async Task<bool> UpdateWithTransactionNumberAsync(string transactionNumber)
+    {
+        var cards = await _cardRepository.SelectAll()
+            .Where(t => t.TransNo == transactionNumber)
+            .ToListAsync();
+
+        foreach (var card in cards)
+        {
+            if (card != null)
+            {
+                card.Status = "Sotildi";
+                await _cardRepository.UpdateAsync(card);
+
+                var product = await _stockProductRepository.SelectAll()
+                    .Where(s => s.BarCode == card.BarCode)
+                    .FirstOrDefaultAsync();
+
+                if (product != null)
+                {
+                    product.Quantity -= card.Quantity;
+                    await _stockProductRepository.UpdateAsync(product);
+                }
+            }
+        }
+
+        return true;
+    }
+
 
 
     private static int lastTransactionNumberSuffix = 1000;
+    private static DateTime lastTransactionDate = DateTime.UtcNow.Date;
 
     public string GenerateTransactionNumber()
     {
         // Use current date in "yyyyMMdd" format
-        string currentDate = DateTime.Now.ToString("yyyyMMdd");
+        DateTime currentDate = DateTime.UtcNow.Date;
 
-        // Append the lastTransactionNumberSuffix to the currentDate
-        string transactionNumber = currentDate + (lastTransactionNumberSuffix++).ToString();
-
-        // Reset the suffix to 1001 for the next day
-        if (lastTransactionNumberSuffix > 1001)
+        // Check if it's a new day
+        if (currentDate > lastTransactionDate)
         {
+            // Reset the suffix to 1001 for the new day
             lastTransactionNumberSuffix = 1001;
+            lastTransactionDate = currentDate;
         }
+
+        string transactionNumber;
+        do
+        {
+            transactionNumber = currentDate.ToString("yyyyMMdd") + lastTransactionNumberSuffix.ToString();
+            lastTransactionNumberSuffix++;
+        } while (_cardRepository.SelectAll().Any(t => t.TransNo == transactionNumber));
 
         return transactionNumber;
     }
