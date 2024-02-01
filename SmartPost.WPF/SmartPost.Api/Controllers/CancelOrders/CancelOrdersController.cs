@@ -18,8 +18,8 @@ namespace SmartPost.Api.Controllers.CancelOrders
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(string transNo, decimal quantity, string canceledBy, string reason, bool action)
-           => Ok(await _productsService.CanceledProductsAsync(transNo, quantity, canceledBy, reason, action));
+        public async Task<IActionResult> PostAsync(long id, decimal quantity, long canceledBy, string reason, bool action)
+           => Ok(await _productsService.CanceledProductsAsync(id, quantity, canceledBy, reason, action));
 
         [HttpGet("ikkita-vaqt-orasida-magazindagi-mahsulotlarni-kurish/{userId}/{startDate}/{endDate}")]
         public async Task<IActionResult> GetAllAsync(long userId, DateTime startDate, DateTime endDate)

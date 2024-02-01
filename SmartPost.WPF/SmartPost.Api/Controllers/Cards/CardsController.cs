@@ -18,8 +18,8 @@ namespace SmartPost.Api.Controllers.Cards
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(long id, long userId, decimal quantityToMove)
-           => Ok(await _cardManagement.MoveProductToStockAsync(id, userId, quantityToMove));
+        public async Task<IActionResult> PostAsync(long id, long userId, decimal quantityToMove, string trnasNo)
+           => Ok(await _cardManagement.MoveProductToStockAsync(id, userId, quantityToMove, trnasNo));
 
         [HttpPost("calculate-discount-percentage/{id}/{discountPercentage}")]
         public async Task<IActionResult> CalculateAsync(long id, short discountPercentage)
@@ -32,6 +32,10 @@ namespace SmartPost.Api.Controllers.Cards
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute(Name = "id")] long id)
             => Ok(await _cardService.RetrieveByIdAsync(id));
+
+        [HttpPost("{transNo}")]
+        public async Task<IActionResult> Updateasync([FromRoute(Name = "transNo")] string transNo)
+            => Ok(await _cardManagement.UpdateWithTransactionNumberAsync(transNo));
 
         [HttpGet("bar-code-orqali-olish/{barCode}")]
         public async Task<IActionResult> GetByBarCodeAsync([FromRoute(Name = "barCode")] string barCode)
@@ -48,6 +52,10 @@ namespace SmartPost.Api.Controllers.Cards
         [HttpGet("eng-kop-sotilgan-yuklarni-olish/{max}")]
         public async Task<IActionResult> GetByMaxAsync([FromRoute(Name = "max")] int max)
             => Ok(await _cardManagement.RetrieveAllWithMaxSaledAsync(max));
+
+        [HttpGet("transaction-generator")]
+        public async Task<IActionResult> GenerateTranNo()
+            => Ok(await Task.FromResult(_cardManagement.GenerateTransactionNumber()));
 
         /* [HttpPut("{id}")]
          public async Task<IActionResult> UpdateAsync([FromRoute(Name = "id")] long id, [FromBody] CardForUpdateDto dto)

@@ -12,7 +12,7 @@ public record CancelOrderForUpdateDto
     public decimal Price { get; set; }
     public decimal TotalPrice { get; set; }
     public decimal Quantity { get; set; }
-    public string CanceledBy { get; set; }
+    public long CanceledBy { get; set; }
     public string Status { get; set; }
     public string Reason { get; set; }
     public string Action { get; set; }
