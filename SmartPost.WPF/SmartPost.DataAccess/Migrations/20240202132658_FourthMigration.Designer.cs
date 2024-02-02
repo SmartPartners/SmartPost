@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartPost.DataAccess.Data;
@@ -11,9 +12,11 @@ using SmartPost.DataAccess.Data;
 namespace SmartPost.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240202132658_FourthMigration")]
+    partial class FourthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,95 +225,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.ToTable("InventoryLists");
                 });
 
-            modelBuilder.Entity("SmartPost.Domain.Entities.Partners.Partner", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Partners");
-                });
-
-            modelBuilder.Entity("SmartPost.Domain.Entities.Partners.PartnerProduct", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("BarCode")
-                        .HasColumnType("text");
-
-                    b.Property<long>("BrandId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("Debt")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("PCode")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Paid")
-                        .HasColumnType("numeric");
-
-                    b.Property<long>("PartnerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BrandId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("PartnerId");
-
-                    b.ToTable("PartnerProducts");
-                });
-
             modelBuilder.Entity("SmartPost.Domain.Entities.StokProducts.StokProduct", b =>
                 {
                     b.Property<long>("Id")
@@ -477,33 +391,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SmartPost.Domain.Entities.Partners.PartnerProduct", b =>
-                {
-                    b.HasOne("SmartPost.Domain.Entities.Brands.Brand", "Brand")
-                        .WithMany("PartnersProducts")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SmartPost.Domain.Entities.Categories.Category", "Category")
-                        .WithMany("PartnersProducts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SmartPost.Domain.Entities.Partners.Partner", "Partner")
-                        .WithMany("PartnersProducts")
-                        .HasForeignKey("PartnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Brand");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Partner");
-                });
-
             modelBuilder.Entity("SmartPost.Domain.Entities.StokProducts.StokProduct", b =>
                 {
                     b.HasOne("SmartPost.Domain.Entities.Brands.Brand", "Brand")
@@ -554,8 +441,6 @@ namespace SmartPost.DataAccess.Migrations
                 {
                     b.Navigation("InventoryLists");
 
-                    b.Navigation("PartnersProducts");
-
                     b.Navigation("Products");
 
                     b.Navigation("StokProducts");
@@ -565,16 +450,9 @@ namespace SmartPost.DataAccess.Migrations
                 {
                     b.Navigation("InventoryLists");
 
-                    b.Navigation("PartnersProducts");
-
                     b.Navigation("Products");
 
                     b.Navigation("StokProducts");
-                });
-
-            modelBuilder.Entity("SmartPost.Domain.Entities.Partners.Partner", b =>
-                {
-                    b.Navigation("PartnersProducts");
                 });
 
             modelBuilder.Entity("SmartPost.Domain.Entities.Users.User", b =>
