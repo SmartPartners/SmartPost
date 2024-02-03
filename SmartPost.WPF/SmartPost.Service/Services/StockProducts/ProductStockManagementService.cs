@@ -71,9 +71,11 @@ public class ProductStockManagementService : IProductStockManagementService
         {
             stokProducts.Quantity += quantityToMove;
             stokProducts.Status = "Qo'shildi";
+            stokProducts.UpdatedAt = DateTime.UtcNow;
             await _stockProductRepository.UpdateAsync(stokProducts);
 
             product.Quantity -= quantityToMove;
+            product.UpdatedAt = DateTime.UtcNow;
             await _productRepository.UpdateAsync(product);
 
             return true;
@@ -82,10 +84,12 @@ public class ProductStockManagementService : IProductStockManagementService
         await _stockProductRepository.InsertAsync(stockProduct);
 
         stockProduct.Status = "Qo'shildi";
+        stockProduct.UpdatedAt = DateTime.UtcNow;
         await _stockProductRepository.UpdateAsync(stockProduct);
 
 
         product.Quantity -= quantityToMove;
+        product.UpdatedAt = DateTime.UtcNow;
         await _productRepository.UpdateAsync(product);
 
         return true;

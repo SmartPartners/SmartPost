@@ -1,4 +1,5 @@
 ﻿using SmartPost.Service.DTOs.InventoryLists;
+using SmartPost.Service.DTOs.PartnerProduct;
 using SmartPost.Service.DTOs.Products;
 using SmartPost.Service.DTOs.StockProducts;
 
@@ -14,4 +15,5 @@ public class BrandForResultDto
     public ICollection<ProductForResultDto> Products { get; set; }
     public ICollection<StockProductsForResultDto> StokProducts { get; set; }
     public ICollection<InventoryListForResultDto> InventoryLists { get; set; }
+    public ICollection<PartnerProductForResultDto> PartnerProducts { get; set; }
 }

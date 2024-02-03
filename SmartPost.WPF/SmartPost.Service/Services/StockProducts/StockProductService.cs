@@ -162,7 +162,7 @@ public class StockProductService : IStockProductService
         return _mapper.Map<StockProductsForResultDto>(result);
     }
 
-    public async Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity)
+    /*public async Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity)
     {
         var stockProduct = await _stockProductRepository.SelectAll()
             .Where(s => s.Id == id)
@@ -174,5 +174,5 @@ public class StockProductService : IStockProductService
 
         stockProduct.Quantity += quantity;
         return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.UpdateAsync(stockProduct));
-    }
+    }*/
 }

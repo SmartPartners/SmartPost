@@ -76,6 +76,7 @@ public class CardManagementService : ICardManagementService
         {
             existingCard.Quantity += quantityToMove;
             existingCard.TotalPrice = existingCard.Price * existingCard.Quantity;
+            existingCard.UpdatedAt = DateTime.UtcNow;
             await _cardRepository.UpdateAsync(existingCard);
         }
         else
@@ -97,6 +98,7 @@ public class CardManagementService : ICardManagementService
             if (card != null)
             {
                 card.Status = "Sotildi";
+                card.UpdatedAt = DateTime.UtcNow;
                 await _cardRepository.UpdateAsync(card);
 
                 var product = await _stockProductRepository.SelectAll()
@@ -106,6 +108,7 @@ public class CardManagementService : ICardManagementService
                 if (product != null)
                 {
                     product.Quantity -= card.Quantity;
+                    product.UpdatedAt = DateTime.UtcNow;
                     await _stockProductRepository.UpdateAsync(product);
                 }
             }

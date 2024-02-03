@@ -1,5 +1,6 @@
 ﻿using SmartPost.Domain.Commons;
 using SmartPost.Domain.Entities.Cards;
+using SmartPost.Domain.Entities.Partners;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Domain.Enums;
 
@@ -17,5 +18,6 @@ namespace SmartPost.Domain.Entities.Users
 
         public IEnumerable<StokProduct> StokProducts { get; set; }
         public IEnumerable<Card> Cards { get; set; }
+        public IEnumerable<PartnerProduct> PartnerProducts { get; set; }
     }
 }

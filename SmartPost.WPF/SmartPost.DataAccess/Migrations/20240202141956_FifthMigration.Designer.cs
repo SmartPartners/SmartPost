@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartPost.DataAccess.Data;
@@ -11,9 +12,11 @@ using SmartPost.DataAccess.Data;
 namespace SmartPost.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240202141956_FifthMigration")]
+    partial class FifthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,9 +303,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
@@ -310,8 +310,6 @@ namespace SmartPost.DataAccess.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("PartnerId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("PartnerProducts");
                 });
@@ -502,19 +500,11 @@ namespace SmartPost.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartPost.Domain.Entities.Users.User", "User")
-                        .WithMany("PartnerProducts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
 
                     b.Navigation("Partner");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SmartPost.Domain.Entities.StokProducts.StokProduct", b =>
@@ -593,8 +583,6 @@ namespace SmartPost.DataAccess.Migrations
             modelBuilder.Entity("SmartPost.Domain.Entities.Users.User", b =>
                 {
                     b.Navigation("Cards");
-
-                    b.Navigation("PartnerProducts");
 
                     b.Navigation("StokProducts");
                 });

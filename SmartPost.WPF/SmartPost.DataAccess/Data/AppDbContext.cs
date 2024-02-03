@@ -4,6 +4,7 @@ using SmartPost.Domain.Entities.CancelOrders;
 using SmartPost.Domain.Entities.Cards;
 using SmartPost.Domain.Entities.Categories;
 using SmartPost.Domain.Entities.InventoryLists;
+using SmartPost.Domain.Entities.Partners;
 using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Domain.Entities.Users;
@@ -16,6 +17,8 @@ public class AppDbContext : DbContext
         : base(options)
     { }
 
+    public DbSet<Partner> Partners { get; set; }
+    public DbSet<PartnerProduct> PartnerProducts { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Brand> Brands { get; set; }
@@ -43,6 +46,7 @@ public class AppDbContext : DbContext
                   .OnDelete(DeleteBehavior.Cascade);
         });
 
+
         modelBuilder.Entity<StokProduct>(entity =>
         {
             entity.HasOne(s => s.Brand)
@@ -59,6 +63,31 @@ public class AppDbContext : DbContext
                   .WithMany(u => u.StokProducts)
                   .HasForeignKey(s => s.UserId)
                   .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<PartnerProduct>(entity =>
+        {
+
+            entity.HasOne(s => s.Partner)
+                  .WithMany(b => b.PartnersProducts)
+                  .HasForeignKey(s => s.PartnerId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(s => s.Brand)
+                  .WithMany(b => b.PartnersProducts)
+                  .HasForeignKey(s => s.BrandId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(s => s.Category)
+                  .WithMany(c => c.PartnersProducts)
+                  .HasForeignKey(s => s.CategoryId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(s => s.User)
+                  .WithMany(c => c.PartnerProducts)
+                  .HasForeignKey(s => s.UserId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
         });
 
         modelBuilder.Entity<Card>(entity =>

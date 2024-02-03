@@ -10,5 +10,5 @@ public interface IStockProductService
     Task<IEnumerable<StockProductsForResultDto>> GetAllAsync(PaginationParams @params);
     Task<StockProductsForResultDto> UpdateAsync(long id, StockProductForUpdateDto updateDto);
     //Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto);
-    Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity);
+    //Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity);
 }

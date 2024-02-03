@@ -1,6 +1,7 @@
-﻿using SmartPost.Domain.Entities.Cards;
-using SmartPost.Domain.Entities.StokProducts;
-using SmartPost.Domain.Enums;
+﻿using SmartPost.Domain.Enums;
+using SmartPost.Service.DTOs.Cards;
+using SmartPost.Service.DTOs.PartnerProduct;
+using SmartPost.Service.DTOs.StockProducts;
 
 namespace SmartPost.Service.DTOs.Users;
 
@@ -14,6 +15,7 @@ public record UserForResultDto
     public bool IsActive { get; set; }
     public UserRole Role { get; set; }
 
-    public ICollection<StokProduct> StokProducts { get; set; }
-    public ICollection<Card> Cards { get; set; }
+    public ICollection<StockProductsForResultDto> StokProducts { get; set; }
+    public ICollection<CardForResultDto> Cards { get; set; }
+    public ICollection<PartnerProductForResultDto> PartnerProducts { get; set; }
 }
