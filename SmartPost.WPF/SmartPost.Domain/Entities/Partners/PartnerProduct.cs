@@ -1,6 +1,7 @@
 ﻿using SmartPost.Domain.Commons;
 using SmartPost.Domain.Entities.Brands;
 using SmartPost.Domain.Entities.Categories;
+using SmartPost.Domain.Entities.Users;
 
 namespace SmartPost.Domain.Entities.Partners
 {
@@ -14,6 +15,9 @@ namespace SmartPost.Domain.Entities.Partners
 
         public long CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public long UserId { get; set; }
+        public User User { get; set; }
 
         public string ProductName { get; set; }
         public string PCode { get; set; }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.CancelOrders;
 using SmartPost.DataAccess.Interfaces.Cards;
+using SmartPost.DataAccess.Interfaces.Partners;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Entities.CancelOrders;
 using SmartPost.Service.Commons.Exceptions;
@@ -14,15 +15,21 @@ public class CanceledProductesService : ICanceledProductsService
 {
     private readonly ICancelOrderRepository _cancelOrderRepository;
     private readonly IStockProductRepository _stockProductRepository;
+    private readonly IPartnerProductRepository _partnerProductRepository;
     private readonly IMapper _mapper;
     private readonly ICardRepository _cardRepository;
 
-    public CanceledProductesService(ICancelOrderRepository cancelOrderRepository, IMapper mapper, ICardRepository cardRepository, IStockProductRepository stockProductRepository)
+    public CanceledProductesService(ICancelOrderRepository cancelOrderRepository, 
+        IMapper mapper, 
+        ICardRepository cardRepository,
+        IStockProductRepository stockProductRepository, 
+        IPartnerProductRepository partnerProductRepository)
     {
         _cancelOrderRepository = cancelOrderRepository;
         _mapper = mapper;
         _cardRepository = cardRepository;
         _stockProductRepository = stockProductRepository;
+        _partnerProductRepository = partnerProductRepository;
     }
 
     public async Task<bool> CanceledProductsAsync(long id, decimal quantity, long canceledBy, string reason, bool action)
@@ -62,27 +69,107 @@ public class CanceledProductesService : ICanceledProductsService
             if (stok is not null)
             {
                 stok.Quantity += quantity;
+                stok.UpdatedAt = DateTime.UtcNow;
                 await _stockProductRepository.UpdateAsync(stok);
 
                 canceledOrder.Status = "Yaroqli";
+                canceledOrder.UpdatedAt = DateTime.UtcNow;
                 await _cancelOrderRepository.UpdateAsync(canceledOrder);
 
                 card.Quantity -= quantity;
+                card.UpdatedAt = DateTime.UtcNow;
                 await _cardRepository.UpdateAsync(card);
             }
         }
         else
         {
             canceledOrder.Status = "Yaroqsiz";
+            canceledOrder.UpdatedAt = DateTime.UtcNow;
             await _cancelOrderRepository.UpdateAsync(canceledOrder);
 
             card.Quantity -= quantity;
+            card.UpdatedAt = DateTime.UtcNow;
             await _cardRepository.UpdateAsync(card);
         }
 
 
         return true;
 }
+    
+    /// <summary>
+    /// Canceled partner's product
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="quantity"></param>
+    /// <param name="canceledBy"></param>
+    /// <param name="reason"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
+    /// <exception cref="CustomException"></exception>
+
+    /*public async Task<bool> CanceledPartnersProductsAsync(long id, decimal quantity, long canceledBy, string reason, bool action)
+    {
+        var card = await _partnerProductRepository.SelectAll()
+            .Where(c => c.Id == id)
+            .FirstOrDefaultAsync();
+        if (card is not null && card.Quantity < quantity)
+            throw new CustomException(404, $"Noto'g'ri son kirityabsiz, sotilgan yuklar soni: {card.Quantity}");
+
+
+        var canceledOrder = new CancelOrder
+        {
+            SaleBy = card.UserId,
+            TransNo = card.TransNo,
+            ProductName = card.ProductName,
+            BarCode = card.BarCode,
+            PCode = card.PCode,
+            Price = card.Price,
+            TotalPrice = card.TotalPrice,
+            Quantity = quantity,
+            CanceledBy = canceledBy,
+            Reason = reason,
+            Action = action,
+            ReturnDate = DateTime.UtcNow,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        await _cancelOrderRepository.InsertAsync(canceledOrder);
+
+        if (canceledOrder.Action)
+        {
+            var stok = await _stockProductRepository.SelectAll()
+                .Where(s => s.BarCode == canceledOrder.BarCode)
+                .FirstOrDefaultAsync();
+
+            if (stok is not null)
+            {
+                stok.Quantity += quantity;
+                stok.UpdatedAt = DateTime.UtcNow;
+                await _stockProductRepository.UpdateAsync(stok);
+
+                canceledOrder.Status = "Yaroqli";
+                canceledOrder.UpdatedAt = DateTime.UtcNow;
+                await _cancelOrderRepository.UpdateAsync(canceledOrder);
+
+                card.Quantity -= quantity;
+                card.UpdatedAt = DateTime.UtcNow;
+                await _cardRepository.UpdateAsync(card);
+            }
+        }
+        else
+        {
+            canceledOrder.Status = "Yaroqsiz";
+            canceledOrder.UpdatedAt = DateTime.UtcNow;
+            await _cancelOrderRepository.UpdateAsync(canceledOrder);
+
+            card.Quantity -= quantity;
+            card.UpdatedAt = DateTime.UtcNow;
+            await _cardRepository.UpdateAsync(card);
+        }
+
+
+        return true;
+    }*/
 
     /// <summary>
     /// Cancel qilingan mahsulotlarni chiqarib beradi
