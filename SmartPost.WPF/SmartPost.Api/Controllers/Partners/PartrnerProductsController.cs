@@ -16,6 +16,10 @@ namespace SmartPost.Api.Controllers.Partners
             _partnerProductService = partnerProductService;
         }
 
+        [HttpPost("ombordan-hamkorga-yuk-jonatish")]
+        public async Task<IActionResult> AddAsync(long productId, long partnerId, long userId, decimal quantityToMove, string transNo)
+            => Ok(await _partnerProductService.MoveProductToPartnerProductAsync(productId, partnerId, userId, quantityToMove, transNo));
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
             => Ok(await _partnerProductService.RetrieveByIdAsync(id));
@@ -24,13 +28,13 @@ namespace SmartPost.Api.Controllers.Partners
         public async Task<IActionResult> GeAllAsync([FromQuery] PaginationParams @params)
             => Ok(await _partnerProductService.RetrieveAllAsync(@params));
 
-        [HttpPost("ombordan-hamkorga-yuk-jonatish")]
-        public async Task<IActionResult> AddAsync(long productId, long partnerId, long userId, decimal quantityToMove)
-            => Ok(await _partnerProductService.MoveProductToPartnerProductAsync(productId, partnerId, userId, quantityToMove));
+        [HttpGet("transaction-generator")]
+        public async Task<IActionResult> GenerateTranNo()
+           => Ok(await Task.FromResult(_partnerProductService.GenerateTransactionNumber()));
 
         [HttpPut("update-partner-products-paid")]
-        public async Task<IActionResult> UpdatePaidAsync(long productId, long partnerId, decimal paid)
-            => Ok(await _partnerProductService.PayForProductsAsync(productId, partnerId, paid));
+        public async Task<IActionResult> UpdatePaidAsync(long partnerId, decimal paid)
+            => Ok(await _partnerProductService.PayForProductsAsync(partnerId, paid));
 
         [HttpGet("ikkita-vaqt-orasida-magazindagi-mahsulotlarni-kurish/{userId}/{startDate}/{endDate}")]
         public async Task<IActionResult> GetAllAsync(long userId, DateTime startDate, DateTime endDate)
