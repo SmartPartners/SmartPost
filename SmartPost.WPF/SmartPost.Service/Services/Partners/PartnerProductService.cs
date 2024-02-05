@@ -19,6 +19,7 @@ namespace SmartPost.Service.Services.Partners;
 public class PartnerProductService : IPartnerProductService
 {
     private readonly IPartnerProductRepository _partnerProductRepository;
+    private readonly IPartnerRepository _partnerRepository;
     private readonly ICategoryService _categoryService;
     private readonly IBrandService _brandService;
     private readonly IProductRepository _productRepository;
@@ -35,7 +36,8 @@ public class PartnerProductService : IPartnerProductService
         ICategoryService categoryService,
         IBrandService brandService,
         IUserService userService,
-        IPartnerService partnerService)
+        IPartnerService partnerService,
+        IPartnerRepository partnerRepository)
     {
         _partnerProductRepository = partnerProductRepository;
         _mapper = mapper;
@@ -45,9 +47,10 @@ public class PartnerProductService : IPartnerProductService
         _brandService = brandService;
         _userService = userService;
         _partnerService = partnerService;
+        _partnerRepository = partnerRepository;
     }
 
-    public async Task<bool> MoveProductToPartnerProductAsync(long id, long partnerId, long userId, decimal quantityToMove)
+    public async Task<bool> MoveProductToPartnerProductAsync(long id, long partnerId, long userId, decimal quantityToMove, string transNo)
     {
         var insufficientProduct = await _productRepository.SelectAll()
             .Where(p => p.Id == id && p.Quantity < quantityToMove)
@@ -70,18 +73,23 @@ public class PartnerProductService : IPartnerProductService
             PCode = product.PCode,
             BarCode = product.BarCode,
             ProductName = product.ProductName,
+            TransNo = transNo,
             Price = product.Price,
             BrandId = product.BrandId,
             CategoryId = product.CategoryId,
             UserId = userId,
             PartnerId = partnerId,
-            Status = "Nasiya",
             Quantity = quantityToMove,
             CreatedAt = DateTime.UtcNow,
         };
         partnerProduct.TotalPrice = partnerProduct.Price * partnerProduct.Quantity;
-        partnerProduct.Debt = partnerProduct.TotalPrice;
-        partnerProduct.Paid = 0;
+
+        var partnerDebt = await _partnerRepository.SelectAll()
+            .Where(p => p.Id == partnerProduct.PartnerId)
+            .FirstOrDefaultAsync();
+        partnerDebt.Debt += partnerProduct.TotalPrice;
+        partnerDebt.UpdatedAt = DateTime.UtcNow;
+        await _partnerRepository.UpdateAsync(partnerDebt);
 
         var partnerProducts = await _partnerProductRepository.SelectAll()
             .Where(p => p.PCode == product.PCode && p.BarCode == product.BarCode)
@@ -106,25 +114,33 @@ public class PartnerProductService : IPartnerProductService
         return true;
     }
 
-    public async Task<bool> PayForProductsAsync(long productId, long partnerId, decimal paid)
+    public async Task<bool> PayForProductsAsync(long partnerId, decimal paid)
     {
         var partnerProduct = await _partnerProductRepository.SelectAll()
-            .Where(p => p.Id == productId && p.PartnerId == partnerId)
+            .Where(p => p.PartnerId == partnerId)
             .FirstOrDefaultAsync();
         if (partnerProduct is not null)
         {
-            var nat = partnerProduct.Debt -= paid;
-            partnerProduct.Debt = nat;
-            partnerProduct.Paid += paid;
-            partnerProduct.UpdatedAt = DateTime.UtcNow;
-            await _partnerProductRepository.UpdateAsync(partnerProduct);
-
-
-            if (partnerProduct.Debt == 0 && partnerProduct.Paid == partnerProduct.TotalPrice)
+            var partnerDebt = await _partnerRepository.SelectAll()
+            .Where(p => p.Id == partnerProduct.PartnerId)
+            .FirstOrDefaultAsync();
+            if(partnerDebt.Debt > 0)
             {
-                partnerProduct.Status = "To'landi";
+                var nat = partnerDebt.Debt -= paid;
+                partnerDebt.Debt = nat;
+                partnerDebt.Paid = paid;
                 partnerProduct.UpdatedAt = DateTime.UtcNow;
-                await _partnerProductRepository.UpdateAsync(partnerProduct);
+                await _partnerRepository.UpdateAsync(partnerDebt);
+
+                if(partnerDebt.Debt == 0)
+                {
+                    partnerDebt.Paid = 0;
+                    partnerDebt.UpdatedAt = new DateTime(0001, 1, 1);
+                }
+            }
+            else
+            {
+                throw new CustomException(400, "Qarz qolmadi.");
             }
         }
         return true;
@@ -211,5 +227,31 @@ public class PartnerProductService : IPartnerProductService
             throw new CustomException(404, "Bu mahsulot topilmadi.");
 
         return _mapper.Map<PartnerProductForResultDto>(StockProduct);
+    }
+
+    private static int lastTransactionNumberSuffix = 2001;
+    private static DateTime lastTransactionDate = DateTime.UtcNow.Date;
+
+    public string GenerateTransactionNumber()
+    {
+        // Use current date in "yyyyMMdd" format
+        DateTime currentDate = DateTime.UtcNow.Date;
+
+        // Check if it's a new day
+        if (currentDate > lastTransactionDate)
+        {
+            // Reset the suffix to 2001 for the new day
+            lastTransactionNumberSuffix = 2001;
+            lastTransactionDate = currentDate;
+        }
+
+        string transactionNumber;
+        do
+        {
+            transactionNumber = currentDate.ToString("yyyyMMdd") + lastTransactionNumberSuffix.ToString();
+            lastTransactionNumberSuffix++;
+        } while (_partnerProductRepository.SelectAll().Any(t => t.TransNo == transactionNumber));
+
+        return transactionNumber;
     }
 }
