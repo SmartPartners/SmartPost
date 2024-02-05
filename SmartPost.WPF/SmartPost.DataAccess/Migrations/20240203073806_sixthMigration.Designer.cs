@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartPost.DataAccess.Data;
@@ -11,9 +12,11 @@ using SmartPost.DataAccess.Data;
 namespace SmartPost.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240203073806_sixthMigration")]
+    partial class sixthMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,17 +236,11 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("Debt")
-                        .HasColumnType("numeric");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
-
-                    b.Property<decimal>("Paid")
-                        .HasColumnType("numeric");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
@@ -276,8 +273,14 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<decimal>("Debt")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("PCode")
                         .HasColumnType("text");
+
+                    b.Property<decimal>("Paid")
+                        .HasColumnType("numeric");
 
                     b.Property<long>("PartnerId")
                         .HasColumnType("bigint");
@@ -291,11 +294,11 @@ namespace SmartPost.DataAccess.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("numeric");
-
-                    b.Property<string>("TransNo")
-                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");

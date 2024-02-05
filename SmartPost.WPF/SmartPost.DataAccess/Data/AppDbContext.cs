@@ -82,6 +82,12 @@ public class AppDbContext : DbContext
                   .WithMany(c => c.PartnersProducts)
                   .HasForeignKey(s => s.CategoryId)
                   .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(s => s.User)
+                  .WithMany(c => c.PartnerProducts)
+                  .HasForeignKey(s => s.UserId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
         });
 
         modelBuilder.Entity<Card>(entity =>

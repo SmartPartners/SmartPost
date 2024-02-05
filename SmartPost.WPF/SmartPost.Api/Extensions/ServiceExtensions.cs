@@ -68,6 +68,7 @@ namespace SmartPost.Api.Extensions
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IPartnerService, PartnerService>();
+            services.AddScoped<IPartnerProductService, PartnerProductService>();
 
             services.AddScoped<IStockProductRepository, StockProductRepository>();
             services.AddScoped<IStockProductService, StockProductService>();

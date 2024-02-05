@@ -72,6 +72,7 @@ public class CategoryService : ICategoryService
                 .Include(c => c.Products)
                 .Include(c => c.StokProducts)
                 .Include(c => c.InventoryLists)
+                .Include(c => c.PartnersProducts)
                 .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
@@ -86,6 +87,7 @@ public class CategoryService : ICategoryService
                 .Include(c => c.Products)
                 .Include(c => c.StokProducts)
                 .Include(c => c.InventoryLists)
+                .Include(c => c.PartnersProducts)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         if (category is null)
