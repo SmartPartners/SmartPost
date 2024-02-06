@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Data;
+using System.Windows;
 
-namespace SmartPost.WPFUi
+namespace SmartPost.Desktop
 {
     /// <summary>
     /// Interaction logic for App.xaml

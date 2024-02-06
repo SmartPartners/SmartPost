@@ -1,7 +1,7 @@
-﻿<Application x:Class="SmartPost.WPF.App"
+﻿<Application x:Class="SmartPost.Desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SmartPost.WPF"
+             xmlns:local="clr-namespace:SmartPost.Desktop"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
