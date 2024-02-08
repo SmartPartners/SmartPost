@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="FirstColor" Color="White"/>
+    <SolidColorBrush x:Key="SecondColor" Color="#EEEEEE"/>
+    <SolidColorBrush x:Key="TheerdColor" Color="#329DFF"/>
+    <SolidColorBrush x:Key="FourthColor" Color="#93CBFF"/>
+
+    <SolidColorBrush x:Key="BorderColor" Color="#383838"/>
+    <SolidColorBrush x:Key="LabelColor" Color="White"/>
+    <SolidColorBrush x:Key="labelColor" Color="#0D0D0D"/>
+
+    <SolidColorBrush x:Key="btncolor" Color="#329DFF"/>
+    <SolidColorBrush x:Key="btnMouseEnter" Color="#57AEFF"/>
+    <SolidColorBrush x:Key="btnMouseClick" Color="#2696FF"/>
+
+</ResourceDictionary>

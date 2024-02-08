@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="SmartPost.Desktop.Components.ProductComponent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="45">
+    <Border
+        x:Name="Product_Border"
+        BorderThickness="0.5"
+        Margin="0 3 20 5"
+        CornerRadius="10"
+        MouseEnter="Border_MouseEnter"
+        MouseLeave="Border_MouseLeave"
+        Background="{DynamicResource FirstColor}">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                x:Name="Product_Number"
+                Grid.Column="0"
+                Content="1"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+            <Label
+                x:Name="Product_Name"
+                Grid.Column="1"
+                Content="Blender"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+            <Label
+                x:Name="Product_Price"
+                Grid.Column="2"
+                Content="500000"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+            <Label
+                x:Name="Product_Count"
+                Grid.Column="3"
+                Content="18"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+        </Grid>
+
+    </Border>
+</UserControl>
