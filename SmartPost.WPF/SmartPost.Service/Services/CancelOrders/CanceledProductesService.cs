@@ -111,7 +111,7 @@ public class CanceledProductesService : ICanceledProductsService
 
 
         return true;
-}
+    }
 
     /// <summary>
     /// Hamkorlardan qaytgan mahsulot uchun
@@ -154,12 +154,12 @@ public class CanceledProductesService : ICanceledProductsService
         var partDebt = await _partnerRepository.SelectAll()
             .Where(p => p.Id == partnerId)
             .FirstOrDefaultAsync();
-        if(partDebt.Debt != 0)
+        if (partDebt.Debt != 0)
         {
             partDebt.Debt -= totalPrice;
             await _partnerRepository.UpdateAsync(partDebt);
         }
-        
+
 
         await _cancelOrderRepository.InsertAsync(canceledOrder);
 

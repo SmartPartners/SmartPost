@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartPost.Api.Controllers.Commons;
 using SmartPost.Domain.Configurations;
-using SmartPost.Service.DTOs.CancelOrders;
 using SmartPost.Service.Interfaces.CancelOrders;
 
 namespace SmartPost.Api.Controllers.CancelOrders
@@ -41,9 +40,9 @@ namespace SmartPost.Api.Controllers.CancelOrders
         public async Task<IActionResult> GetByIdAsync([FromRoute(Name = "id")] long id)
             => Ok(await _cancelOrderService.RetrieveByIdAsync(id));
 
-       /* [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute(Name = "id")] long id, [FromBody] CancelOrderForUpdateDto dto)
-            => Ok(await _cancelOrderService.ModifyAsync(id, dto));*/
+        /* [HttpPut("{id}")]
+         public async Task<IActionResult> UpdateAsync([FromRoute(Name = "id")] long id, [FromBody] CancelOrderForUpdateDto dto)
+             => Ok(await _cancelOrderService.ModifyAsync(id, dto));*/
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute(Name = "id")] long id)

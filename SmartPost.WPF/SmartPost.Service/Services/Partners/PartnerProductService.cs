@@ -124,7 +124,7 @@ public class PartnerProductService : IPartnerProductService
             var partnerDebt = await _partnerRepository.SelectAll()
             .Where(p => p.Id == partnerProduct.PartnerId)
             .FirstOrDefaultAsync();
-            if(partnerDebt.Debt > 0)
+            if (partnerDebt.Debt > 0)
             {
                 var nat = partnerDebt.Debt -= paid;
                 partnerDebt.Debt = nat;
@@ -132,7 +132,7 @@ public class PartnerProductService : IPartnerProductService
                 partnerProduct.UpdatedAt = DateTime.UtcNow;
                 await _partnerRepository.UpdateAsync(partnerDebt);
 
-                if(partnerDebt.Debt == 0)
+                if (partnerDebt.Debt == 0)
                 {
                     partnerDebt.Paid = 0;
                     partnerDebt.UpdatedAt = new DateTime(0001, 1, 1);
@@ -253,5 +253,18 @@ public class PartnerProductService : IPartnerProductService
         } while (_partnerProductRepository.SelectAll().Any(t => t.TransNo == transactionNumber));
 
         return transactionNumber;
+    }
+
+    public async Task<PartnerProductForResultDto> RetrieveByTransNoAsync(string transNo)
+    {
+        var partnerProduct = await _partnerProductRepository.SelectAll()
+          .Where(s => s.TransNo == transNo)
+          .AsNoTracking()
+          .FirstOrDefaultAsync();
+
+        if (partnerProduct is null)
+            throw new CustomException(404, "Bu mahsulot topilmadi.");
+
+        return _mapper.Map<PartnerProductForResultDto>(partnerProduct);
     }
 }

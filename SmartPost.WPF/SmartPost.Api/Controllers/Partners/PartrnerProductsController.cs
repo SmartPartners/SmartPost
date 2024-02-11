@@ -2,7 +2,6 @@
 using SmartPost.Api.Controllers.Commons;
 using SmartPost.Domain.Configurations;
 using SmartPost.Service.DTOs.PartnerProduct;
-using SmartPost.Service.DTOs.StockProducts;
 using SmartPost.Service.Interfaces.Partners;
 
 namespace SmartPost.Api.Controllers.Partners
@@ -21,8 +20,12 @@ namespace SmartPost.Api.Controllers.Partners
             => Ok(await _partnerProductService.MoveProductToPartnerProductAsync(productId, partnerId, userId, quantityToMove, transNo));
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(long id)
             => Ok(await _partnerProductService.RetrieveByIdAsync(id));
+
+        [HttpGet("get-by-transaction-number")]
+        public async Task<IActionResult> GetByTransNo(string transNo)
+            => Ok(await _partnerProductService.RetrieveByTransNoAsync(transNo));
 
         [HttpGet]
         public async Task<IActionResult> GeAllAsync([FromQuery] PaginationParams @params)

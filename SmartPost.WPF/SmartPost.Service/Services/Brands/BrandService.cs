@@ -71,7 +71,7 @@ namespace SmartPost.Service.Services.Brands
                 .Include(c => c.Products)
                 .Include(c => c.StokProducts)
                 .Include(c => c.InventoryLists)
-                .Include(c =>c.PartnersProducts)
+                .Include(c => c.PartnersProducts)
                 .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();

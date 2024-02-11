@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartPost.Api.Controllers.Commons;
 using SmartPost.Domain.Configurations;
-using SmartPost.Service.DTOs.Cards;
 using SmartPost.Service.Interfaces.Cards;
 
 namespace SmartPost.Api.Controllers.Cards

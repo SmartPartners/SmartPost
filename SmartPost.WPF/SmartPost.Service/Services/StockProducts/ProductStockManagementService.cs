@@ -116,7 +116,7 @@ public class ProductStockManagementService : IProductStockManagementService
             .AsNoTracking()
             .ToListAsync();
 
-        return  _mapper.Map<IEnumerable<StockProductsForResultDto>>(products);
+        return _mapper.Map<IEnumerable<StockProductsForResultDto>>(products);
     }
 
 
