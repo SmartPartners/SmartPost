@@ -10,6 +10,7 @@ public interface IPartnerProductService
     public string GenerateTransactionNumber();
     Task<PartnerProductForResultDto> RetrieveByIdAsync(long id);
     public Task<bool> PayForProductsAsync(long partnerId, decimal paid);
+    public Task<PartnerProductForResultDto> RetrieveByTransNoAsync(string transNo);
     Task<PartnerProductForResultDto> ModifyAsync(long id, PartnerProductForUpdateDto dto);
     Task<IEnumerable<PartnerProductForResultDto>> RetrieveAllAsync(PaginationParams @params);
     Task<bool> MoveProductToPartnerProductAsync(long id, long partnerId, long userId, decimal quantityToMove, string transNo);

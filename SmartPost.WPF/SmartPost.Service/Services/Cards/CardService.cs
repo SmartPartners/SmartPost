@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Cards;
 using SmartPost.Domain.Configurations;
-using SmartPost.Domain.Entities.Cards;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
 using SmartPost.Service.DTOs.Cards;
@@ -29,31 +28,31 @@ public class CardService : ICardService
         _cardRepository = cardRepository;
     }
 
-/*    public async Task<CardForResultDto> CreateAsync(CardForCreationDto dto)
-    {
-        var user = await _userService.RetrieveByIdAsync(dto.UserId);
-
-        var card = await _cardRepository.SelectAll()
-            .Where(c => c.PCode.ToLower() == dto.PCode.ToLower()
-            && c.BarCode == dto.BarCode)
-            .FirstOrDefaultAsync();
-
-        if (card != null)
+    /*    public async Task<CardForResultDto> CreateAsync(CardForCreationDto dto)
         {
-            card.Quantity += dto.Quantity;
-            await _cardRepository.UpdateAsync(card);
+            var user = await _userService.RetrieveByIdAsync(dto.UserId);
 
-            //throw new CustomException(200, "Bu turdagi mahsulot bazada mavjudligi uchun uning soniga qo'shib qo'yildi.");
-            return _mapper.Map<CardForResultDto>(card);
-        }
+            var card = await _cardRepository.SelectAll()
+                .Where(c => c.PCode.ToLower() == dto.PCode.ToLower()
+                && c.BarCode == dto.BarCode)
+                .FirstOrDefaultAsync();
 
-        var mappedCard = _mapper.Map<Card>(dto);
-        mappedCard.CreatedAt = DateTime.UtcNow;
+            if (card != null)
+            {
+                card.Quantity += dto.Quantity;
+                await _cardRepository.UpdateAsync(card);
 
-        var result = await _cardRepository.InsertAsync(mappedCard);
+                //throw new CustomException(200, "Bu turdagi mahsulot bazada mavjudligi uchun uning soniga qo'shib qo'yildi.");
+                return _mapper.Map<CardForResultDto>(card);
+            }
 
-        return _mapper.Map<CardForResultDto>(result);
-    }*/
+            var mappedCard = _mapper.Map<Card>(dto);
+            mappedCard.CreatedAt = DateTime.UtcNow;
+
+            var result = await _cardRepository.InsertAsync(mappedCard);
+
+            return _mapper.Map<CardForResultDto>(result);
+        }*/
 
     /*public async Task<CardForResultDto> ModifyAsync(long id, CardForUpdateDto dto)
     {

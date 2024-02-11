@@ -20,9 +20,9 @@ namespace SmartPost.Api.Controllers.StockProducts
         public async Task<IActionResult> GetById(int id)
             => Ok(await _stockProductService.GetByIdAsync(id));
 
-       /* [HttpPost]
-        public async Task<IActionResult> AddsAsync(StockProductForCreationDto dto)
-            => Ok(await _stockProductService.CreateAsync(dto));*/
+        /* [HttpPost]
+         public async Task<IActionResult> AddsAsync(StockProductForCreationDto dto)
+             => Ok(await _stockProductService.CreateAsync(dto));*/
 
         [HttpGet]
         public async Task<IActionResult> GeAllAsync([FromQuery] PaginationParams @params)

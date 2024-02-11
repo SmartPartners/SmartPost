@@ -1,5 +1,4 @@
-﻿using SmartPost.Domain.Entities.StokProducts;
-using SmartPost.Service.DTOs.StockProducts;
+﻿using SmartPost.Service.DTOs.StockProducts;
 
 namespace SmartPost.Service.Interfaces.StockProducts;
 

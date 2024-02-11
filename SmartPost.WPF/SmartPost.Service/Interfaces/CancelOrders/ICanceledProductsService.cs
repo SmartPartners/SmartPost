@@ -1,5 +1,4 @@
-﻿using SmartPost.Domain.Entities.CancelOrders;
-using SmartPost.Service.DTOs.CancelOrders;
+﻿using SmartPost.Service.DTOs.CancelOrders;
 
 namespace SmartPost.Service.Interfaces.CancelOrders;
 
