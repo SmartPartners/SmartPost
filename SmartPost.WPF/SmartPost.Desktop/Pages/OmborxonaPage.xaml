@@ -3,8 +3,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="500"
+      mc:Ignorable="d"
+      Loaded="Page_Loaded"
       Title="OmborxonaPage">
 
     <Grid
@@ -15,16 +15,17 @@
             BorderThickness="0">
             
             <TabItem
+                x:Name="Item_All_Products"
                 Style="{DynamicResource TabItemStyle}"
                 Header="Barcha maxsulotlar">
 
                 <Grid
-                    >
+                    Margin="5">
                     <ScrollViewer>
-                        <WrapPanel 
+                        <StackPanel
                             x:Name="wrpOmborxona">
-
-                        </WrapPanel>
+                            
+                        </StackPanel>
                     </ScrollViewer>
                     <Label 
                         x:Name="emptyDataProducts"
@@ -39,16 +40,17 @@
             </TabItem>
 
             <TabItem
+                x:Name="Item_Brands"
                 Style="{DynamicResource TabItemStyle}"
                 Header="Brendlar">
 
                 <Grid
                     >
                     <ScrollViewer>
-                        <WrapPanel 
+                        <StackPanel 
                             x:Name="wrpBrand">
 
-                        </WrapPanel>
+                        </StackPanel>
                     </ScrollViewer>
                     <Label 
                         x:Name="emptyDataBrand"
@@ -63,16 +65,17 @@
             </TabItem>
 
             <TabItem
+                x:Name="Item_Categories"
                 Style="{DynamicResource TabItemStyle}"
                 Header="Kategoriyalar">
 
                 <Grid
                     >
                     <ScrollViewer>
-                        <WrapPanel 
+                        <StackPanel 
                             x:Name="wrpCategory">
 
-                        </WrapPanel>
+                        </StackPanel>
                     </ScrollViewer>
                     <Label 
                         x:Name="emptyDataCategory"

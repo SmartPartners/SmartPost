@@ -4,7 +4,7 @@
     <SolidColorBrush x:Key="FirstColor" Color="White"/>
     <SolidColorBrush x:Key="SecondColor" Color="#EEEEEE"/>
     <SolidColorBrush x:Key="TheerdColor" Color="#329DFF"/>
-    <SolidColorBrush x:Key="FourthColor" Color="#93CBFF"/>
+    <SolidColorBrush x:Key="FourthColor" Color="#B9DDFF"/>
 
     <SolidColorBrush x:Key="BorderColor" Color="#383838"/>
     <SolidColorBrush x:Key="LabelColor" Color="White"/>

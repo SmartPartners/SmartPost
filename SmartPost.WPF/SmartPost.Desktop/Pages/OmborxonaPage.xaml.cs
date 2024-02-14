@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using SmartPost.Desktop.Components;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace SmartPost.Desktop.Pages
+namespace SmartPost.Desktop.Pages;
+
+/// <summary>
+/// Interaction logic for OmborxonaPage.xaml
+/// </summary>
+public partial class OmborxonaPage : Page
 {
-    /// <summary>
-    /// Interaction logic for OmborxonaPage.xaml
-    /// </summary>
-    public partial class OmborxonaPage : Page
+    public OmborxonaPage()
     {
-        public OmborxonaPage()
+        InitializeComponent();
+    }
+
+    private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        for (int i = 0; i < 10; i++)
         {
-            InitializeComponent();
+            StorageComponent storage = new StorageComponent();
+            wrpOmborxona.Children.Add(storage);
         }
     }
 }

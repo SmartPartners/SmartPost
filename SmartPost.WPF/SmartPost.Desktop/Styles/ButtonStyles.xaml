@@ -301,7 +301,8 @@
                 <ControlTemplate TargetType="{x:Type TabItem}">
 
                     <Border
-                        Margin="5 0 0 0"
+                        x:Name="tabItemBorder"
+                        Margin="5 0 5 0"
                         Width="200"
                         Height="40"
                         CornerRadius="5"
@@ -309,7 +310,7 @@
 
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
@@ -323,9 +324,10 @@
                             <Border
                                 Grid.Column="1">
 
-                                <TextBlock
+                                <ContentPresenter 
+                                    x:Name="ContentSite"
                                     VerticalAlignment="Center"
-                                    Text="{TemplateBinding Header}"/>
+                                    ContentSource="Header"/>
 
                             </Border>
 
@@ -334,7 +336,9 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="tabItemBorder" Property="Background" Value="{DynamicResource FourthColor}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                     
                 </ControlTemplate>
