@@ -15,10 +15,26 @@ public partial class OmborxonaPage : Page
 
     private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 50; i++)
         {
             StorageComponent storage = new StorageComponent();
             wrpOmborxona.Children.Add(storage);
+
+            CategoryComponent category = new CategoryComponent();
+            wrpCategory.Children.Add(category);
+
+            BrandComponent brand = new BrandComponent();
+            wrpBrand.Children.Add(brand);
         }
+    }
+
+    private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
+    }
+
+    private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+
     }
 }

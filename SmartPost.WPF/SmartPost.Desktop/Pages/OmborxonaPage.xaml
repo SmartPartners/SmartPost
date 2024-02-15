@@ -18,23 +18,94 @@
                 x:Name="Item_All_Products"
                 Style="{DynamicResource TabItemStyle}"
                 Header="Barcha maxsulotlar">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <Grid
-                    Margin="5">
-                    <ScrollViewer>
-                        <StackPanel
-                            x:Name="wrpOmborxona">
-                            
-                        </StackPanel>
-                    </ScrollViewer>
-                    <Label 
-                        x:Name="emptyDataProducts"
+                    <Grid
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Visibility="Collapsed"
-                        Content="Xozircha malumotlar yo'q"
-                        FontSize="18">
-                    </Label>
+                        Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Content="Qidirish"
+                            VerticalAlignment="Center"
+                            Margin="10"
+                            Grid.Column="0"
+                            Style="{DynamicResource TitleLabel}"/>
+
+                        <Border
+                            Grid.Column="1"
+                            Height="38"
+                            Width="500"
+                            CornerRadius="10"
+                            BorderThickness="0.5"
+                            BorderBrush="{DynamicResource BorderColor}"
+                            Background="{DynamicResource FirstColor}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox
+                                    x:Name="textBoxSearchProduct"
+                                    Margin="15 5 0 5"
+                                    Background="Transparent"
+                                    TextChanged="TextBox_TextChanged"
+                                    PreviewKeyDown="TextBox_PreviewKeyDown"
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    BorderThickness="0"
+                                    Foreground="{DynamicResource BorderColor}">
+                                </TextBox>
+                                <Path 
+                                    x:Name="searchProduct" 
+                                    Grid.Column="1"
+                                    Data="{DynamicResource qidirish}"
+                                    Fill="{DynamicResource BorderColor}"
+                                    Height="20"
+                                    Stretch="Uniform"/>
+                            </Grid>
+                        </Border>
+
+                        <Button
+                            x:Name="searchButtonProducts"
+                            Height="35"
+                            Width="150"
+                            Margin="20 0 0 0"
+                            Grid.Column="2"
+                            Content="Qo'shish"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            Foreground="{DynamicResource BorderColor}"
+                            Style="{DynamicResource LoginButton}">
+                        </Button>
+
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="1">
+                        <ScrollViewer>
+                            <WrapPanel
+                                x:Name="wrpOmborxona">
+
+                            </WrapPanel>
+                        </ScrollViewer>
+                        <Label 
+                            x:Name="emptyDataProducts"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Visibility="Collapsed"
+                            Content="Xozircha malumotlar yo'q"
+                            FontSize="18">
+                        </Label>
+                    </Grid>
                 </Grid>
                 
             </TabItem>
@@ -44,23 +115,98 @@
                 Style="{DynamicResource TabItemStyle}"
                 Header="Brendlar">
 
-                <Grid
-                    >
-                    <ScrollViewer>
-                        <StackPanel 
-                            x:Name="wrpBrand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                        </StackPanel>
-                    </ScrollViewer>
-                    <Label 
-                        x:Name="emptyDataBrand"
+                    <Grid
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Visibility="Collapsed"
-                        Content="Xozircha malumotlar yo'q"
-                        FontSize="18">
-                    </Label>
+                        Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Content="Qidirish"
+                            VerticalAlignment="Center"
+                            Margin="10"
+                            Grid.Column="0"
+                            Style="{DynamicResource TitleLabel}"/>
+
+                        <Border
+                            Grid.Column="1"
+                            Height="38"
+                            Width="500"
+                            CornerRadius="10"
+                            BorderThickness="0.5"
+                            BorderBrush="{DynamicResource BorderColor}"
+                            Background="{DynamicResource FirstColor}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox
+                                    x:Name="textBoxSearchBrand"
+                                    Margin="15 5 0 5"
+                                    Background="Transparent"
+                                    TextChanged="TextBox_TextChanged"
+                                    PreviewKeyDown="TextBox_PreviewKeyDown"
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    BorderThickness="0"
+                                    Foreground="{DynamicResource BorderColor}">
+                                </TextBox>
+                                <Path 
+                                    x:Name="searchBrand" 
+                                    Grid.Column="1"
+                                    Data="{DynamicResource qidirish}"
+                                    Fill="{DynamicResource BorderColor}"
+                                    Height="20"
+                                    Stretch="Uniform"/>
+                            </Grid>
+                        </Border>
+
+                        <Button
+                            x:Name="searchButtonBrand"
+                            Height="35"
+                            Width="150"
+                            Margin="20 0 0 0"
+                            Grid.Column="2"
+                            Content="Qo'shish"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            Foreground="{DynamicResource BorderColor}"
+                            Style="{DynamicResource LoginButton}">
+                        </Button>
+
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="1">
+                        <ScrollViewer>
+                            <WrapPanel
+                                x:Name="wrpBrand">
+
+                            </WrapPanel>
+                        </ScrollViewer>
+                        <Label 
+                            x:Name="emptyDataBrand"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Visibility="Collapsed"
+                            Content="Xozircha malumotlar yo'q"
+                            FontSize="18">
+                        </Label>
+                    </Grid>
+                    
                 </Grid>
+
+                
 
             </TabItem>
 
@@ -69,23 +215,98 @@
                 Style="{DynamicResource TabItemStyle}"
                 Header="Kategoriyalar">
 
-                <Grid
-                    >
-                    <ScrollViewer>
-                        <StackPanel 
-                            x:Name="wrpCategory">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                        </StackPanel>
-                    </ScrollViewer>
-                    <Label 
-                        x:Name="emptyDataCategory"
+                    <Grid
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Visibility="Collapsed"
-                        Content="Xozircha malumotlar yo'q"
-                        FontSize="18">
-                    </Label>
+                        Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Content="Qidirish"
+                            VerticalAlignment="Center"
+                            Margin="10"
+                            Grid.Column="0"
+                            Style="{DynamicResource TitleLabel}"/>
+
+                        <Border
+                            Grid.Column="1"
+                            Height="38"
+                            Width="500"
+                            CornerRadius="10"
+                            BorderThickness="0.5"
+                            BorderBrush="{DynamicResource BorderColor}"
+                            Background="{DynamicResource FirstColor}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox
+                                    x:Name="textBoxSearchCategory"
+                                    Margin="15 5 0 5"
+                                    Background="Transparent"
+                                    TextChanged="TextBox_TextChanged"
+                                    PreviewKeyDown="TextBox_PreviewKeyDown"
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    BorderThickness="0"
+                                    Foreground="{DynamicResource BorderColor}">
+                                </TextBox>
+                                <Path 
+                                    x:Name="searchCategory" 
+                                    Grid.Column="1"
+                                    Data="{DynamicResource qidirish}"
+                                    Fill="{DynamicResource BorderColor}"
+                                    Height="20"
+                                    Stretch="Uniform"/>
+                            </Grid>
+                        </Border>
+
+                        <Button
+                            x:Name="searchButtonCategory"
+                            Height="35"
+                            Width="150"
+                            Margin="20 0 0 0"
+                            Grid.Column="2"
+                            Content="Qo'shish"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            Foreground="{DynamicResource BorderColor}"
+                            Style="{DynamicResource LoginButton}">
+                        </Button>
+
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="1">
+                        <ScrollViewer>
+                            <WrapPanel 
+                                x:Name="wrpCategory">
+
+                            </WrapPanel>
+                        </ScrollViewer>
+                        <Label 
+                            x:Name="emptyDataCategory"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Visibility="Collapsed"
+                            Content="Xozircha malumotlar yo'q"
+                            FontSize="18">
+                        </Label>
+                    </Grid>
+                    
                 </Grid>
+                
+                
 
             </TabItem>
             
