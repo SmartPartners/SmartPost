@@ -20,9 +20,15 @@ public partial class DokondagiMaxsulotlarPage : Page
 
         for (int i = 0; i < 50; i++)
         {
+            AddedProductComponent addedProduct = new AddedProductComponent();
             ProductComponent productComponent = new ProductComponent();
-            stp_Product.Children.Add(productComponent);
+
             productComponent.Product_Number.Content = count.ToString();
+            addedProduct.product_Number.Content = count.ToString();
+
+            stp_Added_Product.Children.Add(addedProduct);
+            stp_Product.Children.Add(productComponent);
+
             count++;
         }
 

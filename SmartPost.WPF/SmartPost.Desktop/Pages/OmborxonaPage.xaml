@@ -37,6 +37,7 @@
                             VerticalAlignment="Center"
                             Margin="10"
                             Grid.Column="0"
+                            FontSize="16"
                             Style="{DynamicResource TitleLabel}"/>
 
                         <Border
@@ -133,6 +134,7 @@
                             Content="Qidirish"
                             VerticalAlignment="Center"
                             Margin="10"
+                            FontSize="16"
                             Grid.Column="0"
                             Style="{DynamicResource TitleLabel}"/>
 
@@ -234,6 +236,7 @@
                             VerticalAlignment="Center"
                             Margin="10"
                             Grid.Column="0"
+                            FontSize="16"
                             Style="{DynamicResource TitleLabel}"/>
 
                         <Border
