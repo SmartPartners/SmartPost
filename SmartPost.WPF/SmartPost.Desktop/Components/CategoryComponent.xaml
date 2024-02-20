@@ -6,18 +6,58 @@
              mc:Ignorable="d" 
              >
     <Border
-        Height="350" 
-        Width="285"
+        Name="category_Border"
+        Height="50"
+        Margin="10 3 20 3"
         CornerRadius="10"
-        Margin="7"
+        BorderBrush="Transparent"
+        BorderThickness="1"
+        MouseEnter="category_Border_MouseEnter"
+        MouseLeave="category_Border_MouseLeave"
         Background="{DynamicResource FirstColor}">
 
-        <Label
-            FontWeight="SemiBold"
-            FontSize="20"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Content="Category"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Name="category_number"
+                Grid.Column="0"
+                Content="1"
+                Style="{DynamicResource ProductLabelStyle}"/>
+            <Label
+                Name="category_name"
+                Grid.Column="1"
+                Content="Telefonlar"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+            <Grid
+                Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    x:Name="delete_btn"
+                    Grid.Column="1"
+                    Tag="{DynamicResource delete}"
+                    Background="Red"
+                    Style="{DynamicResource ActionButton}"/>
+
+                <Button
+                    Name="update_btn"
+                    Grid.Column="0"
+                    Background="DarkBlue"
+                    Style="{DynamicResource ActionButton}"
+                    Tag="{DynamicResource pencil}"/>
+
+            </Grid>
+
+        </Grid>
 
     </Border>
 </UserControl>

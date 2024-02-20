@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace SmartPost.Desktop.Components
+namespace SmartPost.Desktop.Components;
+
+/// <summary>
+/// Interaction logic for BrandComponent.xaml
+/// </summary>
+public partial class BrandComponent : UserControl
 {
-    /// <summary>
-    /// Interaction logic for BrandComponent.xaml
-    /// </summary>
-    public partial class BrandComponent : UserControl
+    public BrandComponent()
     {
-        public BrandComponent()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
+
+    private void store_Border_MouseEnter(object sender, MouseEventArgs e)
+    {
+        brand_Border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#329DFF"));
+    }
+
+    private void store_Border_MouseLeave(object sender, MouseEventArgs e)
+    {
+        brand_Border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("transparent"));
     }
 }

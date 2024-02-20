@@ -303,7 +303,7 @@
 
                     <Border
                         x:Name="tabItemBorder"
-                        Margin="10 0 40 0"
+                        Margin="10 0 20 0"
                         Width="200"
                         Height="30"
                         CornerRadius="5"
@@ -346,6 +346,47 @@
             </Setter.Value>
         </Setter>
 
+    </Style>
+
+    <Style x:Key="ActionButton" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Name="B"
+                        Width="40"
+                        Height="30"
+                        CornerRadius="10"
+                        Grid.Column="0">
+
+                        <Path
+                            Fill="{TemplateBinding Background}"
+                            Width="20"
+                            Height="20"
+                            Stretch="Uniform"
+                            Data="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"/>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="B" Property="Background" Value="#EBEBEB"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="B" Property="Background" Value="transparent"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="B" Property="Background" Value="#D5D5D5"/>
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

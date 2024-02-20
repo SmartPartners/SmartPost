@@ -92,10 +92,10 @@
                     <Grid
                         Grid.Row="1">
                         <ScrollViewer>
-                            <WrapPanel
+                            <StackPanel
                                 x:Name="wrpOmborxona">
 
-                            </WrapPanel>
+                            </StackPanel>
                         </ScrollViewer>
                         <Label 
                             x:Name="emptyDataProducts"
@@ -189,10 +189,10 @@
                     <Grid
                         Grid.Row="1">
                         <ScrollViewer>
-                            <WrapPanel
+                            <StackPanel
                                 x:Name="wrpBrand">
 
-                            </WrapPanel>
+                            </StackPanel>
                         </ScrollViewer>
                         <Label 
                             x:Name="emptyDataBrand"
@@ -289,10 +289,10 @@
                     <Grid
                         Grid.Row="1">
                         <ScrollViewer>
-                            <WrapPanel 
+                            <StackPanel 
                                 x:Name="wrpCategory">
 
-                            </WrapPanel>
+                            </StackPanel>
                         </ScrollViewer>
                         <Label 
                             x:Name="emptyDataCategory"

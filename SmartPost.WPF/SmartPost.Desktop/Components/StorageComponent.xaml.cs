@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace SmartPost.Desktop.Components
+namespace SmartPost.Desktop.Components;
+
+/// <summary>
+/// Interaction logic for StorageComponent.xaml
+/// </summary>
+public partial class StorageComponent : UserControl
 {
-    /// <summary>
-    /// Interaction logic for StorageComponent.xaml
-    /// </summary>
-    public partial class StorageComponent : UserControl
+    bool isPressed = false;
+    public StorageComponent()
     {
-        public StorageComponent()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
+
+    private void store_Border_MouseEnter(object sender, MouseEventArgs e)
+    {
+        store_Border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#329DFF"));
+    }
+
+    private void store_Border_MouseLeave(object sender, MouseEventArgs e)
+    {
+        store_Border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
+    }
+
 }

@@ -24,5 +24,15 @@ namespace SmartPost.Desktop.Pages
         {
             InitializeComponent();
         }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

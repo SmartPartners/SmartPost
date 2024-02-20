@@ -7,7 +7,7 @@
              Height="50">
     <Border
         x:Name="Product_Border"
-        BorderThickness="0.5"
+        BorderThickness="1"
         Margin="0 3 20 5"
         CornerRadius="10"
         MouseEnter="Border_MouseEnter"

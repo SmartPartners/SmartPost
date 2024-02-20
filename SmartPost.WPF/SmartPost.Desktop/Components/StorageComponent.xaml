@@ -5,17 +5,72 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" >
     <Border
-        Height="230"
-        Width="280"
-        Margin="7"
+        Name="store_Border"
+        Height="50"
+        Margin="10 3 20 3"
         CornerRadius="10"
+        BorderBrush="Transparent"
+        BorderThickness="1"
+        MouseEnter="store_Border_MouseEnter"
+        MouseLeave="store_Border_MouseLeave"
         Background="{DynamicResource FirstColor}">
 
-        <Label 
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            FontSize="20"
-            Content="Product"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Name="product_number"
+                Grid.Column="0"
+                Content="1"
+                Style="{DynamicResource ProductLabelStyle}"/>
+            <Label
+                Name="product_name"
+                Grid.Column="1"
+                Content="Komputer"
+                Style="{DynamicResource ProductLabelStyle}"/>
+            <Label
+                Name="product_price"
+                Grid.Column="2"
+                Content="500"
+                Style="{DynamicResource ProductLabelStyle}"/>
+            <Label
+                Name="product_quantity"
+                Grid.Column="3"
+                Content="20"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+            <Grid
+                Grid.Column="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    x:Name="delete_btn"
+                    Grid.Column="1"
+                    ToolTip="O'chirish"
+                    Tag="{DynamicResource delete}"
+                    Background="Red"
+                    Style="{DynamicResource ActionButton}"/>
+
+                <Button
+                    Name="update_btn"
+                    Grid.Column="0"
+                    ToolTip="Yangilash"
+                    Background="DarkBlue"
+                    Style="{DynamicResource ActionButton}"
+                    Tag="{DynamicResource pencil}"/>
+
+            </Grid>
+
+        </Grid>
 
     </Border>
 </UserControl>

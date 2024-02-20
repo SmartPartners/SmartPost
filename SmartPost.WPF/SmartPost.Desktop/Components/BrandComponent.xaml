@@ -1,24 +1,64 @@
 ﻿<UserControl x:Class="SmartPost.Desktop.Components.BrandComponent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SmartPost.Desktop.Components"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
 
     <Border
-        Margin="7"
-        Height="250"
-        Width="285"
+        Name="brand_Border"
+        Height="50"
+        Margin="10 3 20 3"
         CornerRadius="10"
+        BorderBrush="Transparent"
+        BorderThickness="1"
+        MouseEnter="store_Border_MouseEnter"
+        MouseLeave="store_Border_MouseLeave"
         Background="{DynamicResource FirstColor}">
-        
-        <Label
-            FontWeight="SemiBold"
-            FontSize="20"
-            Content="Brand"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Name="brand_number"
+                Grid.Column="0"
+                Content="1"
+                Style="{DynamicResource ProductLabelStyle}"/>
+            <Label
+                Name="brand_name"
+                Grid.Column="1"
+                Content="Samsung"
+                Style="{DynamicResource ProductLabelStyle}"/>
+            
+            <Grid
+                Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    x:Name="delete_btn"
+                    Grid.Column="1"
+                    Tag="{DynamicResource delete}"
+                    Background="Red"
+                    Style="{DynamicResource ActionButton}"/>
+
+                <Button
+                    Name="update_btn"
+                    Grid.Column="0"
+                    Background="DarkBlue"
+                    Style="{DynamicResource ActionButton}"
+                    Tag="{DynamicResource pencil}"/>
+
+            </Grid>
+
+        </Grid>
+
     </Border>
-    
+
 </UserControl>
