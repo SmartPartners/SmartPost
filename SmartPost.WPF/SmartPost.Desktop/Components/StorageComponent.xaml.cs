@@ -10,7 +10,6 @@ namespace SmartPost.Desktop.Components;
 /// </summary>
 public partial class StorageComponent : UserControl
 {
-    bool isPressed = false;
     public StorageComponent()
     {
         InitializeComponent();

@@ -1,21 +1,164 @@
 ﻿<Page x:Class="SmartPost.Desktop.Pages.SotuvTarixiPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:SmartPost.Desktop.Pages"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      Loaded="Page_Loaded"
       Title="SotuvTarixiPage">
 
-    <Grid>
+    <Grid
+        Margin="10 10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Label
-            FontSize="25"
-            FontWeight="Bold"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Content="Sotuv tarixi"/>
+        <StackPanel
+            Orientation="Horizontal"
+            Grid.Row="0">
 
+            <Border
+                Grid.Column="1"
+                Height="38"
+                Width="320"
+                Margin="10 0"
+                CornerRadius="10"
+                BorderThickness="0.5"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                BorderBrush="{DynamicResource BorderColor}"
+                Background="{DynamicResource FirstColor}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        x:Name="Sale_History_search"
+                        Margin="15 5 0 5"
+                        Background="Transparent"
+                        TextChanged="TextBox_TextChanged"
+                        PreviewKeyDown="TextBox_PreviewKeyDown"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        BorderThickness="0"
+                        Foreground="{DynamicResource BorderColor}">
+                    </TextBox>
+                    <Path 
+                        x:Name="search_path" 
+                        Grid.Column="1"
+                        Data="{DynamicResource qidirish}"
+                        Fill="{DynamicResource BorderColor}"
+                        Height="20"
+                        Stretch="Uniform"/>
+                </Grid>
+            </Border>
+
+            <DatePicker 
+                Margin="30 0 0 0"
+                x:Name="dan" 
+                Style="{DynamicResource FormDatePicker}"/>
+
+            <Label
+                VerticalAlignment="Center"
+                Content="dan:"/>
+
+            <DatePicker 
+                Margin="20 0 0 0"
+                x:Name="gacha" 
+                Style="{DynamicResource FormDatePicker}"/>
+
+            <Label
+                VerticalAlignment="Center"
+                Content="gacha"/>
+
+            <ComboBox
+                Margin="55 0 0 0" 
+                Height="30"
+                Width="150">
+
+                <ComboBoxItem
+                    Content="Abror"/>
+                <ComboBoxItem
+                    Content="Aziz"/>
+                <ComboBoxItem
+                    Content="Bobur"/>
+                <ComboBoxItem
+                    Content="Azam"/>
+
+            </ComboBox>
+
+        </StackPanel>
+
+        <Grid
+            Margin="10 10 10 0"
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Label 
+                Grid.Column="0"
+                Content="No."
+                Margin="5 0 0 0"
+                Style="{DynamicResource TitleLabel}"/>
+            <Label 
+                Grid.Column="1"
+                Margin="10 0 0 0"
+                Content="Hamkor ismi"
+                Style="{DynamicResource TitleLabel}"/>
+            <Label 
+                Grid.Column="2"
+                Content="Nomi"
+                Margin="10 0 0 0"
+                Style="{DynamicResource TitleLabel}"/>
+            <Label 
+                Grid.Column="3"
+                Content="Brendi"
+                Margin="10 0 0 0"
+                Style="{DynamicResource TitleLabel}"/>
+            <Label 
+                Grid.Column="4"
+                Content="Narxi"
+                Margin="10 0 0 0"
+                Style="{DynamicResource TitleLabel}"/>
+            <Label 
+                Grid.Column="5"
+                Content="Soni"
+                Style="{DynamicResource TitleLabel}"/>
+            <Label 
+                Grid.Column="6"
+                Content="Jami summasi"
+                Style="{DynamicResource TitleLabel}"/>
+
+        </Grid>
+
+        <Grid
+            Grid.Row="2">
+            <ScrollViewer>
+                <StackPanel
+                    x:Name="wrp_Sale_History">
+
+                </StackPanel>
+            </ScrollViewer>
+            <Label 
+                x:Name="emptyDataSaleHistory"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Visibility="Collapsed"
+                Content="Xozircha malumotlar yo'q"
+                FontSize="18">
+            </Label>
+        </Grid>
     </Grid>
 </Page>
