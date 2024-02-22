@@ -254,4 +254,17 @@ public class PartnerProductService : IPartnerProductService
 
         return transactionNumber;
     }
+
+    public async Task<PartnerProductForResultDto> RetrieveByTransNoAsync(string transNo)
+    {
+        var partnerProduct = await _partnerProductRepository.SelectAll()
+          .Where(s => s.TransNo == transNo)
+          .AsNoTracking()
+          .FirstOrDefaultAsync();
+
+        if (partnerProduct is null)
+            throw new CustomException(404, "Bu mahsulot topilmadi.");
+
+        return _mapper.Map<PartnerProductForResultDto>(partnerProduct);
+    }
 }

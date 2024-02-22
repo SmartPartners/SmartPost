@@ -28,6 +28,10 @@ namespace SmartPost.Api.Controllers.Partners
         public async Task<IActionResult> GeAllAsync([FromQuery] PaginationParams @params)
             => Ok(await _partnerProductService.RetrieveAllAsync(@params));
 
+        [HttpGet("get-by-transaction-number")]
+        public async Task<IActionResult> GetByTransNo(string transNo)
+            => Ok(await _partnerProductService.RetrieveByTransNoAsync(transNo));
+
         [HttpGet("transaction-generator")]
         public async Task<IActionResult> GenerateTranNo()
            => Ok(await Task.FromResult(_partnerProductService.GenerateTransactionNumber()));
