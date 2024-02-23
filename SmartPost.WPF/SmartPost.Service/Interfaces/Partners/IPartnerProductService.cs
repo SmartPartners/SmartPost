@@ -7,9 +7,10 @@ namespace SmartPost.Service.Interfaces.Partners;
 public interface IPartnerProductService
 {
     Task<bool> RemoveAsync(long id);
-    public string GenerateTransactionNumber();
+    string GenerateTransactionNumber();
     Task<PartnerProductForResultDto> RetrieveByIdAsync(long id);
-    public Task<bool> PayForProductsAsync(long partnerId, decimal paid);
+    Task<bool> PayForProductsAsync(long partnerId, decimal paid);
+    Task<PartnerProductForResultDto> RetrieveByTransNoAsync(string transNo);
     Task<PartnerProductForResultDto> ModifyAsync(long id, PartnerProductForUpdateDto dto);
     Task<IEnumerable<PartnerProductForResultDto>> RetrieveAllAsync(PaginationParams @params);
     Task<bool> MoveProductToPartnerProductAsync(long id, long partnerId, long userId, decimal quantityToMove, string transNo);
