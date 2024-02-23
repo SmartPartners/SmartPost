@@ -56,6 +56,8 @@ public class ProductStockManagementService : IProductStockManagementService
             ProductName = product.ProductName,
             Price = product.Price,
             BrandId = product.BrandId,
+            SalePrice = product.SalePrice,
+            PercentageSalePrice = product.PercentageSalePrice,
             CategoryId = product.CategoryId,
             UserId = userId,
             Status = "Kutilmoqda",
