@@ -109,6 +109,30 @@ public class ProductService : IProductService
                 await _stockProductRepository.UpdateAsync(stok);
             }
 
+            if( product.SalePrice != productForCreationDto.SalePrice)
+            {
+                product.SalePrice = productForCreationDto.SalePrice;
+                await _productRepository.UpdateAsync(product);
+
+                var stok = await _stockProductRepository.SelectAll()
+                    .Where(p => p.BarCode == product.BarCode)
+                    .FirstOrDefaultAsync();
+                stok.SalePrice = productForCreationDto.SalePrice;
+                await _stockProductRepository.UpdateAsync(stok);
+            }
+
+            if (product.PercentageSalePrice != productForCreationDto.PercentageSalePrice)
+            {
+                product.PercentageSalePrice = productForCreationDto.PercentageSalePrice;
+                await _productRepository.UpdateAsync(product);
+
+                var stok = await _stockProductRepository.SelectAll()
+                    .Where(p => p.BarCode == product.BarCode)
+                    .FirstOrDefaultAsync();
+                stok.PercentageSalePrice = productForCreationDto.PercentageSalePrice;
+                await _stockProductRepository.UpdateAsync(stok);
+            }
+
             if (product.CategoryId != productForCreationDto.CategoryId)
             {
                 product.CategoryId = productForCreationDto.CategoryId;
@@ -147,6 +171,21 @@ public class ProductService : IProductService
 
         var mappedProduct = _mapper.Map<Product>(productForCreationDto);
         mappedProduct.CreatedAt = DateTime.UtcNow;
+
+        if (mappedProduct.SalePrice is null && mappedProduct.PercentageSalePrice is not null)
+        {
+            decimal? newPrice = (mappedProduct.Price / 100) * mappedProduct.PercentageSalePrice;
+            decimal? salePrice = mappedProduct.Price + newPrice;
+            mappedProduct.SalePrice = salePrice;
+        }
+        else if (mappedProduct.SalePrice is not null && mappedProduct.PercentageSalePrice is null)
+        {
+            decimal? percentPrice = ((mappedProduct.Price - mappedProduct.SalePrice) / mappedProduct.Price) * 100;
+            decimal? percentSale = 100 - percentPrice;
+            mappedProduct.PercentageSalePrice = (short?)percentSale;
+        }
+
+
         return _mapper.Map<ProductForResultDto>(await _productRepository.InsertAsync(mappedProduct));
     }
 
@@ -411,11 +450,31 @@ public class ProductService : IProductService
         if (product.PCode != productForUpdateDto.PCode)
             product.PCode = productForUpdateDto.PCode;
 
+
         if (product.CategoryId != productForUpdateDto.CategoryId)
             product.CategoryId = productForUpdateDto.CategoryId;
 
         if (product.Quantity != productForUpdateDto.Quantity)
             product.Quantity += productForUpdateDto.Quantity;
+
+        if (product.SalePrice != productForUpdateDto.SalePrice)
+            product.SalePrice = productForUpdateDto.SalePrice;
+
+        if (product.PercentageSalePrice != productForUpdateDto.PercentageSalePrice)
+            product.PercentageSalePrice = productForUpdateDto.PercentageSalePrice;
+
+        if (product.SalePrice is null && product.PercentageSalePrice is not null)
+        {
+            decimal? newPrice = (product.Price / 100) * product.PercentageSalePrice;
+            decimal? salePrice = product.Price + newPrice;
+            product.SalePrice = salePrice;
+        }
+        else if (product.SalePrice is not null && product.PercentageSalePrice is null)
+        {
+            decimal? percentPrice = ((product.Price - product.SalePrice) / product.Price) * 100;
+            decimal? percentSale = 100 - percentPrice;
+            product.PercentageSalePrice = (short?)percentSale;
+        }
 
         await _productRepository.UpdateAsync(product);
 
@@ -426,6 +485,8 @@ public class ProductService : IProductService
         if (stockProduct != null)
         {
             stockProduct.Price = productForUpdateDto.Price;
+            stockProduct.SalePrice = productForUpdateDto.SalePrice;
+            stockProduct.PercentageSalePrice = productForUpdateDto.PercentageSalePrice;
             stockProduct.BarCode = productForUpdateDto.BarCode;
             stockProduct.BrandId = productForUpdateDto.BrandId;
             stockProduct.ProductName = productForUpdateDto.ProductName;

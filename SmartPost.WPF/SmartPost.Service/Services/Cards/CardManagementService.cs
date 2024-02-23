@@ -61,6 +61,8 @@ public class CardManagementService : ICardManagementService
             BarCode = product.BarCode,
             ProductName = product.ProductName,
             Price = product.Price,
+            SalePrice = product.SalePrice,
+            PercentageSalePrice = product.PercentageSalePrice,
             Quantity = quantityToMove,
             Status = "Kutilmoqda",
             TransNo = trnasNo,
