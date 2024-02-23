@@ -94,7 +94,7 @@
         </StackPanel>
 
         <Grid
-            Margin="10 10 10 0"
+            Margin="10 10 20 0"
             Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
@@ -130,7 +130,7 @@
             <Label 
                 Grid.Column="4"
                 Content="Narxi"
-                Margin="10 0 0 0"
+                Margin="5 0 0 0"
                 Style="{DynamicResource TitleLabel}"/>
             <Label 
                 Grid.Column="5"
@@ -144,6 +144,7 @@
         </Grid>
 
         <Grid
+            Margin="10 0"
             Grid.Row="2">
             <ScrollViewer>
                 <StackPanel
