@@ -20,6 +20,8 @@ namespace SmartPost.Domain.Entities.StokProducts
         public string BarCode { get; set; }
         public string PCode { get; set; }
         public decimal Price { get; set; }
+        public decimal? SalePrice { get; set; }
+        public short? PercentageSalePrice { get; set; }
         public decimal Quantity { get; set; }
         public string Status { get; set; }
     }

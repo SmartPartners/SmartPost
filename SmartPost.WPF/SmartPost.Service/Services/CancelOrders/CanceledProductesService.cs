@@ -92,10 +92,6 @@ public class CanceledProductesService : ICanceledProductsService
                 canceledOrder.Status = "Yaroqli";
                 canceledOrder.UpdatedAt = DateTime.UtcNow;
                 await _cancelOrderRepository.UpdateAsync(canceledOrder);
-
-                card.Quantity -= quantity;
-                card.UpdatedAt = DateTime.UtcNow;
-                await _cardRepository.UpdateAsync(card);
             }
         }
         else
@@ -103,10 +99,6 @@ public class CanceledProductesService : ICanceledProductsService
             canceledOrder.Status = "Yaroqsiz";
             canceledOrder.UpdatedAt = DateTime.UtcNow;
             await _cancelOrderRepository.UpdateAsync(canceledOrder);
-
-            card.Quantity -= quantity;
-            card.UpdatedAt = DateTime.UtcNow;
-            await _cardRepository.UpdateAsync(card);
         }
 
 
