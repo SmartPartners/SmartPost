@@ -255,6 +255,7 @@
 
     <Style x:Key="LoginButton" TargetType="{x:Type Button}">
         <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="Width" Value="140"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -262,9 +263,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border 
-                    x:Name="B"
-                    CornerRadius="5"
-                    Background="{DynamicResource btncolor}"
+                        x:Name="B"
+                        CornerRadius="5"
+                        Background="{DynamicResource btncolor}"
                     >
                     <Label
                         FontFamily="Jetbrains Mono"

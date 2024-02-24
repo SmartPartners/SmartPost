@@ -76,7 +76,7 @@
                         </Border>
 
                         <Button
-                            x:Name="searchButtonProducts"
+                            x:Name="CreateButtonProducts"
                             Height="35"
                             Width="150"
                             Margin="20 0 0 0"
@@ -84,6 +84,7 @@
                             Content="Qo'shish"
                             FontSize="16"
                             HorizontalAlignment="Center"
+                            Click="CreateButtonProducts_Click"
                             Foreground="{DynamicResource BorderColor}"
                             Style="{DynamicResource LoginButton}">
                         </Button>

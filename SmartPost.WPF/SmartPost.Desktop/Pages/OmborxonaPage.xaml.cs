@@ -1,4 +1,5 @@
 ﻿using SmartPost.Desktop.Components;
+using SmartPost.Desktop.Windows;
 using System.Windows.Controls;
 
 namespace SmartPost.Desktop.Pages;
@@ -36,5 +37,11 @@ public partial class OmborxonaPage : Page
     private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
 
+    }
+
+    private void CreateButtonProducts_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        AddProductWindow addProductWindow = new AddProductWindow();
+        addProductWindow.ShowDialog();
     }
 }
