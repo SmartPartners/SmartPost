@@ -74,7 +74,7 @@ public class PartnerProductService : IPartnerProductService
             BarCode = product.BarCode,
             ProductName = product.ProductName,
             TransNo = transNo,
-            Price = product.Price,
+            Price = product.SalePrice ?? 0,
             BrandId = product.BrandId,
             CategoryId = product.CategoryId,
             UserId = userId,

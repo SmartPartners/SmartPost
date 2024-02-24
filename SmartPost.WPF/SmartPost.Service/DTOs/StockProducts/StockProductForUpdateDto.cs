@@ -5,8 +5,8 @@ public class StockProductForUpdateDto
     public long UserId { get; set; }
     public long BrandId { get; set; }
     public decimal Price { get; set; }
-    public decimal? SalePrice { get; set; }
-    public short? PercentageSalePrice { get; set; }
+    public decimal SalePrice { get; set; }
+    public short PercentageSalePrice { get; set; }
     public long CategoryId { get; set; }
     public string ProductName { get; set; }
     public string BarCode { get; set; }
