@@ -1,8 +1,11 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows;
-using static SmartPost.Desktop.Windows.BlurWindow.BlurEffect;
-using System.Windows.Interop;
+﻿using SmartPost.DataAccess.Interfaces.Products;
+using SmartPost.Service.Interfaces.Products;
+using SmartPost.Service.Services.Products;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Interop;
+using static SmartPost.Desktop.Windows.BlurWindow.BlurEffect;
 
 namespace SmartPost.Desktop.Windows;
 
@@ -11,9 +14,13 @@ namespace SmartPost.Desktop.Windows;
 /// </summary>
 public partial class AddProductWindow : Window
 {
+
+    private readonly IProductService _productService;
+
     public AddProductWindow()
     {
         InitializeComponent();
+        //this._productService = new ProductService();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -57,5 +64,10 @@ public partial class AddProductWindow : Window
     private void product_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
     {
         e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+    }
+
+    private void create_button_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }
