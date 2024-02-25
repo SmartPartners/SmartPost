@@ -13,7 +13,7 @@
         Loaded="Window_Loaded">
 
     <Border
-        Height="700" 
+        Height="600" 
         Width="600"
         CornerRadius="10"
         Background="{DynamicResource FirstColor}">
@@ -22,7 +22,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="90"/>
             </Grid.RowDefinitions>
 
             <Label
@@ -48,13 +48,109 @@
                     Width="300"
                     HorizontalAlignment="Left"
                     Orientation="Vertical">
-                    
+
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Maxsulot nomi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Soni:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Narxi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Shtrix kodi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="P kodi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Chegirma narxi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Sotish narxi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Kategoriyasi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                        Margin="70 10 0 0"
+                        Content="Brendi:"
+                        Style="{DynamicResource ProductLabelStyle}"/>
+
                 </StackPanel>
 
                 <StackPanel
                     Width="300"
                     HorizontalAlignment="Right"
                     Orientation="Vertical">
+
+                    <TextBox
+                        x:Name="product_name"
+                        Style="{DynamicResource textbox}"/>
+                    <TextBox
+                        x:Name="product_quantity"
+                        PreviewTextInput="product_PreviewTextInput"
+                        Style="{DynamicResource textbox}"/>
+                    <TextBox
+                        x:Name="product_price"
+                        PreviewTextInput="product_PreviewTextInput"
+                        Style="{DynamicResource textbox}"/>
+                    <TextBox
+                        x:Name="product_barcode"
+                        PreviewTextInput="product_PreviewTextInput"
+                        Style="{DynamicResource textbox}"/>
+                    <TextBox
+                        x:Name="product_Pcode"
+                        PreviewTextInput="product_PreviewTextInput"
+                        Style="{DynamicResource textbox}"/>
+                    <TextBox
+                        x:Name="product_sale_price"
+                        PreviewTextInput="product_PreviewTextInput"
+                        Style="{DynamicResource textbox}"/>
+                    <TextBox
+                        x:Name="product_percentage_price"
+                        PreviewTextInput="product_PreviewTextInput"
+                        Style="{DynamicResource textbox}"/>
+
+                    <ComboBox
+                        Margin="0 18 70 0">
+
+                        <ComboBoxItem
+                            Content="Telefon"/>
+                        <ComboBoxItem
+                            Content="Komputer"/>
+                        <ComboBoxItem
+                            Content="Quloqchin"/>
+                        <ComboBoxItem
+                            Content="Aksessuar"/>
+
+                    </ComboBox>
+
+                    <ComboBox
+                        Margin="0 18 70 0">
+
+                        <ComboBoxItem
+                            Content="Samsung"/>
+                        <ComboBoxItem
+                            Content="Apple"/>
+                        <ComboBoxItem
+                            Content="Microsoft"/>
+                        <ComboBoxItem
+                            Content="Xiomi"/>
+
+                    </ComboBox>
 
                 </StackPanel>
 
@@ -64,7 +160,6 @@
                 Width="200"
                 Grid.Row="2"
                 Content="Qo'shish"
-                VerticalAlignment="Top"
                 Style="{DynamicResource LoginButton}"/>
 
         </Grid>

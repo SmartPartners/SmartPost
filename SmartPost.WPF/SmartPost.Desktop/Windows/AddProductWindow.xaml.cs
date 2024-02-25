@@ -2,6 +2,7 @@
 using System.Windows;
 using static SmartPost.Desktop.Windows.BlurWindow.BlurEffect;
 using System.Windows.Interop;
+using System.Text.RegularExpressions;
 
 namespace SmartPost.Desktop.Windows;
 
@@ -51,5 +52,10 @@ public partial class AddProductWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         EnableBlur();
+    }
+
+    private void product_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    {
+        e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
     }
 }
