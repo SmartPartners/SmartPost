@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using SmartPost.Desktop.Windows.Products;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -25,4 +26,14 @@ public partial class StorageComponent : UserControl
         store_Border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
     }
 
+    private void update_btn_Click(object sender, RoutedEventArgs e)
+    {
+        ProductUpdateWindow productUpdateWindow = new ProductUpdateWindow();
+        productUpdateWindow.ShowDialog();
+    }
+
+    private void delete_btn_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
