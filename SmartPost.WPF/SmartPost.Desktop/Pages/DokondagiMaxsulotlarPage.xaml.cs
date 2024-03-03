@@ -1,4 +1,5 @@
 ﻿using SmartPost.Desktop.Components;
+using SmartPost.Desktop.Windows.Products;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -42,5 +43,11 @@ public partial class DokondagiMaxsulotlarPage : Page
     private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
 
+    }
+
+    private void add_product_btn_Click(object sender, RoutedEventArgs e)
+    {
+        AddProductStoreWindow addProductStoreWindow = new AddProductStoreWindow();
+        addProductStoreWindow.ShowDialog();
     }
 }

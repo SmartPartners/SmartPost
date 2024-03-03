@@ -31,25 +31,25 @@
                         Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="209.64"/>
+                            <ColumnDefinition Width="290.36"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label
                             Grid.Column="0"
                             Content="Qidirish"
                             VerticalAlignment="Center"
-                            Margin="10"
+                            Margin="10,0,10,0"
                             FontSize="16"
                             Style="{DynamicResource TitleLabel}"/>
 
                         <Border
-                            Grid.Column="1"
                             Height="38"
                             Width="500"
                             CornerRadius="10"
                             BorderThickness="0.5"
                             BorderBrush="{DynamicResource BorderColor}"
-                            Background="{DynamicResource FirstColor}">
+                            Background="{DynamicResource FirstColor}" Grid.ColumnSpan="3" Margin="86,16,0,16">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -78,13 +78,15 @@
                         </Border>
 
                         <Button
-                            Height="35"
+                            Name="add_product_btn"
+                            Height="34"
                             Width="150"
-                            Margin="20 0 0 0"
-                            Grid.Column="2"
+                            Margin="4,0,0,0"
+                            Grid.Column="3"
                             Content="Qo'shish"
                             FontSize="16"
-                            HorizontalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Click="add_product_btn_Click"
                             Foreground="{DynamicResource BorderColor}"
                             Style="{DynamicResource LoginButton}">
                         </Button>
@@ -252,7 +254,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Label 
                             Grid.Column="0"
                             Content="No."
@@ -309,13 +311,13 @@
                         </Label>
 
                     </Grid>
-                    
+
                 </Grid>
-                
+
             </TabItem>
-            
+
         </TabControl>
-            
+
     </Grid>
-    
+
 </Page>

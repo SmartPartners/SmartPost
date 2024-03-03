@@ -8,7 +8,9 @@
         AllowsTransparency="True"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="750" Width="1250">
+        Title="MainWindow" 
+        Height="750" 
+        Width="1250">
     
     <Border
         Background="{DynamicResource FirstColor}">
