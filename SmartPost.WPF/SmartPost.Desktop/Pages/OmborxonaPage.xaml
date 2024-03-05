@@ -13,7 +13,7 @@
         <TabControl
             Background="Transparent"
             BorderThickness="0">
-            
+
             <TabItem
                 x:Name="Item_All_Products"
                 Style="{DynamicResource TabItemStyle}"
@@ -109,7 +109,7 @@
                         </Label>
                     </Grid>
                 </Grid>
-                
+
             </TabItem>
 
             <TabItem
@@ -128,25 +128,25 @@
                         Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
+                            <ColumnDefinition Width="424.783"/>
+                            <ColumnDefinition Width="75.217"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label
                             Content="Qidirish"
                             VerticalAlignment="Center"
-                            Margin="10"
+                            Margin="10,0,10,0"
                             FontSize="16"
                             Grid.Column="0"
                             Style="{DynamicResource TitleLabel}"/>
 
                         <Border
-                            Grid.Column="1"
                             Height="38"
                             Width="500"
                             CornerRadius="10"
                             BorderThickness="0.5"
                             BorderBrush="{DynamicResource BorderColor}"
-                            Background="{DynamicResource FirstColor}">
+                            Background="{DynamicResource FirstColor}" Grid.ColumnSpan="3" Margin="86,16,0,16">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -175,14 +175,15 @@
                         </Border>
 
                         <Button
-                            x:Name="searchButtonBrand"
-                            Height="35"
+                            x:Name="CreateButtonBrand"
+                            Height="34"
                             Width="150"
-                            Margin="20 0 0 0"
-                            Grid.Column="2"
+                            Margin="20,0,0,0"
+                            Grid.Column="3"
                             Content="Qo'shish"
                             FontSize="16"
-                            HorizontalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Click="CreateButtonBrand_Click"
                             Foreground="{DynamicResource BorderColor}"
                             Style="{DynamicResource LoginButton}">
                         </Button>
@@ -206,10 +207,10 @@
                             FontSize="18">
                         </Label>
                     </Grid>
-                    
+
                 </Grid>
 
-                
+
 
             </TabItem>
 
@@ -276,7 +277,7 @@
                         </Border>
 
                         <Button
-                            x:Name="searchButtonCategory"
+                            x:Name="CreateButtonCategory"
                             Height="35"
                             Width="150"
                             Margin="20 0 0 0"
@@ -284,6 +285,7 @@
                             Content="Qo'shish"
                             FontSize="16"
                             HorizontalAlignment="Center"
+                            Click="CreateButtonCategory_Click"
                             Foreground="{DynamicResource BorderColor}"
                             Style="{DynamicResource LoginButton}">
                         </Button>
@@ -307,14 +309,14 @@
                             FontSize="18">
                         </Label>
                     </Grid>
-                    
+
                 </Grid>
-                
-                
+
+
 
             </TabItem>
-            
+
         </TabControl>
-        
+
     </Grid>
 </Page>

@@ -1,5 +1,7 @@
 ﻿using SmartPost.Desktop.Components;
 using SmartPost.Desktop.Windows;
+using SmartPost.Desktop.Windows.Brands;
+using SmartPost.Desktop.Windows.Categories;
 using System.Windows.Controls;
 
 namespace SmartPost.Desktop.Pages;
@@ -43,5 +45,17 @@ public partial class OmborxonaPage : Page
     {
         AddProductWindow addProductWindow = new AddProductWindow();
         addProductWindow.ShowDialog();
+    }
+
+    private void CreateButtonBrand_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        BrandCreateWindow brandCreateWindow = new BrandCreateWindow();
+        brandCreateWindow.ShowDialog();
+    }
+
+    private void CreateButtonCategory_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        CategoryCreateWindow categoryCreateWindow = new CategoryCreateWindow();
+        categoryCreateWindow.ShowDialog();
     }
 }

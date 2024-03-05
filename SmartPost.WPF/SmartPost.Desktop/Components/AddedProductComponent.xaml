@@ -7,11 +7,14 @@
              mc:Ignorable="d" 
              Height="50">
     <Border
+        Name="product_border"
         CornerRadius="10"
         BorderThickness="1"
         BorderBrush="Transparent"
         Margin="0 2 20 2"
-        Background="White">
+        Background="White"
+        MouseEnter="product_border_MouseEnter"
+        MouseLeave="product_border_MouseLeave">
 
         <Grid>
             <Grid.ColumnDefinitions>

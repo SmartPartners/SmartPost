@@ -46,12 +46,14 @@
                     Grid.Column="1"
                     Tag="{DynamicResource delete}"
                     Background="Red"
+                    Click="delete_btn_Click"
                     Style="{DynamicResource ActionButton}"/>
 
                 <Button
                     Name="update_btn"
                     Grid.Column="0"
                     Background="DarkBlue"
+                    Click="update_btn_Click"
                     Style="{DynamicResource ActionButton}"
                     Tag="{DynamicResource pencil}"/>
 

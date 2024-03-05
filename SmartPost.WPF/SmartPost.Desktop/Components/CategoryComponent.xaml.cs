@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using SmartPost.Desktop.Windows.Categories;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -22,5 +23,16 @@ public partial class CategoryComponent : UserControl
     private void category_Border_MouseLeave(object sender, MouseEventArgs e)
     {
         category_Border.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Transparent"));
+    }
+
+    private void delete_btn_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+
+    }
+
+    private void update_btn_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        CategoryUpdateWindow updateWindow = new CategoryUpdateWindow();
+        updateWindow.ShowDialog();
     }
 }

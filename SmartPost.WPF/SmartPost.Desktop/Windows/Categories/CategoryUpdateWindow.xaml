@@ -1,0 +1,171 @@
+﻿<Window x:Class="SmartPost.Desktop.Windows.Categories.CategoryUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartPost.Desktop.Windows.Categories"
+        mc:Ignorable="d"
+        Title="CategoryUpdateWindow" 
+        WindowState="Maximized"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#21212121"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+
+    <Border
+    Height="600" 
+    Width="600"
+    CornerRadius="10"
+    Background="{DynamicResource FirstColor}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="90"/>
+            </Grid.RowDefinitions>
+
+            <Label
+            Grid.Row="0"
+            FontSize="20"
+            FontWeight="SemiBold"
+            Content="Kategoriyani yangilash"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+        />
+
+            <Button
+            x:Name="close_Button"
+            Grid.Row="0"
+            HorizontalAlignment="Right"
+            Click="close_Button_Click"
+            Style="{DynamicResource ClosedButton}"/>
+
+            <Grid
+            Grid.Row="1">
+
+                <StackPanel
+                Width="300"
+                HorizontalAlignment="Left"
+                Orientation="Vertical">
+
+                    <Label
+                    Margin="70 10 0 0"
+                    Content="Kategoriya nomi:"
+                    Style="{DynamicResource ProductLabelStyle}"/>
+
+                    <Label
+                    Margin="70 10 0 0"
+                    Content="Soni:"
+                    Style="{DynamicResource ProductLabelStyle}"/>
+
+                    <Label
+                    Margin="70 10 0 0"
+                    Content="Narxi:"
+                    Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                    Margin="70 10 0 0"
+                    Content="Shtrix kodi:"
+                    Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                Margin="70 10 0 0"
+                Content="P kodi:"
+                Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                Margin="70 10 0 0"
+                Content="Chegirma narxi:"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+                    <Label
+                Margin="70 10 0 0"
+                Content="Sotish narxi:"
+                Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                Margin="70 10 0 0"
+                Content="Kategoriyasi:"
+                Style="{DynamicResource ProductLabelStyle}"/>
+                    <Label
+                Margin="70 10 0 0"
+                Content="Brendi:"
+                Style="{DynamicResource ProductLabelStyle}"/>
+
+                </StackPanel>
+
+                <StackPanel
+            Width="300"
+            HorizontalAlignment="Right"
+            Orientation="Vertical">
+
+                    <TextBox
+                x:Name="product_name"
+                Style="{DynamicResource textbox}"/>
+                    <TextBox
+                x:Name="product_quantity"
+                PreviewTextInput="product_PreviewTextInput"
+                Style="{DynamicResource textbox}"/>
+                    <TextBox
+                x:Name="product_price"
+                PreviewTextInput="product_PreviewTextInput"
+                Style="{DynamicResource textbox}"/>
+                    <TextBox
+                x:Name="product_barcode"
+                PreviewTextInput="product_PreviewTextInput"
+                Style="{DynamicResource textbox}"/>
+                    <TextBox
+                x:Name="product_Pcode"
+                PreviewTextInput="product_PreviewTextInput"
+                Style="{DynamicResource textbox}"/>
+                    <TextBox
+                x:Name="product_sale_price"
+                PreviewTextInput="product_PreviewTextInput"
+                Style="{DynamicResource textbox}"/>
+                    <TextBox
+                x:Name="product_percentage_price"
+                PreviewTextInput="product_PreviewTextInput"
+                Style="{DynamicResource textbox}"/>
+
+                    <ComboBox
+                Margin="0 18 70 0">
+
+                        <ComboBoxItem
+                    Content="Telefon"/>
+                        <ComboBoxItem
+                    Content="Komputer"/>
+                        <ComboBoxItem
+                    Content="Quloqchin"/>
+                        <ComboBoxItem
+                    Content="Aksessuar"/>
+
+                    </ComboBox>
+
+                    <ComboBox
+                Margin="0 18 70 0">
+
+                        <ComboBoxItem
+                    Content="Samsung"/>
+                        <ComboBoxItem
+                    Content="Apple"/>
+                        <ComboBoxItem
+                    Content="Microsoft"/>
+                        <ComboBoxItem
+                    Content="Xiomi"/>
+
+                    </ComboBox>
+
+                </StackPanel>
+
+            </Grid>
+
+            <Button
+        x:Name="create_button"
+        Width="200"
+        Grid.Row="2"
+        Content="Qo'shish"
+        Click="create_button_Click"
+        Style="{DynamicResource LoginButton}"/>
+
+        </Grid>
+
+    </Border>
+</Window>

@@ -9,8 +9,7 @@
         Background="#21212121"
         WindowState="Maximized"
         WindowStyle="None"
-        Loaded="Window_Loaded"
-        >
+        Loaded="Window_Loaded">
     <Border
         Background="{DynamicResource SecondColor}"
         Height="800" 
@@ -76,7 +75,11 @@
                     Grid.Column="4"
                     Content="Nechta"
                     Style="{DynamicResource ProductLabelStyle}"/>
-
+                <Label
+                    Grid.Column="5"
+                    Content="Do'konga qo'shish"
+                    Style="{DynamicResource ProductLabelStyle}"/>
+                
             </Grid>
 
             <Grid

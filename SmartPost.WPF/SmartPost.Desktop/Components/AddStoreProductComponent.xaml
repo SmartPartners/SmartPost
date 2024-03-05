@@ -72,7 +72,7 @@
                 Grid.Column="5"
                 Background="DarkBlue"
                 Click="save_in_store_Click"
-                Tag="{DynamicResource delete}"
+                Tag="{DynamicResource download}"
                 Style="{DynamicResource ActionButton}">
                 
             </Button>

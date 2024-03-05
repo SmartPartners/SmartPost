@@ -100,291 +100,149 @@
                 Header="Parolni o'zgartirish">
 
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <Grid
-                        HorizontalAlignment="Center"
-                        Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Orientation="Vertical"
+                        Grid.Column="0">
+
                         <Label
-                            Content="Qidirish"
-                            VerticalAlignment="Center"
-                            Margin="10"
-                            Grid.Column="0"
-                            Style="{DynamicResource TitleLabel}"/>
+                            Margin="150 100 0 0"
+                            Content="Joriy parol:"
+                            Style="{DynamicResource ProductLabelStyle}"/>
+                        <Label
+                            Margin="150 30 0 0"
+                            Content="Yangi parol:"
+                            Style="{DynamicResource ProductLabelStyle}"/>
+                        <Label
+                            Margin="150 30 0 0"
+                            Content="Qayta parol:"
+                            Style="{DynamicResource ProductLabelStyle}"/>
+                        <Label
+                            Margin="150 30 0 0"
+                            Content="Rolni o'zgartirish:"
+                            Style="{DynamicResource ProductLabelStyle}"/>
+                        
+                        <Button
+                            Margin="150 211.5 0 0"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource LoginButton}"
+                            Content="Bekor qilish"/>
 
-                        <Border
-                            Grid.Column="1"
-                            Height="38"
-                            Width="500"
-                            CornerRadius="10"
-                            BorderThickness="0.5"
-                            BorderBrush="{DynamicResource BorderColor}"
-                            Background="{DynamicResource FirstColor}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
+                    </StackPanel>
 
-                                <TextBox
-                                    x:Name="textBoxSearchBrand"
-                                    Margin="15 5 0 5"
-                                    Background="Transparent"
-                                    TextChanged="TextBox_TextChanged"
-                                    PreviewKeyDown="TextBox_PreviewKeyDown"
-                                    VerticalAlignment="Center"
-                                    FontSize="15"
-                                    BorderThickness="0"
-                                    Foreground="{DynamicResource BorderColor}">
-                                </TextBox>
-                                <Path 
-                                    x:Name="searchBrand" 
-                                    Grid.Column="1"
-                                    Data="{DynamicResource qidirish}"
-                                    Fill="{DynamicResource BorderColor}"
-                                    Height="20"
-                                    Stretch="Uniform"/>
-                            </Grid>
-                        </Border>
+                    <StackPanel
+                        Grid.Column="1">
+
+                        <TextBox
+                            Margin="50 90 150 0"
+                            x:Name="current_pasword"
+                            Style="{DynamicResource textbox}"/>
+                        <TextBox
+                            Margin="50 20 150 0"
+                            Name="new_password"
+                            Style="{DynamicResource textbox}"/>
+                        <TextBox
+                            x:Name="retype_password"
+                            Margin="50 20 150 0"
+                            Style="{DynamicResource textbox}"/>
+                        <ComboBox
+                            Margin="50 32 220 0">
+                            
+                            <ComboBoxItem
+                                Content="Admin"/>
+
+                            <ComboBoxItem
+                                Content="Sotuvchi"/>
+
+                        </ComboBox>
 
                         <Button
-                            x:Name="searchButtonBrand"
-                            Height="35"
-                            Width="150"
-                            Margin="20 0 0 0"
-                            Grid.Column="2"
-                            Content="Qo'shish"
-                            FontSize="16"
-                            HorizontalAlignment="Center"
-                            Foreground="{DynamicResource BorderColor}"
-                            Style="{DynamicResource LoginButton}">
-                        </Button>
+                            Margin="0 211 220 0"
+                            HorizontalAlignment="Right"
+                            Style="{DynamicResource LoginButton}"
+                            Content="Saqlash"/>
 
-                    </Grid>
-
-                    <Grid
-                        Grid.Row="1">
-                        <ScrollViewer>
-                            <WrapPanel
-                                x:Name="wrpBrand">
-
-                            </WrapPanel>
-                        </ScrollViewer>
-                        <Label 
-                            x:Name="emptyDataBrand"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Visibility="Collapsed"
-                            Content="Xozircha malumotlar yo'q"
-                            FontSize="18">
-                        </Label>
-                    </Grid>
-
-                </Grid>
-
-
-
-            </TabItem>
-
-            <TabItem
-                x:Name="Item_"
-                Style="{DynamicResource TabItemStyle}"
-                Header="Active">
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid
-                        HorizontalAlignment="Center"
-                        Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Content="Qidirish"
-                            VerticalAlignment="Center"
-                            Margin="10"
-                            Grid.Column="0"
-                            Style="{DynamicResource TitleLabel}"/>
-
-                        <Border
-                            Grid.Column="1"
-                            Height="38"
-                            Width="500"
-                            CornerRadius="10"
-                            BorderThickness="0.5"
-                            BorderBrush="{DynamicResource BorderColor}"
-                            Background="{DynamicResource FirstColor}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox
-                                    x:Name="textBoxSearchCategory"
-                                    Margin="15 5 0 5"
-                                    Background="Transparent"
-                                    TextChanged="TextBox_TextChanged"
-                                    PreviewKeyDown="TextBox_PreviewKeyDown"
-                                    VerticalAlignment="Center"
-                                    FontSize="15"
-                                    BorderThickness="0"
-                                    Foreground="{DynamicResource BorderColor}">
-                                </TextBox>
-                                <Path 
-                                    x:Name="searchCategory" 
-                                    Grid.Column="1"
-                                    Data="{DynamicResource qidirish}"
-                                    Fill="{DynamicResource BorderColor}"
-                                    Height="20"
-                                    Stretch="Uniform"/>
-                            </Grid>
-                        </Border>
-
-                        <Button
-                            x:Name="searchButtonCategory"
-                            Height="35"
-                            Width="150"
-                            Margin="20 0 0 0"
-                            Grid.Column="2"
-                            Content="Qo'shish"
-                            FontSize="16"
-                            HorizontalAlignment="Center"
-                            Foreground="{DynamicResource BorderColor}"
-                            Style="{DynamicResource LoginButton}">
-                        </Button>
-
-                    </Grid>
-
-                    <Grid
-                        Grid.Row="1">
-                        <ScrollViewer>
-                            <WrapPanel 
-                                x:Name="wrpCategory">
-
-                            </WrapPanel>
-                        </ScrollViewer>
-                        <Label 
-                            x:Name="emptyDataCategory"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Visibility="Collapsed"
-                            Content="Xozircha malumotlar yo'q"
-                            FontSize="18">
-                        </Label>
-                    </Grid>
+                    </StackPanel>
 
                 </Grid>
 
             </TabItem>
 
             <TabItem
-                x:Name="Item_Role_Change"
+                x:Name="Item_active"
                 Style="{DynamicResource TabItemStyle}"
-                Header="Rolni o'zgartirish">
+                Header="Faol akkauntlar">
+
+                <Grid
+                    Margin="10">
+                    <ScrollViewer>
+                        <StackPanel
+                            Name="stp_account">
+                            
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+            </TabItem>
+
+            <TabItem
+                x:Name="Item_create_store"
+                Style="{DynamicResource TabItemStyle}"
+                Header="Do'kon qo'shish">
 
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <Grid
-                        HorizontalAlignment="Center"
-                        Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Orientation="Vertical"
+                        Grid.Column="0">
+
                         <Label
-                            Content="Qidirish"
-                            VerticalAlignment="Center"
-                            Margin="10"
-                            Grid.Column="0"
-                            Style="{DynamicResource TitleLabel}"/>
-
-                        <Border
-                            Grid.Column="1"
-                            Height="38"
-                            Width="500"
-                            CornerRadius="10"
-                            BorderThickness="0.5"
-                            BorderBrush="{DynamicResource BorderColor}"
-                            Background="{DynamicResource FirstColor}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox
-                                    x:Name="textBoxSearchInvalid"
-                                    Margin="15 5 0 5"
-                                    Background="Transparent"
-                                    TextChanged="TextBox_TextChanged"
-                                    PreviewKeyDown="TextBox_PreviewKeyDown"
-                                    VerticalAlignment="Center"
-                                    FontSize="15"
-                                    BorderThickness="0"
-                                    Foreground="{DynamicResource BorderColor}">
-                                </TextBox>
-                                <Path 
-                                    x:Name="searchInvalidProducts" 
-                                    Grid.Column="1"
-                                    Data="{DynamicResource qidirish}"
-                                    Fill="{DynamicResource BorderColor}"
-                                    Height="20"
-                                    Stretch="Uniform"/>
-                            </Grid>
-                        </Border>
+                            Margin="150 200 0 0"
+                            Content="Do'kon nomi:"
+                            Style="{DynamicResource ProductLabelStyle}"/>
+                        <Label
+                            Margin="150 30 0 0"
+                            Content="Do'kon manzili:"
+                            Style="{DynamicResource ProductLabelStyle}"/>
 
                         <Button
-                            x:Name="searchButton"
-                            Height="35"
-                            Width="150"
-                            Margin="20 0 0 0"
-                            Grid.Column="2"
-                            Content="Qo'shish"
-                            FontSize="16"
-                            HorizontalAlignment="Center"
-                            Foreground="{DynamicResource BorderColor}"
-                            Style="{DynamicResource LoginButton}">
-                        </Button>
+                            Name="cancel_btn"
+                            Margin="150 234 0 0"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource LoginButton}"
+                            Content="Bekor qilish"/>
 
-                    </Grid>
+                    </StackPanel>
 
-                    <Grid
-                        Grid.Row="1">
-                        <ScrollViewer>
-                            <WrapPanel 
-                                x:Name="wrpInvalid">
+                    <StackPanel
+                        Grid.Column="1">
 
-                            </WrapPanel>
-                        </ScrollViewer>
-                        <Label 
-                            x:Name="emptyDataInvalid"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Visibility="Collapsed"
-                            Content="Xozircha malumotlar yo'q"
-                            FontSize="18">
-                        </Label>
-                    </Grid>
+                        <TextBox
+                            Margin="50 190 150 0"
+                            x:Name="store_name"
+                            Style="{DynamicResource textbox}"/>
+                        <TextBox
+                            Margin="50 20 150 0"
+                            Name="store_address"
+                            Style="{DynamicResource textbox}"/>
+                        
+
+                        <Button
+                            Name="create_btn"
+                            Margin="0 231 220 0"
+                            HorizontalAlignment="Right"
+                            Style="{DynamicResource LoginButton}"
+                            Content="Saqlash"/>
+
+                    </StackPanel>
 
                 </Grid>
 
