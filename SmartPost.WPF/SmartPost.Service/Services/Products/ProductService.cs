@@ -179,96 +179,13 @@ public class ProductService : IProductService
         }
         else if (mappedProduct.SalePrice is not null && mappedProduct.PercentageSalePrice is null)
         {
-            decimal? percentPrice = ((mappedProduct.Price - mappedProduct.SalePrice) / mappedProduct.Price) * 100;
-            decimal? percentSale = 100 - percentPrice;
-            mappedProduct.PercentageSalePrice = (short?)percentSale;
+            decimal? percentPrice = ((mappedProduct.SalePrice - mappedProduct.Price) / mappedProduct.Price) * 100;
+            mappedProduct.PercentageSalePrice = (short)percentPrice; 
         }
 
 
         return _mapper.Map<ProductForResultDto>(await _productRepository.InsertAsync(mappedProduct));
     }
-
-    /*public async Task<ProductForResultDto> CreateAsync(ProductForCreationDto productForCreationDto)
-    {
-        var category = await _categoryService.RetrieveByIdAsync(productForCreationDto.CategoryId);
-        var brand = await _brandService.RetrieveByIdAsync(productForCreationDto.BrandId);
-
-        var existingProduct = await _productRepository.SelectAll()
-            .Where(p => p.PCode.ToUpper() == productForCreationDto.PCode.ToUpper()
-                     && p.BarCode == productForCreationDto.BarCode)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
-
-        if (existingProduct != null)
-        {
-            // Update existing product properties
-            existingProduct.Price = productForCreationDto.Price;
-            existingProduct.BarCode = productForCreationDto.BarCode;
-            existingProduct.BrandId = productForCreationDto.BrandId;
-            existingProduct.ProductName = productForCreationDto.ProductName;
-            existingProduct.Size = productForCreationDto.Size;
-            existingProduct.PCode = productForCreationDto.PCode;
-            existingProduct.CategoryId = productForCreationDto.CategoryId;
-
-            // Update the existing product in the repository
-            await _productRepository.UpdateAsync(existingProduct);
-
-            // Retrieve the corresponding stock product
-            var stockProduct = await _stockProductRepository.SelectAll()
-                .Where(p => p.PCode == existingProduct.PCode)
-                .FirstOrDefaultAsync();
-
-            // Update stock product properties
-            if (stockProduct != null)
-            {
-                stockProduct.Price = productForCreationDto.Price;
-                stockProduct.BarCode = productForCreationDto.BarCode;
-                stockProduct.BrandId = productForCreationDto.BrandId;
-                stockProduct.ProductName = productForCreationDto.ProductName;
-                stockProduct.Size = productForCreationDto.Size;
-                stockProduct.PCode = productForCreationDto.PCode;
-                stockProduct.CategoryId = productForCreationDto.CategoryId;
-
-                // Update the stock product in the repository
-                await _stockProductRepository.UpdateAsync(stockProduct);
-            }
-
-            // Increase quantity and update the existing product
-            existingProduct.Quantity += productForCreationDto.Quantity;
-            await _productRepository.UpdateAsync(existingProduct);
-
-            // Throw a custom exception indicating the product has been added to the existing one
-            throw new CustomException(200, "Bu turdagi mahsulot omborda mavjudligi uchun uning soniga qo'shib qo'yildi.");
-        }
-
-        // Check if a product with the same PCode exists
-        var existingProductByPCode = await _productRepository.SelectAll()
-            .Where(s => s.PCode == productForCreationDto.PCode)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
-
-        if (existingProductByPCode != null)
-            throw new CustomException(409, $"{existingProductByPCode.PCode} - bu kod bazada mavjud.");
-
-        // Check if a product with the same BarCode exists
-        var existingProductByBarCode = await _productRepository.SelectAll()
-            .Where(s => s.BarCode == productForCreationDto.BarCode)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
-
-        if (existingProductByBarCode != null)
-            throw new CustomException(409, $"{existingProductByBarCode.BarCode} - bu kod bazada mavjud.");
-
-        // Create a new product
-        var newProduct = _mapper.Map<Product>(productForCreationDto);
-        newProduct.CreatedAt = DateTime.UtcNow;
-
-        // Insert the new product into the repository
-        var insertedProduct = await _productRepository.InsertAsync(newProduct);
-
-        // Return the mapped result
-        return _mapper.Map<ProductForResultDto>(insertedProduct);
-    }*/
 
 
     public async Task<bool> DeleteAsync(long id)
