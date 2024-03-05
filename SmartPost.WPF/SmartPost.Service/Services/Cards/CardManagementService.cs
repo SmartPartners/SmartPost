@@ -68,7 +68,7 @@ public class CardManagementService : ICardManagementService
             TransNo = trnasNo,
             CreatedAt = DateTime.UtcNow
         };
-        card.TotalPrice = card.SalePrice * card.Quantity;
+        card.TotalPrice = card.SalePrice * card.Quantity ?? 0;
 
         var existingCard = await _cardRepository.SelectAll()
             .Where(p => p.TransNo == card.TransNo && p.BarCode == card.BarCode)
@@ -77,7 +77,7 @@ public class CardManagementService : ICardManagementService
         if (existingCard != null)
         {
             existingCard.Quantity += quantityToMove;
-            existingCard.TotalPrice = existingCard.SalePrice * existingCard.Quantity;
+            existingCard.TotalPrice = existingCard.SalePrice * existingCard.Quantity ?? 0;
             existingCard.UpdatedAt = DateTime.UtcNow;
             await _cardRepository.UpdateAsync(existingCard);
         }
