@@ -25,6 +25,8 @@ public class CardManagementService : ICardManagementService
         _mapper = mapper;
     }
 
+    public CardManagementService() { }
+
     /// <summary>
     /// StokProdutni ichidan sotilganlarni cardga olib o'tish
     /// </summary>
