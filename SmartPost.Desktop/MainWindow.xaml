@@ -1,0 +1,142 @@
+﻿<Window x:Class="SmartPost.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="750" Width="1250">
+    
+    <Border
+        Background="{DynamicResource FirstColor}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    FontSize="24"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="LOGO"/>
+
+                <Border
+                    Grid.Column="1"
+                    Name="MouseDragable"
+                    MouseDown="MouseDragable_MouseDown"
+                    Cursor="Hand"
+                    Background="Transparent">
+                </Border>
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Column="2">
+
+                    <Button x:Name="btnMinus" Click="btnMinus_Click" Style="{DynamicResource MinimizedButton}"/>
+                    <Button x:Name="btnMaximize" Click="btnMaximize_Click" Style="{DynamicResource MaximizedButton}"/>
+                    <Button x:Name="btnClose" Click="btnClose_Click" Style="{DynamicResource ClosedButton}"/>
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid
+                Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Orientation="Vertical"
+                    Grid.Column="0"
+                    Margin="0 50 0 70">
+
+                    <RadioButton 
+                        x:Name="rbDashboard"
+                        Content="Dashboard"
+                        Click="rbDashboard_Click"
+                        Style="{DynamicResource MenuButton}" 
+                        Tag="{DynamicResource dashboard}"/>
+                    <RadioButton 
+                        x:Name="rbOmbor"
+                        Content="Omborxona"
+                        Click="rbOmbor_Click"
+                        Style="{DynamicResource MenuButton}" 
+                        Tag="{DynamicResource ombor}"/>
+                    <RadioButton
+                        x:Name="rbDokondagi_maxsulotlar"
+                        Content="Do'kondagi maxsulotlar"
+                        Click="rbDokondagi_maxsulotlar_Click"
+                        Style="{DynamicResource MenuButton}"
+                        Tag="{DynamicResource maxsulot}"/>
+                    <RadioButton 
+                        x:Name="rbSotuv_tarixi"
+                        Content="Sotuv tarixi"
+                        Click="rbSotuv_tarixi_Click"
+                        Style="{DynamicResource MenuButton}" 
+                        Tag="{DynamicResource tarix}"/>
+                    <RadioButton 
+                        x:Name="rbSotuv_tafsilotlari"
+                        Content="Sotuv tafsilotlari"
+                        Click="rbSotuv_tafsilotlari_Click"
+                        Style="{DynamicResource MenuButton}" 
+                        Tag="{DynamicResource tafsilot}"/>
+                    <RadioButton 
+                        x:Name="rbSozlamalar"
+                        Content="Sozlamalar"
+                        Click="rbSozlamalar_Click"
+                        Style="{DynamicResource MenuButton}" 
+                        Tag="{DynamicResource sozlama}"/>
+
+                </StackPanel>
+
+                <Border
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    MouseDown="Border_MouseDown"
+                    Grid.Column="0"
+                    Margin="20"
+                    Height="30"
+                    Width="30"
+                    Background="{DynamicResource FirstColor}">
+                    <Path 
+                        x:Name="Logout" 
+                        Data="{DynamicResource chiqish }"
+                        Fill="{DynamicResource BorderColor}"
+                        Height="30"
+                        Stretch="Uniform"/>
+                </Border>
+
+                <Border
+                    Grid.Column="1"
+                    CornerRadius="0 0 10 0"
+                    Background="{DynamicResource SecondColor}">
+                    <Frame
+                        Name="PageNavigator"
+                        NavigationUIVisibility="Hidden" Content=""/>
+
+                </Border>
+
+            </Grid>
+
+        </Grid>
+        
+    </Border>
+</Window>
