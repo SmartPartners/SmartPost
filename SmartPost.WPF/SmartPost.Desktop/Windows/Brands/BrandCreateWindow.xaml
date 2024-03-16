@@ -6,18 +6,18 @@
         xmlns:local="clr-namespace:SmartPost.Desktop.Windows.Brands"
         mc:Ignorable="d"
         Title="BrandCreateWindow" 
-            WindowState="Maximized"
-    WindowStyle="None"
-    AllowsTransparency="True"
-    Background="#21212121"
-    WindowStartupLocation="CenterScreen"
-    Loaded="Window_Loaded">
+        WindowState="Maximized"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#21212121"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
 
     <Border
-    Height="600" 
-    Width="600"
-    CornerRadius="10"
-    Background="{DynamicResource FirstColor}">
+        Height="300" 
+        Width="600"
+        CornerRadius="10"
+        Background="{DynamicResource FirstColor}">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -36,123 +36,37 @@
                 />
 
             <Button
-            x:Name="close_Button"
-            Grid.Row="0"
-            HorizontalAlignment="Right"
-            Click="close_Button_Click"
-            Style="{DynamicResource ClosedButton}"/>
+                x:Name="close_Button"
+                Grid.Row="0"
+                HorizontalAlignment="Right"
+                Click="close_Button_Click"
+                Style="{DynamicResource ClosedButton}"/>
 
             <Grid
-            Grid.Row="1">
+                Margin="0 50 0 0"
+                Grid.Row="1">
 
                 <StackPanel
-                Width="300"
-                HorizontalAlignment="Left"
-                Orientation="Vertical">
+                    Width="220"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
 
                     <Label
                         Margin="70 10 0 0"
                         Content="Brend nomi:"
                         Style="{DynamicResource ProductLabelStyle}"/>
 
-                    <Label
-                    Margin="70 10 0 0"
-                    Content="Soni:"
-                    Style="{DynamicResource ProductLabelStyle}"/>
-
-                    <Label
-                    Margin="70 10 0 0"
-                    Content="Narxi:"
-                    Style="{DynamicResource ProductLabelStyle}"/>
-                    <Label
-                    Margin="70 10 0 0"
-                    Content="Shtrix kodi:"
-                    Style="{DynamicResource ProductLabelStyle}"/>
-                    <Label
-                Margin="70 10 0 0"
-                Content="P kodi:"
-                Style="{DynamicResource ProductLabelStyle}"/>
-                    <Label
-                Margin="70 10 0 0"
-                Content="Chegirma narxi:"
-                Style="{DynamicResource ProductLabelStyle}"/>
-
-                    <Label
-                Margin="70 10 0 0"
-                Content="Sotish narxi:"
-                Style="{DynamicResource ProductLabelStyle}"/>
-                    <Label
-                Margin="70 10 0 0"
-                Content="Kategoriyasi:"
-                Style="{DynamicResource ProductLabelStyle}"/>
-                    <Label
-                Margin="70 10 0 0"
-                Content="Brendi:"
-                Style="{DynamicResource ProductLabelStyle}"/>
-
                 </StackPanel>
 
                 <StackPanel
-            Width="300"
-            HorizontalAlignment="Right"
-            Orientation="Vertical">
+                    Width="370"
+                    HorizontalAlignment="Right"
+                    Orientation="Vertical">
 
                     <TextBox
-                x:Name="product_name"
-                Style="{DynamicResource textbox}"/>
-                    <TextBox
-                x:Name="product_quantity"
-                PreviewTextInput="product_PreviewTextInput"
-                Style="{DynamicResource textbox}"/>
-                    <TextBox
-                x:Name="product_price"
-                PreviewTextInput="product_PreviewTextInput"
-                Style="{DynamicResource textbox}"/>
-                    <TextBox
-                x:Name="product_barcode"
-                PreviewTextInput="product_PreviewTextInput"
-                Style="{DynamicResource textbox}"/>
-                    <TextBox
-                x:Name="product_Pcode"
-                PreviewTextInput="product_PreviewTextInput"
-                Style="{DynamicResource textbox}"/>
-                    <TextBox
-                x:Name="product_sale_price"
-                PreviewTextInput="product_PreviewTextInput"
-                Style="{DynamicResource textbox}"/>
-                    <TextBox
-                x:Name="product_percentage_price"
-                PreviewTextInput="product_PreviewTextInput"
-                Style="{DynamicResource textbox}"/>
-
-                    <ComboBox
-                Margin="0 18 70 0">
-
-                        <ComboBoxItem
-                    Content="Telefon"/>
-                        <ComboBoxItem
-                    Content="Komputer"/>
-                        <ComboBoxItem
-                    Content="Quloqchin"/>
-                        <ComboBoxItem
-                    Content="Aksessuar"/>
-
-                    </ComboBox>
-
-                    <ComboBox
-                Margin="0 18 70 0">
-
-                        <ComboBoxItem
-                    Content="Samsung"/>
-                        <ComboBoxItem
-                    Content="Apple"/>
-                        <ComboBoxItem
-                    Content="Microsoft"/>
-                        <ComboBoxItem
-                    Content="Xiomi"/>
-
-                    </ComboBox>
-
+                        x:Name="product_name"
+                        Style="{DynamicResource textbox}"/>
+                    
                 </StackPanel>
 
             </Grid>

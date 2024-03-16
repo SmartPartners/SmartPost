@@ -1,4 +1,7 @@
 ﻿using ESC_POS_USB_NET.Printer;
+using SmartPost.Service.DTOs.Receipts;
+using SmartPost.Service.DTOs.Transactions;
+using System.Drawing;
 using System.IO;
 using System.Text;
 
@@ -18,7 +21,7 @@ public class PrintService : IDisposable
 
     public void Print(AddReceiptDto receipt, List<TransactionDto> transactions, int receiptId)
     {
-        //using var tokenService = new TokenService();
+        using var tokenService = new TokenService();
         printer = new Printer(printerName, "UTF-8");
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         printer.Separator();
@@ -138,7 +141,7 @@ public class PrintService : IDisposable
         List<string> printers = new List<string>();
         foreach (var print in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
         {
-            printers.Add(print.ToString());
+            printers.Add(print.ToString()!);
         }
 
         return printers;
