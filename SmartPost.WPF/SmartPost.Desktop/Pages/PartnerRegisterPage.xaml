@@ -8,39 +8,49 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PartnerRegisterPage">
 
-	<Grid Background="#1EB7E8" Margin="97,82,195,140" >
-		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-			<TextBlock Text="Hamkor qo'shish" FontSize="24" Foreground="White" Margin="0,0,0,20"/>
+    <Grid Background="#1EB7E8" Margin="97,82,195,140" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="18*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+            <TextBlock Text="Hamkor qo'shish"
+                       FontSize="24" 
+                       Foreground="White" 
+                       Margin="6 0 0 20"/>
 
-			<TextBlock Text="Name:"/>
-			<TextBox x:Name="NameTextBox" Width="200" Margin="5"/>
+            <TextBlock Text="Name:" Margin="6 0"/>
+            <TextBox x:Name="NameTextBox" Width="200" Margin="5"/>
 
-			<TextBlock Text="Surname:"/>
-			<TextBox x:Name="SurnameTextBox" Width="200" Margin="5"/>
+            <TextBlock Text="Surname:" Margin="6 0"/>
+            <TextBox x:Name="SurnameTextBox" Width="200" Margin="5"/>
 
-			<TextBlock Text="Phone Number:"/>
-			<TextBox x:Name="PhoneTextBox" Width="200" Margin="5"/>
+            <TextBlock Text="Phone Number:" Margin="6 0"/>
+            <TextBox x:Name="PhoneTextBox" Width="200" Margin="5"/>
 
-			<Button Content="Register" Width="100" Height="30" Margin="5" Background="LightBlue">
-				<Button.Style>
-					<Style TargetType="Button">
-						<Setter Property="BorderBrush" Value="White"/>
-						<Setter Property="BorderThickness" Value="2"/>
-						<Setter Property="Template">
-							<Setter.Value>
-								<ControlTemplate TargetType="Button">
-									<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-										<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-									</Border>
-								</ControlTemplate>
-							</Setter.Value>
-						</Setter>
-					</Style>
-				</Button.Style>
-				<Button.Effect>
-					<DropShadowEffect ShadowDepth="3" BlurRadius="5" Opacity="0.5"/>
-				</Button.Effect>
-			</Button>
-		</StackPanel>
-	</Grid>
+            <Button Content="Register" 
+                    Style="{DynamicResource RegisterButton}" 
+                    Width="100" 
+                    Height="30" 
+                    Margin="5" 
+                    Click="Button_Click_1">
+                 <Button.Effect>
+                    <DropShadowEffect ShadowDepth="5" BlurRadius="3" Opacity="0.5"/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+        <Button Grid.Column="1"
+                Style="{DynamicResource DeleteButton}"
+                Height="22"
+                Width="22"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center" 
+                Margin="0,3,0,0" 
+                Click="Button_Click">
+
+        </Button>
+
+    </Grid>
 </Page>

@@ -9,9 +9,11 @@ namespace SmartPost.Desktop;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    private readonly IServiceProvider services;
+    public MainWindow(IServiceProvider services)
     {
         InitializeComponent();
+        this.services = services;
     }
 
     private void btnMinus_Click(object sender, RoutedEventArgs e)

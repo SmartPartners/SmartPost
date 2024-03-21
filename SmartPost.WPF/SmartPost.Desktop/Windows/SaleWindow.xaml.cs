@@ -1,8 +1,13 @@
-﻿using SmartPost.DataAccess.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SmartPost.DataAccess.Data;
 using SmartPost.Desktop.Pages;
 using SmartPost.Domain.Entities.StorageProducts;
+using SmartPost.Service.Interfaces.Partners;
+using SmartPost.Service.Interfaces.StockProducts;
 using SmartPost.Service.Services.Cards;
+using SmartPost.Service.Services.Partners;
 using System.Windows;
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -26,10 +31,12 @@ public partial class SaleWindow : Window
 {
     CardManagementService cardManagement = new CardManagementService();
     private AppDbContext dbContext;
-    public SaleWindow()
+    private readonly IServiceProvider services;
+    public SaleWindow(IServiceProvider service)
     {
         InitializeComponent();
         PopulateSampleData();
+        this.services= service;
     }
 
     public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -52,7 +59,7 @@ public partial class SaleWindow : Window
     {
         try
         {
-            PartnersPage partnersPage = new PartnersPage();
+            PartnersPage partnersPage = new PartnersPage(services);
             partnersPage.Owner = this;  // Set the owner window to enable proper modality
             partnersPage.ShowDialog();
         }
@@ -86,7 +93,7 @@ public partial class SaleWindow : Window
     {
         try
         {
-            KunlikSotuvPage kunlikSotuvPage = new KunlikSotuvPage();
+            KunlikSotuvPage kunlikSotuvPage = new KunlikSotuvPage(services);
             mainFrame.NavigationService.Navigate(kunlikSotuvPage);
         }
         catch (Exception ex)
@@ -94,8 +101,6 @@ public partial class SaleWindow : Window
             // Handle or log the exception
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-
     }
 
     private void DiscountButton_Click(object sender, RoutedEventArgs e)
@@ -158,5 +163,20 @@ public partial class SaleWindow : Window
         //	}
 
         //}
+    }
+
+    private void setings_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            SozlamalarPage sozlamalarPage = new SozlamalarPage();
+            mainFrame.NavigationService.Navigate(sozlamalarPage);
+        }
+        catch (Exception ex)
+        {
+            // Handle or log the exception
+            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
     }
 }

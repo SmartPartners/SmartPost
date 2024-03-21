@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
-using System.Windows;
-using static SmartPost.Desktop.Windows.BlurWindow.BlurEffect;
-using System.Windows.Interop;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Interop;
+using static SmartPost.Desktop.Windows.BlurWindow.BlurEffect;
 
 namespace SmartPost.Desktop.Windows.Categories;
 
@@ -64,4 +64,5 @@ public partial class CategoryCreateWindow : Window
     {
         this.Close();
     }
+
 }
