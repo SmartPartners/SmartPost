@@ -20,77 +20,92 @@
                 Header="Sotilganlar">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid
-                    HorizontalAlignment="Center"
-                    Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Grid.Row="0">
+
+                        <DatePicker
+                            Name="dan_datePicker_sale"
+                            Margin="10 20 0 0"
+                            Width="200"
+                            Style="{DynamicResource FormDatePicker}"/>
+
                         <Label
-                        Content="Qidirish"
-                        VerticalAlignment="Center"
-                        Margin="10"
-                        Grid.Column="0"
-                        Style="{DynamicResource TitleLabel}"/>
+                            FontSize="16"
+                            Margin="5 18 0 0"
+                            Content="dan:"/>
 
-                        <Border
-                        Grid.Column="1"
-                        Height="38"
-                        Width="500"
-                        CornerRadius="10"
-                        BorderThickness="0.5"
-                        BorderBrush="{DynamicResource BorderColor}"
-                        Background="{DynamicResource FirstColor}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
+                        <DatePicker
+                            Name="gacha_datePicker_sale"
+                            Margin="50 20 0 0"
+                            Width="200"
+                            Style="{DynamicResource FormDatePicker}"/>
 
-                                <TextBox
-                                x:Name="textBoxSearchProduct"
-                                Margin="15 5 0 5"
-                                Background="Transparent"
-                                TextChanged="TextBox_TextChanged"
-                                PreviewKeyDown="TextBox_PreviewKeyDown"
-                                VerticalAlignment="Center"
-                                FontSize="15"
-                                BorderThickness="0"
-                                Foreground="{DynamicResource BorderColor}">
-                                </TextBox>
-                                <Path 
-                                x:Name="searchProduct" 
-                                Grid.Column="1"
-                                Data="{DynamicResource qidirish}"
-                                Fill="{DynamicResource BorderColor}"
-                                Height="20"
-                                Stretch="Uniform"/>
-                            </Grid>
-                        </Border>
+                        <Label
+                            FontSize="16"
+                            Margin="5 18 0 0"
+                            Content="gacha"/>
 
-                        <Button
-                        x:Name="searchButtonProducts"
-                        Height="35"
-                        Width="150"
-                        Margin="20 0 0 0"
-                        Grid.Column="2"
-                        Content="Qo'shish"
-                        FontSize="16"
-                        HorizontalAlignment="Center"
-                        Foreground="{DynamicResource BorderColor}"
-                        Style="{DynamicResource LoginButton}">
-                        </Button>
+
+                    </StackPanel>
+
+                    <Grid
+                        Margin="10 10 20 0"
+                        Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label 
+                            Grid.Column="0"
+                            Content="No."
+                            Margin="5 0 0 0"
+                            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+                            Grid.Column="1"
+                            Margin="10 0 0 0"
+                            Content="Hamkor ismi"
+                            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+                            Grid.Column="2"
+                            Content="Nomi"
+                            Margin="10 0 0 0"
+                            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+                            Grid.Column="3"
+                            Content="Brendi"
+                            Margin="10 0 0 0"
+                            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+                            Grid.Column="4"
+                            Content="Narxi"
+                            Margin="10 0 0 0"
+                            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+                            Grid.Column="5"
+                            Content="Soni"
+                            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+                            Grid.Column="6"
+                            Content="Jami summasi"
+                            Style="{DynamicResource TitleLabel}"/>
 
                     </Grid>
 
                     <Grid
-                        Grid.Row="1">
+                        Grid.Row="2">
                         <ScrollViewer>
                             <WrapPanel
                                 x:Name="wrpOmborxona">
@@ -98,12 +113,12 @@
                             </WrapPanel>
                         </ScrollViewer>
                         <Label 
-                        x:Name="emptyDataProducts"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Visibility="Collapsed"
-                        Content="Xozircha malumotlar yo'q"
-                        FontSize="18">
+                            x:Name="emptyDataProducts"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Visibility="Collapsed"
+                            Content="Xozircha malumotlar yo'q"
+                            FontSize="18">
                         </Label>
                     </Grid>
                 </Grid>
@@ -245,8 +260,6 @@
 
                 </Grid>
 
-
-
             </TabItem>
 
             <TabItem
@@ -256,93 +269,107 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid
-                    HorizontalAlignment="Center"
-                    Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel
+        Orientation="Horizontal"
+        Grid.Row="0">
+
+                        <DatePicker
+            Name="dan_datePicker_cancel"
+            Margin="10 20 0 0"
+            Width="200"
+            Style="{DynamicResource FormDatePicker}"/>
+
                         <Label
-                        Content="Qidirish"
-                        VerticalAlignment="Center"
-                        Margin="10"
-                        Grid.Column="0"
-                        Style="{DynamicResource TitleLabel}"/>
+            FontSize="16"
+            Margin="5 18 0 0"
+            Content="dan:"/>
 
-                        <Border
-                        Grid.Column="1"
-                        Height="38"
-                        Width="500"
-                        CornerRadius="10"
-                        BorderThickness="0.5"
-                        BorderBrush="{DynamicResource BorderColor}"
-                        Background="{DynamicResource FirstColor}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
+                        <DatePicker
+            Name="gacha_datePicker_cancel"
+            Margin="50 20 0 0"
+            Width="200"
+            Style="{DynamicResource FormDatePicker}"/>
 
-                                <TextBox
-                                x:Name="textBoxSearchCategory"
-                                Margin="15 5 0 5"
-                                Background="Transparent"
-                                TextChanged="TextBox_TextChanged"
-                                PreviewKeyDown="TextBox_PreviewKeyDown"
-                                VerticalAlignment="Center"
-                                FontSize="15"
-                                BorderThickness="0"
-                                Foreground="{DynamicResource BorderColor}">
-                                </TextBox>
-                                <Path 
-                                x:Name="searchCategory" 
-                                Grid.Column="1"
-                                Data="{DynamicResource qidirish}"
-                                Fill="{DynamicResource BorderColor}"
-                                Height="20"
-                                Stretch="Uniform"/>
-                            </Grid>
-                        </Border>
+                        <Label
+            FontSize="16"
+            Margin="5 18 0 0"
+            Content="gacha"/>
 
-                        <Button
-                        x:Name="searchButtonCategory"
-                        Height="35"
-                        Width="150"
-                        Margin="20 0 0 0"
-                        Grid.Column="2"
-                        Content="Qo'shish"
-                        FontSize="16"
-                        HorizontalAlignment="Center"
-                        Foreground="{DynamicResource BorderColor}"
-                        Style="{DynamicResource LoginButton}">
-                        </Button>
+
+                    </StackPanel>
+
+                    <Grid
+        Margin="10 10 20 0"
+        Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label 
+            Grid.Column="0"
+            Content="No."
+            Margin="5 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="1"
+            Margin="10 0 0 0"
+            Content="Hamkor ismi"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="2"
+            Content="Nomi"
+            Margin="10 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="3"
+            Content="Brendi"
+            Margin="10 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="4"
+            Content="Narxi"
+            Margin="10 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="5"
+            Content="Soni"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="6"
+            Content="Jami summasi"
+            Style="{DynamicResource TitleLabel}"/>
 
                     </Grid>
 
                     <Grid
-                    Grid.Row="1">
+                        Grid.Row="2">
                         <ScrollViewer>
-                            <WrapPanel 
-                            x:Name="wrpCategory">
+                            <WrapPanel
+                x:Name="wrpCancel">
 
                             </WrapPanel>
                         </ScrollViewer>
                         <Label 
-                        x:Name="emptyDataCategory"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Visibility="Collapsed"
-                        Content="Xozircha malumotlar yo'q"
-                        FontSize="18">
+            x:Name="emptyDataCancel"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="Collapsed"
+            Content="Xozircha malumotlar yo'q"
+            FontSize="18">
                         </Label>
                     </Grid>
-
                 </Grid>
 
             </TabItem>
@@ -354,93 +381,107 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid
-                        HorizontalAlignment="Center"
-                        Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="500"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel
+        Orientation="Horizontal"
+        Grid.Row="0">
+
+                        <DatePicker
+            Name="dan_datePicker_invalid"
+            Margin="10 20 0 0"
+            Width="200"
+            Style="{DynamicResource FormDatePicker}"/>
+
                         <Label
-                            Content="Qidirish"
-                            VerticalAlignment="Center"
-                            Margin="10"
-                            Grid.Column="0"
-                            Style="{DynamicResource TitleLabel}"/>
+            FontSize="16"
+            Margin="5 18 0 0"
+            Content="dan:"/>
 
-                        <Border
-                            Grid.Column="1"
-                            Height="38"
-                            Width="500"
-                            CornerRadius="10"
-                            BorderThickness="0.5"
-                            BorderBrush="{DynamicResource BorderColor}"
-                            Background="{DynamicResource FirstColor}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
+                        <DatePicker
+            Name="gacha_datePicker_invalid"
+            Margin="50 20 0 0"
+            Width="200"
+            Style="{DynamicResource FormDatePicker}"/>
 
-                                <TextBox
-                                    x:Name="textBoxSearchInvalid"
-                                    Margin="15 5 0 5"
-                                    Background="Transparent"
-                                    TextChanged="TextBox_TextChanged"
-                                    PreviewKeyDown="TextBox_PreviewKeyDown"
-                                    VerticalAlignment="Center"
-                                    FontSize="15"
-                                    BorderThickness="0"
-                                    Foreground="{DynamicResource BorderColor}">
-                                </TextBox>
-                                <Path 
-                                    x:Name="searchInvalidProducts" 
-                                    Grid.Column="1"
-                                    Data="{DynamicResource qidirish}"
-                                    Fill="{DynamicResource BorderColor}"
-                                    Height="20"
-                                    Stretch="Uniform"/>
-                            </Grid>
-                        </Border>
+                        <Label
+            FontSize="16"
+            Margin="5 18 0 0"
+            Content="gacha"/>
 
-                        <Button
-                            x:Name="searchButton"
-                            Height="35"
-                            Width="150"
-                            Margin="20 0 0 0"
-                            Grid.Column="2"
-                            Content="Qo'shish"
-                            FontSize="16"
-                            HorizontalAlignment="Center"
-                            Foreground="{DynamicResource BorderColor}"
-                            Style="{DynamicResource LoginButton}">
-                        </Button>
+
+                    </StackPanel>
+
+                    <Grid
+        Margin="10 10 20 0"
+        Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label 
+            Grid.Column="0"
+            Content="No."
+            Margin="5 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="1"
+            Margin="10 0 0 0"
+            Content="Hamkor ismi"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="2"
+            Content="Nomi"
+            Margin="10 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="3"
+            Content="Brendi"
+            Margin="10 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="4"
+            Content="Narxi"
+            Margin="10 0 0 0"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="5"
+            Content="Soni"
+            Style="{DynamicResource TitleLabel}"/>
+                        <Label 
+            Grid.Column="6"
+            Content="Jami summasi"
+            Style="{DynamicResource TitleLabel}"/>
 
                     </Grid>
 
                     <Grid
-                        Grid.Row="1">
+        Grid.Row="2">
                         <ScrollViewer>
-                            <WrapPanel 
-                                x:Name="wrpInvalid">
+                            <WrapPanel
+                x:Name="wrpInvalid">
 
                             </WrapPanel>
                         </ScrollViewer>
                         <Label 
-                            x:Name="emptyDataInvalid"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Visibility="Collapsed"
-                            Content="Xozircha malumotlar yo'q"
-                            FontSize="18">
+            x:Name="emptyDataInvalid"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="Collapsed"
+            Content="Xozircha malumotlar yo'q"
+            FontSize="18">
                         </Label>
                     </Grid>
-
                 </Grid>
 
             </TabItem>
