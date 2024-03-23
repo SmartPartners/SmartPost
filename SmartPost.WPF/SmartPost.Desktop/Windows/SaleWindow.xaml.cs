@@ -40,7 +40,6 @@ public partial class SaleWindow : Window
     {
         InitializeComponent();
         PopulateSampleData();
-        this.services= service;
     }
 
     public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -63,7 +62,7 @@ public partial class SaleWindow : Window
     {
         try
         {
-            PartnersPage partnersPage = new PartnersPage(services);
+            PartnersPage partnersPage = new PartnersPage();
             partnersPage.Owner = this;  // Set the owner window to enable proper modality
             partnersPage.ShowDialog();
         }
@@ -97,7 +96,7 @@ public partial class SaleWindow : Window
     {
         try
         {
-            KunlikSotuvPage kunlikSotuvPage = new KunlikSotuvPage(services);
+            KunlikSotuvPage kunlikSotuvPage = new KunlikSotuvPage();
             mainFrame.NavigationService.Navigate(kunlikSotuvPage);
         }
         catch (Exception ex)
