@@ -6,7 +6,8 @@
       mc:Ignorable="d" 
       Title="SozlamalarPage">
 
-    <Grid
+    <Grid x:Name="grSettings"
+        Background="AliceBlue"
         Margin="10">
 
         <TabControl
@@ -33,7 +34,7 @@
                             Style="{DynamicResource ProductLabelStyle}"/>
                         <Label
                             Margin="150 30 0 0"
-                            Content="Ism va fameliya:"
+                            Content="Ism va familiya:"
                             Style="{DynamicResource ProductLabelStyle}"/>
                         <Label
                             Margin="150 30 0 0"
@@ -51,27 +52,26 @@
                             Margin="150 150 0 0"
                             HorizontalAlignment="Left"
                             Style="{DynamicResource LoginButton}"
-                            Content="Bekor qilish"/>
+                            Content="Bekor qilish" Click="Button_Click"/>
 
                     </StackPanel>
 
                     <StackPanel
                         Grid.Column="1">
 
-                        <TextBox
+                        <TextBox x:Name="tbUserName"
                             Margin="50 90 150 0"
-                            x:Name="product_name"
                             Style="{DynamicResource textbox}"/>
-                        <TextBox
+                        <TextBox x:Name="tbNameAndSurname"
                             Margin="50 20 150 0"
                             Style="{DynamicResource textbox}"/>
-                        <TextBox
+                        <TextBox x:Name="tbParol"
                             Margin="50 20 150 0"
                             Style="{DynamicResource textbox}"/>
-                        <TextBox
+                        <TextBox x:Name="tbConfirmParol"
                             Margin="50 20 150 0"
                             Style="{DynamicResource textbox}"/>
-                        <ComboBox
+                        <ComboBox x:Name="cbRoll"
                             Margin="50 32 220 0"
                             >
                             <ComboBoxItem
@@ -86,7 +86,7 @@
                             Margin="0 150 220 0"
                             HorizontalAlignment="Right"
                             Style="{DynamicResource LoginButton}"
-                            Content="Saqlash"/>
+                            Content="Saqlash" Click="Button_Click"/>
 
                     </StackPanel>
 
@@ -130,7 +130,7 @@
                             Margin="150 211.5 0 0"
                             HorizontalAlignment="Left"
                             Style="{DynamicResource LoginButton}"
-                            Content="Bekor qilish"/>
+                            Content="Bekor qilish" Click="Button_Click_1"/>
 
                     </StackPanel>
 
@@ -143,7 +143,7 @@
                             Style="{DynamicResource textbox}"/>
                         <TextBox
                             Margin="50 20 150 0"
-                            Name="new_password"
+                            x:Name="new_password"
                             Style="{DynamicResource textbox}"/>
                         <TextBox
                             x:Name="retype_password"
@@ -218,7 +218,7 @@
                             Margin="150 234 0 0"
                             HorizontalAlignment="Left"
                             Style="{DynamicResource LoginButton}"
-                            Content="Bekor qilish"/>
+                            Content="Bekor qilish" Click="cancel_btn_Click"/>
 
                     </StackPanel>
 

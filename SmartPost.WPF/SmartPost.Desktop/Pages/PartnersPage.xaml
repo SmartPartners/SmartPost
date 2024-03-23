@@ -12,13 +12,16 @@
 
 	<Grid Width="988">
 		<Button Content="X"
-        FontSize="30"
-        HorizontalAlignment="Right"
-        VerticalAlignment="Top"
-		Background="Transparent"
-		Foreground="White"
-		FontWeight="Bold"
-         BorderBrush="Transparent" Height="45" Width="45" Click="CloseButton_Click"/>
+				FontSize="30"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Top"
+				Background="Transparent"
+				Foreground="White"
+				FontWeight="Bold"
+				BorderBrush="Transparent" 
+                Height="45" 
+                Width="45" 
+                Click="CloseButton_Click"/>
 		
 		<TextBlock Text="Hamkorlarimiz"
                    FontSize="24"
@@ -28,8 +31,21 @@
                    VerticalAlignment="Top"
                    Margin="10"/>
 
-		
-		<DataGrid x:Name="partnersDataGrid"
+        <Button x:Name="btnQoshish"
+                Content="Qo'shish"
+                Style="{DynamicResource SuccessButton}"
+                Width="150"
+                Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="10"
+                Click="btnQoshish_Click">
+            <Button.Effect>
+                <DropShadowEffect ShadowDepth="5" Opacity="0.3" BlurRadius="5"/>
+            </Button.Effect>
+        </Button>
+
+        <DataGrid x:Name="partnersDataGrid"
                   Background="White"
                   AutoGenerateColumns="False"
                   CanUserAddRows="false"
@@ -70,13 +86,13 @@
 								<!-- Sale history -->
 								<Button FontSize="12" Click="SaleHistory_Click" Background="Transparent" >
 									<StackPanel Orientation="Horizontal">
-										<Image Source="/Assets/sale_history.png" Width="25"						Height="25" Margin="5,0,5,0"/>
+										<Image Source="/Assets/sale_history.png" Width="25"	Height="25" Margin="5,0,5,0"/>
 									</StackPanel>
 								</Button>
 								<!--Cart Button-->
 								<Button FontSize="12" Click="RowActionButton_Click" Background="Transparent" >
 									<StackPanel Orientation="Horizontal">
-										<Image Source="/Assets/cart_icon.png" Width="25"						Height="25" Margin="5,0,5,0"/>
+										<Image Source="/Assets/cart_icon.png" Width="25" Height="25" Margin="5,0,5,0"/>
 									</StackPanel>
 								</Button>
 							</StackPanel>
@@ -87,6 +103,6 @@
 
 		</DataGrid>
 		<!--frame pages are locate this place-->
-		<Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Width="auto" />
+		<Frame x:Name="mainFrame" NavigationUIVisibility="Hidden" Width="auto"/>
 	</Grid>
 </Window>

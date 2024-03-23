@@ -14,13 +14,9 @@ namespace SmartPost.Desktop.Windows;
 /// </summary>
 public partial class AddProductWindow : Window
 {
-
-    private readonly IProductService _productService;
-
     public AddProductWindow()
     {
         InitializeComponent();
-        //this._productService = new ProductService();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////

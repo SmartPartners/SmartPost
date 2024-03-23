@@ -1,7 +1,9 @@
-﻿using SmartPost.Desktop.Components;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SmartPost.Desktop.Components;
 using SmartPost.Desktop.Windows;
 using SmartPost.Desktop.Windows.Brands;
 using SmartPost.Desktop.Windows.Categories;
+using SmartPost.Service.Interfaces.Brands;
 using System.Windows.Controls;
 
 namespace SmartPost.Desktop.Pages;
@@ -11,6 +13,7 @@ namespace SmartPost.Desktop.Pages;
 /// </summary>
 public partial class OmborxonaPage : Page
 {
+
     public OmborxonaPage()
     {
         InitializeComponent();
@@ -49,8 +52,9 @@ public partial class OmborxonaPage : Page
 
     private void CreateButtonBrand_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        BrandCreateWindow brandCreateWindow = new BrandCreateWindow();
-        brandCreateWindow.ShowDialog();
+        
+        //BrandCreateWindow brandCreateWindow = new BrandCreateWindow();
+        //brandCreateWindow.ShowDialog();
     }
 
     private void CreateButtonCategory_Click(object sender, System.Windows.RoutedEventArgs e)

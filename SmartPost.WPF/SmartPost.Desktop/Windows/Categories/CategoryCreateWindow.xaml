@@ -63,9 +63,8 @@
                     HorizontalAlignment="Right"
                     Orientation="Vertical">
 
-                    <TextBox
-                        x:Name="category_name"
-                        Style="{DynamicResource textbox}"/>
+                    <TextBox x:Name="category_name"
+                             Style="{DynamicResource textbox}"/>
 
                 </StackPanel>
 

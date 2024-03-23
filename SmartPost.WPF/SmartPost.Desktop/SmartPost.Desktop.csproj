@@ -48,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SmartPost.Api\SmartPost.Api.csproj" />
     <ProjectReference Include="..\SmartPost.Service\SmartPost.Service.csproj" />
   </ItemGroup>
 
