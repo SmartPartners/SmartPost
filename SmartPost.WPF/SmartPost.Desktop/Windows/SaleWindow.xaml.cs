@@ -1,10 +1,15 @@
-﻿using SmartPost.DataAccess.Data;
+﻿using Microsoft.Graph.Models;
+using SmartPost.DataAccess.Data;
 using SmartPost.Desktop.Pages;
+using SmartPost.Desktop.Services;
+using SmartPost.Desktop.ViewModels;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Services.Cards;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
+using PrintService = SmartPost.Desktop.Services.PrintService;
 
 namespace SmartPost.Desktop.Windows;
 
@@ -26,6 +31,7 @@ public partial class SaleWindow : Window
 {
     CardManagementService cardManagement = new CardManagementService();
     private AppDbContext dbContext;
+    TransactionViewModel vm;
     public SaleWindow()
     {
         InitializeComponent();
@@ -158,5 +164,41 @@ public partial class SaleWindow : Window
         //	}
 
         //}
+
+        Thread t = new Thread(SaveReceipt);
+        t.SetApartmentState(ApartmentState.STA);
+        t.IsBackground = true;
+        t.Start();
+    }
+
+    private async void SaveReceipt()
+    {
+        await System.Windows.Application.Current.Dispatcher.BeginInvoke(
+              DispatcherPriority.Background,
+              new Action(async () =>
+              {
+                  
+                      using var selling = new SellingService();
+                      var receipt = selling.CreateEmptyReceipt();
+                      receipt.SellerId = "Some guid";
+                      receipt.Discount = decimal.Parse(chegirma.Text.Replace(" ", ""));
+                      receipt.TotalPrice = decimal.Parse(total.Text.Replace(" ", ""));
+                      receipt.HasLoan = false;
+                      receipt.Transactions.AddRange(vm.Transactions.ToList());
+
+                      try
+                      {
+                           using var printService = new PrintService();
+                           printService.printerName = "XP-80";
+                           printService.Print(receipt, vm.Transactions.ToList(), 1);
+
+                           MessageBox.Show("Bajarildi");
+                      }
+                      catch (Exception ex)
+                      {
+                          MessageBox.Show(ex.Message);
+                      }
+                  
+              }));
     }
 }
