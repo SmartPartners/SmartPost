@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Cards;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Entities.Cards;
+using SmartPost.Domain.Entities.StokProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.DTOs.Cards;
+using SmartPost.Service.DTOs.StockProducts;
 using SmartPost.Service.Interfaces.Cards;
 
 namespace SmartPost.Service.Services.Cards;
@@ -262,5 +264,50 @@ public class CardManagementService : ICardManagementService
 
         return _mapper.Map<IEnumerable<CardForResultDto>>(result);
     }
+
+    public async Task<CardForResultDto> InsertWithBarCodeAsync(string barCode, decimal quantity)
+    {
+        var card = await _cardRepository.SelectAll()
+             .Where(p => p.BarCode == barCode)
+             .AsNoTracking()
+             .FirstOrDefaultAsync();
+
+        if (card is null)
+            throw new CustomException(404, "Mahsulot topilmadi.");
+
+        var mappedProduct = new Card
+        {
+            UserId = card.UserId,
+            ProductName = card.ProductName,
+            TransNo = card.TransNo,
+            BarCode = card.BarCode,
+            PCode = card.PCode,
+            Price = card.Price,
+            SalePrice = card.SalePrice,
+            PercentageSalePrice = card.PercentageSalePrice,
+            TotalPrice = card.TotalPrice,
+            DiscPercent = card.DiscPercent,
+            Status = card.Status,
+            Quantity = card.Quantity,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        var stock = await _stockProductRepository.SelectAll()
+            .Where(s => s.PCode == mappedProduct.PCode && s.BarCode == mappedProduct.BarCode)
+            .FirstOrDefaultAsync();
+        if (stock != null)
+        {
+            stock.Quantity -= quantity;
+            stock.UpdatedAt = DateTime.UtcNow;
+            await _stockProductRepository.UpdateAsync(stock);
+        }
+
+        card.Quantity += quantity;
+        card.UpdatedAt = DateTime.UtcNow;
+        await _cardRepository.UpdateAsync(card);
+
+        return _mapper.Map<CardForResultDto>(mappedProduct);
+    }
+
 
 }

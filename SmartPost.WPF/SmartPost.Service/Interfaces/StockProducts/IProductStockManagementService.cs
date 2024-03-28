@@ -5,7 +5,8 @@ namespace SmartPost.Service.Interfaces.StockProducts;
 
 public interface IProductStockManagementService
 {
-    public Task<bool> MoveProductToStockAsync(long id, long userId, decimal quantityToMove);
-    public Task<IEnumerable<StockProductsForResultDto>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate);
+    Task<bool> MoveProductToStockAsync(long id, long userId, decimal quantityToMove);
+    Task<StockProductsForResultDto> InsertWithBarCodeAsync(string barCode, decimal quantity);
+    Task<IEnumerable<StockProductsForResultDto>> RetrieveAllWithDateTimeAsync(long userId, DateTime startDate, DateTime endDate);
 
 }

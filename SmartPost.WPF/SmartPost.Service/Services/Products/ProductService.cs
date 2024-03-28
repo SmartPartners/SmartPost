@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Configurations;
+using SmartPost.Domain.Entities.Brands;
+using SmartPost.Domain.Entities.Categories;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
@@ -226,7 +228,37 @@ public class ProductService : IProductService
         return _mapper.Map<ProductForResultDto>(product);
     }
 
+    public async Task<ProductForResultDto> InsertWithBarCodeAsync(string barCode, decimal quantity)
+    {
+        var product = await _productRepository.SelectAll()
+             .Where(p => p.BarCode == barCode)
+             .AsNoTracking()
+             .FirstOrDefaultAsync();
 
+        if (product is null)
+            throw new CustomException(404, "Mahsulot topilmadi.");
+
+        var mappedProduct = new Product
+        {
+            Id = product.Id,
+            BrandId = product.BrandId,
+            CategoryId = product.CategoryId,
+            ProductName = product.ProductName,
+            BarCode = product.BarCode,
+            PCode = product.PCode,
+            Price = product.Price,
+            SalePrice = product.SalePrice,
+            PercentageSalePrice = product.PercentageSalePrice,
+            CreatedAt = DateTime.UtcNow
+        };
+        mappedProduct.Quantity += quantity;
+        mappedProduct.UpdatedAt = DateTime.UtcNow;
+        await _productRepository.UpdateAsync(mappedProduct);
+
+        return _mapper.Map<ProductForResultDto>(mappedProduct);
+    }
+
+    #region
     /*public async Task<ProductForResultDto> UpdateAsync(long id, ProductForUpdateDto productForUpdateDto)
     {
         var category = await _categoryService.RetrieveByIdAsync(productForUpdateDto.CategoryId);
@@ -338,6 +370,8 @@ public class ProductService : IProductService
 
         return _mapper.Map<ProductForResultDto>(result);
     }*/
+
+    #endregion
 
     public async Task<ProductForResultDto> UpdateAsync(long id, ProductForUpdateDto productForUpdateDto)
     {

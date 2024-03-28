@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using SmartPost.DataAccess.Interfaces.Products;
 using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Commons.Exceptions;
+using SmartPost.Service.DTOs.Products;
 using SmartPost.Service.DTOs.StockProducts;
 using SmartPost.Service.Interfaces.StockProducts;
 
@@ -122,6 +124,50 @@ public class ProductStockManagementService : IProductStockManagementService
     }
 
 
+
+    public async Task<StockProductsForResultDto> InsertWithBarCodeAsync(string barCode, decimal quantity)
+    {
+        var product = await _stockProductRepository.SelectAll()
+             .Where(p => p.BarCode == barCode)
+             .AsNoTracking()
+             .FirstOrDefaultAsync();
+
+        if (product is null)
+            throw new CustomException(404, "Mahsulot topilmadi.");
+
+        var mappedProduct = new StokProduct
+        {
+            Id = product.Id,
+            UserId = product.UserId,
+            BrandId = product.BrandId,
+            CategoryId = product.CategoryId,
+            ProductName = product.ProductName,
+            BarCode = product.BarCode,
+            PCode = product.PCode,
+            Price = product.Price,
+            SalePrice = product.SalePrice,
+            PercentageSalePrice = product.PercentageSalePrice,
+            Quantity = quantity,
+            Status = product.Status,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        var stock = await _productRepository.SelectAll()
+           .Where(s => s.PCode == mappedProduct.PCode && s.BarCode == mappedProduct.BarCode)
+           .FirstOrDefaultAsync();
+        if (stock != null)
+        {
+            stock.Quantity -= quantity;
+            stock.UpdatedAt = DateTime.UtcNow;
+            await _productRepository.UpdateAsync(stock);
+        }
+
+        product.Quantity += quantity;
+        product.UpdatedAt = DateTime.UtcNow;
+        await _stockProductRepository.UpdateAsync(product);
+
+        return _mapper.Map<StockProductsForResultDto>(mappedProduct);
+    }
 
 }
 
