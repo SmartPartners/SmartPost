@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SmartPost.Service.DTOs.Products;
+using SmartPost.DataAccess.Interfaces.Products;
+using SmartPost.DataAccess.Interfaces.StockProducts;
 using SmartPost.Domain.Configurations;
-using SmartPost.Domain.Entities.Brands;
-using SmartPost.Domain.Entities.Categories;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
-using SmartPost.Service.Interfaces.Products;
-using SmartPost.Service.Interfaces.Categories;
-using SmartPost.DataAccess.Interfaces.Products;
-using SmartPost.DataAccess.Interfaces.StockProducts;
+using SmartPost.Service.DTOs.Products;
 using SmartPost.Service.Interfaces.Brands;
+using SmartPost.Service.Interfaces.Categories;
+using SmartPost.Service.Interfaces.Products;
 
 namespace SmartPost.Service.Services.Products;
 
@@ -50,7 +48,7 @@ public class ProductService : IProductService
 
         if (product is not null)
         {
-            if (product.Price != productForCreationDto.Price)
+            if (product.Price < productForCreationDto.Price)
             {
                 product.Price = productForCreationDto.Price;
                 await _productRepository.UpdateAsync(product);
@@ -110,7 +108,7 @@ public class ProductService : IProductService
                 await _stockProductRepository.UpdateAsync(stok);
             }
 
-            if( product.SalePrice != productForCreationDto.SalePrice)
+            if (product.SalePrice != productForCreationDto.SalePrice)
             {
                 product.SalePrice = productForCreationDto.SalePrice;
                 await _productRepository.UpdateAsync(product);
@@ -182,7 +180,7 @@ public class ProductService : IProductService
         else if (mappedProduct.SalePrice is not null && mappedProduct.PercentageSalePrice is null)
         {
             decimal? percentPrice = ((mappedProduct.SalePrice - mappedProduct.Price) / mappedProduct.Price) * 100;
-            mappedProduct.PercentageSalePrice = (short)percentPrice; 
+            mappedProduct.PercentageSalePrice = (short)percentPrice;
         }
 
 
@@ -228,150 +226,6 @@ public class ProductService : IProductService
         return _mapper.Map<ProductForResultDto>(product);
     }
 
-    public async Task<ProductForResultDto> InsertWithBarCodeAsync(string barCode, decimal quantity)
-    {
-        var product = await _productRepository.SelectAll()
-             .Where(p => p.BarCode == barCode)
-             .AsNoTracking()
-             .FirstOrDefaultAsync();
-
-        if (product is null)
-            throw new CustomException(404, "Mahsulot topilmadi.");
-
-        var mappedProduct = new Product
-        {
-            Id = product.Id,
-            BrandId = product.BrandId,
-            CategoryId = product.CategoryId,
-            ProductName = product.ProductName,
-            BarCode = product.BarCode,
-            PCode = product.PCode,
-            Price = product.Price,
-            SalePrice = product.SalePrice,
-            PercentageSalePrice = product.PercentageSalePrice,
-            CreatedAt = DateTime.UtcNow
-        };
-        mappedProduct.Quantity += quantity;
-        mappedProduct.UpdatedAt = DateTime.UtcNow;
-        await _productRepository.UpdateAsync(mappedProduct);
-
-        return _mapper.Map<ProductForResultDto>(mappedProduct);
-    }
-
-    #region
-    /*public async Task<ProductForResultDto> UpdateAsync(long id, ProductForUpdateDto productForUpdateDto)
-    {
-        var category = await _categoryService.RetrieveByIdAsync(productForUpdateDto.CategoryId);
-
-        var brand = await _brandService.RetrieveByIdAsync(productForUpdateDto.BrandId);
-
-        var product = await _productRepository.SelectAll()
-             .Where(p => p.Id == id)
-             .AsNoTracking()
-             .FirstOrDefaultAsync();
-
-        if (product is null)
-            throw new CustomException(404, "Mahsulot topilmadi.");
-
-        if (product.Price != productForUpdateDto.Price)
-        {
-            product.Price = productForUpdateDto.Price;
-            await _productRepository.UpdateAsync(product);
-
-            var stok = await _stockProductRepository.SelectAll()
-                .Where(p => p.PCode == product.PCode)
-                .FirstOrDefaultAsync();
-            stok.Price = productForUpdateDto.Price;
-            await _stockProductRepository.UpdateAsync(stok);
-        }
-
-        if (product.BarCode != productForUpdateDto.BarCode)
-        {
-            product.BarCode = productForUpdateDto.BarCode;
-            await _productRepository.UpdateAsync(product);
-
-            var stok = await _stockProductRepository.SelectAll()
-                .Where(p => p.PCode == product.PCode)
-                .FirstOrDefaultAsync();
-            stok.BarCode = productForUpdateDto.BarCode;
-            await _stockProductRepository.UpdateAsync(stok);
-        }
-
-        if (product.BrandId != productForUpdateDto.BrandId)
-        {
-            product.BrandId = productForUpdateDto.BrandId;
-            await _productRepository.UpdateAsync(product);
-
-            var stok = await _stockProductRepository.SelectAll()
-                .Where(p => p.PCode == product.PCode)
-                .FirstOrDefaultAsync();
-            stok.BrandId = productForUpdateDto.BrandId;
-            await _stockProductRepository.UpdateAsync(stok);
-        }
-
-        if (product.ProductName != productForUpdateDto.ProductName)
-        {
-            product.ProductName = productForUpdateDto.ProductName;
-            await _productRepository.UpdateAsync(product);
-
-            var stok = await _stockProductRepository.SelectAll()
-                .Where(p => p.PCode == product.PCode)
-                .FirstOrDefaultAsync();
-            stok.ProductName = productForUpdateDto.ProductName;
-            await _stockProductRepository.UpdateAsync(stok);
-        }
-
-        if (product.Size != productForUpdateDto.Size)
-        {
-            product.Size = productForUpdateDto.Size;
-            await _productRepository.UpdateAsync(product);
-
-            var stok = await _stockProductRepository.SelectAll()
-                .Where(p => p.PCode == product.PCode)
-                .FirstOrDefaultAsync();
-            stok.Size = productForUpdateDto.Size;
-            await _stockProductRepository.UpdateAsync(stok);
-        }
-
-        if (product.PCode != productForUpdateDto.PCode)
-        {
-            product.PCode = productForUpdateDto.PCode;
-            await _productRepository.UpdateAsync(product);
-
-            var stok = await _stockProductRepository.SelectAll()
-                .Where(p => p.BarCode == product.BarCode)
-                .FirstOrDefaultAsync();
-            stok.PCode = productForUpdateDto.PCode;
-            await _stockProductRepository.UpdateAsync(stok);
-        }
-
-        if (product.CategoryId != productForUpdateDto.CategoryId)
-        {
-            product.CategoryId = productForUpdateDto.CategoryId;
-            await _productRepository.UpdateAsync(product);
-
-            var stok = await _stockProductRepository.SelectAll()
-                .Where(p => p.BarCode == product.BarCode)
-                .FirstOrDefaultAsync();
-            stok.CategoryId = productForUpdateDto.CategoryId;
-            await _stockProductRepository.UpdateAsync(stok);
-        }
-
-        if (product.Quantity != productForUpdateDto.Quantity)
-        {
-            product.Quantity += productForUpdateDto.Quantity;
-            await _productRepository.UpdateAsync(product);
-        }
-
-        var mappedProduct = _mapper.Map(productForUpdateDto, product);
-        mappedProduct.UpdatedAt = DateTime.UtcNow;
-
-        var result = await _productRepository.UpdateAsync(mappedProduct);
-
-        return _mapper.Map<ProductForResultDto>(result);
-    }*/
-
-    #endregion
 
     public async Task<ProductForResultDto> UpdateAsync(long id, ProductForUpdateDto productForUpdateDto)
     {
@@ -385,7 +239,7 @@ public class ProductService : IProductService
         if (product is null)
             throw new CustomException(404, "Mahsulot topilmadi.");
 
-        if (product.Price != productForUpdateDto.Price)
+        if (product.Price < productForUpdateDto.Price)
             product.Price = productForUpdateDto.Price;
 
         if (product.BarCode != productForUpdateDto.BarCode)

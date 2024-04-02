@@ -40,64 +40,6 @@ public class StockProductService : IStockProductService
         _productRepository = productRepository;
     }
 
-   /* public async Task<StockProductsForResultDto> CreateAsync(StockProductForCreationDto createDto)
-    {
-        var category = await _categoryService.RetrieveByIdAsync(createDto.CategoryId);
-        var brand = await _brandService.RetrieveByIdAsync(createDto.BrandId);
-        var user = await _userService.RetrieveByIdAsync(createDto.UserId);
-
-        StokProduct mappedStockProduct = null;
-
-        var existingProduct = await _stockProductRepository.SelectAll()
-            .Where(p => p.PCode.ToUpper() == createDto.PCode.ToUpper() && p.BarCode == createDto.BarCode)
-            .FirstOrDefaultAsync();
-
-        if (existingProduct != null)
-        {
-            existingProduct.Quantity += createDto.Quantity;
-            await _stockProductRepository.UpdateAsync(existingProduct);
-
-            var existingMappedProduct = await _productRepository.SelectAll()
-                .Where(p => p.PCode == createDto.PCode)
-                .FirstOrDefaultAsync();
-
-            if (existingMappedProduct != null)
-            {
-                existingMappedProduct.Quantity -= createDto.Quantity;
-                await _productRepository.UpdateAsync(existingMappedProduct);
-            }
-        }
-        else
-        {
-            var stockProductByPCode = await _stockProductRepository.SelectAll()
-                .Where(s => s.PCode == createDto.PCode)
-                .FirstOrDefaultAsync();
-
-            if (stockProductByPCode != null)
-                throw new CustomException(409, $"{stockProductByPCode.PCode} - bu kod bazada mavjud.");
-
-            var stockProductByBarCode = await _stockProductRepository.SelectAll()
-                .Where(s => s.BarCode == createDto.BarCode)
-                .FirstOrDefaultAsync();
-
-            if (stockProductByBarCode != null)
-                throw new CustomException(409, $"{stockProductByBarCode.BarCode} - bu kod bazada mavjud.");
-
-            mappedStockProduct = _mapper.Map<StokProduct>(createDto);
-            mappedStockProduct.CreatedAt = DateTime.UtcNow;
-
-            await _stockProductRepository.InsertAsync(mappedStockProduct);
-
-            mappedStockProduct.Status = "Qo'shildi";
-            await _stockProductRepository.UpdateAsync(mappedStockProduct);
-
-            var newMappedProduct = _mapper.Map<Product>(createDto);
-            newMappedProduct.Quantity -= createDto.Quantity;
-            await _productRepository.UpdateAsync(newMappedProduct);
-        }
-
-        return _mapper.Map<StockProductsForResultDto>(mappedStockProduct);
-    }*/
 
 
 
@@ -161,18 +103,4 @@ public class StockProductService : IStockProductService
 
         return _mapper.Map<StockProductsForResultDto>(result);
     }
-
-    /*public async Task<StockProductsForResultDto> AddQuentityToStockProduct(long id, decimal quantity)
-    {
-        var stockProduct = await _stockProductRepository.SelectAll()
-            .Where(s => s.Id == id)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
-
-        if (stockProduct is null)
-            throw new CustomException(404, "StockProduct is not found");
-
-        stockProduct.Quantity += quantity;
-        return _mapper.Map<StockProductsForResultDto>(await _stockProductRepository.UpdateAsync(stockProduct));
-    }*/
 }
