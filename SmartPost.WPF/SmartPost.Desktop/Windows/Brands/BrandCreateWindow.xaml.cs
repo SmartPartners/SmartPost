@@ -3,6 +3,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using static SmartPost.Desktop.Windows.BlurWindow.BlurEffect;
 using System.Windows.Interop;
+using SmartPost.Service.DTOs.Brands;
+using SmartPost.Service.Interfaces.Brands;
 
 namespace SmartPost.Desktop.Windows.Brands;
 
@@ -11,9 +13,11 @@ namespace SmartPost.Desktop.Windows.Brands;
 /// </summary>
 public partial class BrandCreateWindow : Window
 {
-    public BrandCreateWindow()
+    private readonly IBrandService brandService;
+    public BrandCreateWindow(IBrandService brandService)
     {
         InitializeComponent();
+        this.brandService = brandService;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -55,8 +59,13 @@ public partial class BrandCreateWindow : Window
         e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
     }
 
-    private void create_button_Click(object sender, RoutedEventArgs e)
+    private async void create_button_Click(object sender, RoutedEventArgs e)
     {
+        BrandForCreationDto brandForCreationDto = new BrandForCreationDto();
+        
+        brandForCreationDto.Name = product_name.Text;
+
+        await this.brandService.CreateAsync(brandForCreationDto);
 
     }
 

@@ -36,13 +36,15 @@ namespace SmartPost.Desktop.Pages
 
 	public partial class KunlikSotuvPage : Page
 	{
-		public KunlikSotuvPage()
-		{
-			InitializeComponent();
-			LoadSampleData();
-		}
+		private readonly IServiceProvider services;
+        public KunlikSotuvPage(IServiceProvider services)
+        {
+            this.services = services;
+            InitializeComponent();
+            LoadSampleData();
+        }
 
-		private void LoadSampleData()
+        private void LoadSampleData()
 		{
 			List<SaleItem> sales = new List<SaleItem>
 	{
@@ -65,8 +67,8 @@ namespace SmartPost.Desktop.Pages
 			}
 			else
 			{
-                // If not, create a new instance of SotuvWindow
-                SaleWindow sotuvWindow = new SaleWindow();
+				// If not, create a new instance of SotuvWindow
+				SaleWindow sotuvWindow = new SaleWindow(services);
 
 				// Close the current window
 				Window.GetWindow(this).Close();
@@ -76,6 +78,5 @@ namespace SmartPost.Desktop.Pages
 			}
 		}
 
-
-	}
+    }
 }

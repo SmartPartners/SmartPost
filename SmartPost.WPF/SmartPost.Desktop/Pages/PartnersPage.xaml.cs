@@ -1,4 +1,7 @@
-﻿using SmartPost.Desktop.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SmartPost.Desktop.Windows;
+using SmartPost.Service.Interfaces.Partners;
+using SmartPost.Service.Services.Partners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,12 +37,14 @@ namespace SmartPost.Desktop.Pages
 	// In your PartnersPage.xaml.cs or PartnersPage.xaml.cs file, create sample data
 	public partial class PartnersPage : Window
 	{
-		public PartnersPage()
-		{
-			InitializeComponent();
-			LoadSampleData();
-		}
-		public void RowActionButton_Click(object sender, RoutedEventArgs e)
+		private readonly IServiceProvider services;
+        public PartnersPage(IServiceProvider services)
+        {
+            InitializeComponent();
+            LoadSampleData();
+            this.services = services;
+        }
+        public void RowActionButton_Click(object sender, RoutedEventArgs e)
 		{
 			// Handle the button click for each row
 			// You can access the data of the clicked row using the DataContext property
@@ -90,7 +95,7 @@ namespace SmartPost.Desktop.Pages
 			else
 			{
 				// If not, create a new instance of SotuvWindow
-				SaleWindow sotuvWindow = new SaleWindow();
+				SaleWindow sotuvWindow = new SaleWindow(services);
 
 				// Close the current window
 				Window.GetWindow(this).Close();
@@ -100,7 +105,12 @@ namespace SmartPost.Desktop.Pages
 			}
 		}
 
+        private void btnQoshish_Click(object sender, RoutedEventArgs e)
+        {
 
-	}
+            PartnerRegisterPage partnerRegisterPage = new PartnerRegisterPage(services);
+			mainFrame.NavigationService.Navigate(partnerRegisterPage);
+        }
+    }
 
 }

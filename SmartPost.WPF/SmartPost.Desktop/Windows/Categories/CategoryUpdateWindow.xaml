@@ -73,12 +73,12 @@
             </Grid>
 
             <Button
-        x:Name="create_button"
-        Width="200"
-        Grid.Row="2"
-        Content="Qo'shish"
-        Click="create_button_Click"
-        Style="{DynamicResource LoginButton}"/>
+                x:Name="create_button"
+                Width="200"
+                Grid.Row="2"
+                Content="Yangilash"
+                Click="create_button_Click"
+                Style="{DynamicResource LoginButton}"/>
 
         </Grid>
 

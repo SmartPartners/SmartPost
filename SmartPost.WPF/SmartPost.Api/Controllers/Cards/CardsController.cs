@@ -21,6 +21,10 @@ namespace SmartPost.Api.Controllers.Cards
         public async Task<IActionResult> PostAsync(long id, long userId, decimal quantityToMove, string trnasNo)
            => Ok(await _cardManagement.MoveProductToStockAsync(id, userId, quantityToMove, trnasNo));
 
+        [HttpPost("sale-with-barcode")]
+        public async Task<IActionResult> SaleAsync(string barCode, long userId, decimal quantityToMove, string trnasNo)
+           => Ok(await _cardManagement.SaleProductWithBarCodeAsync(barCode, userId, quantityToMove, trnasNo));
+
         [HttpPost("calculate-discount-percentage/{id}/{discountPercentage}")]
         public async Task<IActionResult> CalculateAsync(long id, short discountPercentage)
            => Ok(await _cardManagement.CalculeteDiscountPercentageAsync(id, discountPercentage));

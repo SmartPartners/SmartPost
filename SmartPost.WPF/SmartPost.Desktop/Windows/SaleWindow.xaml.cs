@@ -1,10 +1,19 @@
-﻿using SmartPost.DataAccess.Data;
+﻿using Microsoft.Graph.Models;
+using SmartPost.DataAccess.Data;
 using SmartPost.Desktop.Pages;
+using SmartPost.Desktop.Services;
+using SmartPost.Desktop.ViewModels;
 using SmartPost.Domain.Entities.StorageProducts;
+using SmartPost.Service.Interfaces.Partners;
+using SmartPost.Service.Interfaces.StockProducts;
 using SmartPost.Service.Services.Cards;
+using SmartPost.Service.Services.Partners;
 using System.Windows;
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
+using PrintService = SmartPost.Desktop.Services.PrintService;
 
 namespace SmartPost.Desktop.Windows;
 
@@ -26,6 +35,7 @@ public partial class SaleWindow : Window
 {
     CardManagementService cardManagement = new CardManagementService();
     private AppDbContext dbContext;
+    TransactionViewModel vm;
     public SaleWindow()
     {
         InitializeComponent();
@@ -52,7 +62,7 @@ public partial class SaleWindow : Window
     {
         try
         {
-            PartnersPage partnersPage = new PartnersPage();
+            PartnersPage partnersPage = new PartnersPage(null); // Pass null if IServiceProvider is not needed
             partnersPage.Owner = this;  // Set the owner window to enable proper modality
             partnersPage.ShowDialog();
         }
@@ -62,6 +72,7 @@ public partial class SaleWindow : Window
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
 
     private void Close_btn_Click(object sender, RoutedEventArgs e)
     {
@@ -94,8 +105,6 @@ public partial class SaleWindow : Window
             // Handle or log the exception
             MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-
     }
 
     private void DiscountButton_Click(object sender, RoutedEventArgs e)
@@ -115,7 +124,7 @@ public partial class SaleWindow : Window
             {
                 // Assuming your Product class has a Quantity property
                 // Adjust this based on your actual model
-                var selectedProduct = (Product)DataGrid.SelectedItem;
+                  var selectedProduct = (Product)DataGrid.SelectedItem;
 
                 // Parse the content of the clicked button to an integer
                 if (int.TryParse(clickedButton.Content.ToString(), out int quantityToAdd))
@@ -158,5 +167,56 @@ public partial class SaleWindow : Window
         //	}
 
         //}
+
+        Thread t = new Thread(SaveReceipt);
+        t.SetApartmentState(ApartmentState.STA);
+        t.IsBackground = true;
+        t.Start();
+    }
+
+    private async void SaveReceipt()
+    {
+        await System.Windows.Application.Current.Dispatcher.BeginInvoke(
+              DispatcherPriority.Background,
+              new Action(async () =>
+              {
+                  
+                      using var selling = new SellingService();
+                      var receipt = selling.CreateEmptyReceipt();
+                      receipt.SellerId = "Some guid";
+                      receipt.Discount = decimal.Parse(chegirma.Text.Replace(" ", ""));
+                      receipt.TotalPrice = decimal.Parse(total.Text.Replace(" ", ""));
+                      receipt.HasLoan = false;
+                      receipt.Transactions.AddRange(vm.Transactions.ToList());
+
+                      try
+                      {
+                           using var printService = new PrintService();
+                           printService.printerName = "XP-80";
+                           printService.Print(receipt, vm.Transactions.ToList(), 1);
+
+                           MessageBox.Show("Bajarildi");
+                      }
+                      catch (Exception ex)
+                      {
+                          MessageBox.Show(ex.Message);
+                      }
+                  
+              }));
+    }
+
+    private void setings_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            SozlamalarPage sozlamalarPage = new SozlamalarPage();
+            mainFrame.NavigationService.Navigate(sozlamalarPage);
+        }
+        catch (Exception ex)
+        {
+            // Handle or log the exception
+            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
     }
 }

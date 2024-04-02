@@ -75,7 +75,7 @@
                 x:Name="create_button"
                 Width="200"
                 Grid.Row="2"
-                Content="Qo'shish"
+                Content="Yangilash"
                 Click="create_button_Click"
                 Style="{DynamicResource LoginButton}"/>
 

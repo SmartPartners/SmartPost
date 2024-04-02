@@ -233,7 +233,5 @@ public class CanceledProductesService : ICanceledProductsService
 
         return _mapper.Map<IEnumerable<CancelOrderForResultDto>>(result);
     }
-
-
 }
 

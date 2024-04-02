@@ -1,28 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
+using SmartPost.Service.DTOs.Brands;
+using SmartPost.Service.DTOs.Partners;
+using SmartPost.Service.Interfaces.Partners;
+using SmartPost.Service.Services.Partners;
 
 namespace SmartPost.Desktop.Pages
 {
-	/// <summary>
-	/// Interaction logic for PartnerRegisterPage.xaml
-	/// </summary>
-	public partial class PartnerRegisterPage : Page
-	{
-		public PartnerRegisterPage()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Interaction logic for PartnerRegisterPage.xaml
+    /// </summary>
+    public partial class PartnerRegisterPage : Page
+    {
+        private readonly IPartnerService partnerService;
+        
+        public PartnerRegisterPage(IServiceProvider services)
+        {
+            InitializeComponent();
+            this.partnerService = services.GetRequiredService<IPartnerService>();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Visibility = Visibility.Collapsed;
+        }
+
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            PartnerForCreationDto partnerForCreationDto = new PartnerForCreationDto();
+
+            partnerForCreationDto.FirstName = NameTextBox.Text;
+            partnerForCreationDto.LastName = SurnameTextBox.Text;
+            partnerForCreationDto.PhoneNumber = PhoneTextBox.Text;
+
+            var result = await this.partnerService.CreateAsync(partnerForCreationDto);
+
+            if (result is not null)
+                MessageBox.Show("Hamkor qo'shildi.");
+            else
+                MessageBox.Show("Xatolik yuza keldi.");
+        }
+    }
 }

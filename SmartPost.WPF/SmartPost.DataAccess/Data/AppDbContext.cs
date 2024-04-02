@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SmartPost.Domain.Entities.Brands;
-using SmartPost.Domain.Entities.CancelOrders;
 using SmartPost.Domain.Entities.Cards;
-using SmartPost.Domain.Entities.Categories;
-using SmartPost.Domain.Entities.InventoryLists;
-using SmartPost.Domain.Entities.Partners;
-using SmartPost.Domain.Entities.StokProducts;
-using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Domain.Entities.Users;
+using SmartPost.Domain.Entities.Brands;
+using SmartPost.Domain.Entities.Partners;
+using SmartPost.Domain.Entities.Categories;
+using SmartPost.Domain.Entities.CancelOrders;
+using SmartPost.Domain.Entities.StokProducts;
+using SmartPost.Domain.Entities.InventoryLists;
+using SmartPost.Domain.Entities.StorageProducts;
 
 namespace SmartPost.DataAccess.Data;
 

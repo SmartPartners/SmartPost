@@ -5,12 +5,11 @@ namespace SmartPost.Service.Interfaces.Products;
 
 public interface IProductService
 {
+    Task<ProductForResultDto> CreateAsync(ProductForCreationDto productForCreationDto);
+    Task<ProductForResultDto> UpdateAsync(long id, ProductForUpdateDto productForUpdateDto);
     Task<bool> DeleteAsync(long id);
     Task<ProductForResultDto> GetByIdAsync(long id);
-    Task<IEnumerable<ProductForResultDto>> GetAllAsync(PaginationParams @params);
     Task<ProductForResultDto> GetByName(string name);
-    Task<ProductForResultDto> InsertWithBarCodeAsync(string barCode, decimal quantity);
-    Task<ProductForResultDto> UpdateAsync(long id, ProductForUpdateDto productForUpdateDto);
-    Task<ProductForResultDto> CreateAsync(ProductForCreationDto productForCreationDto);
+    Task<IEnumerable<ProductForResultDto>> GetAllAsync(PaginationParams @params);
 
 }

@@ -90,6 +90,62 @@ public class CardManagementService : ICardManagementService
         return true;
     }
 
+    public async Task<bool> SaleProductWithBarCodeAsync(string barCode, long userId, decimal quantityToMove, string trnasNo)
+    {
+        var insufficientProduct = await _stockProductRepository.SelectAll()
+            .Where(q => q.BarCode == barCode && q.Quantity < quantityToMove)
+            .FirstOrDefaultAsync();
+
+        if (insufficientProduct != null)
+            throw new CustomException(400, $"Magazinda buncha mahsulot mavjud emas.\nHozirda {insufficientProduct.Quantity} ta mahsulot bor.");
+
+        if (quantityToMove <= 0)
+            quantityToMove = 1;
+
+        var product = await _stockProductRepository.SelectAll()
+            .Where(p => p.BarCode == barCode)
+            .FirstOrDefaultAsync();
+
+        if (product == null)
+            throw new CustomException(404, "Mahsulot topilmadi.");
+        else if (product.Quantity == 0)
+            throw new CustomException(404, "Hozirda bu mahsulotimiz tugagan.");
+
+        var card = new Card
+        {
+            UserId = userId,
+            PCode = product.PCode,
+            BarCode = product.BarCode,
+            ProductName = product.ProductName,
+            Price = product.Price,
+            SalePrice = product.SalePrice,
+            PercentageSalePrice = product.PercentageSalePrice,
+            Quantity = quantityToMove,
+            Status = "Kutilmoqda",
+            TransNo = trnasNo,
+            CreatedAt = DateTime.UtcNow
+        };
+        card.TotalPrice = card.SalePrice * card.Quantity ?? 0;
+
+        var existingCard = await _cardRepository.SelectAll()
+            .Where(p => p.TransNo == card.TransNo && p.BarCode == card.BarCode)
+            .FirstOrDefaultAsync();
+
+        if (existingCard != null)
+        {
+            existingCard.Quantity += quantityToMove;
+            existingCard.TotalPrice = existingCard.SalePrice * existingCard.Quantity ?? 0;
+            existingCard.UpdatedAt = DateTime.UtcNow;
+            await _cardRepository.UpdateAsync(existingCard);
+        }
+        else
+        {
+            await _cardRepository.InsertAsync(card);
+        }
+
+        return true;
+    }
+
     public async Task<bool> UpdateWithTransactionNumberAsync(string transactionNumber)
     {
         var cards = await _cardRepository.SelectAll()
@@ -272,8 +328,6 @@ public class CardManagementService : ICardManagementService
              .AsNoTracking()
              .FirstOrDefaultAsync();
 
-        if (card is null)
-            throw new CustomException(404, "Mahsulot topilmadi.");
 
         var mappedProduct = new Card
         {

@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SmartPost.DataAccess.Interfaces.Products;
-using SmartPost.DataAccess.Interfaces.StockProducts;
+using SmartPost.Service.DTOs.Products;
 using SmartPost.Domain.Configurations;
 using SmartPost.Domain.Entities.Brands;
 using SmartPost.Domain.Entities.Categories;
 using SmartPost.Domain.Entities.StorageProducts;
 using SmartPost.Service.Commons.Exceptions;
 using SmartPost.Service.Commons.Extensions;
-using SmartPost.Service.DTOs.Products;
-using SmartPost.Service.Interfaces.Brands;
-using SmartPost.Service.Interfaces.Categories;
 using SmartPost.Service.Interfaces.Products;
+using SmartPost.Service.Interfaces.Categories;
+using SmartPost.DataAccess.Interfaces.Products;
+using SmartPost.DataAccess.Interfaces.StockProducts;
+using SmartPost.Service.Interfaces.Brands;
 
 namespace SmartPost.Service.Services.Products;
 

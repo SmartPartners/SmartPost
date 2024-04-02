@@ -21,4 +21,19 @@ public partial class SozlamalarPage : Page
     {
 
     }
+
+    private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        grSettings.Visibility=System.Windows.Visibility.Collapsed;
+    }
+
+    private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
+    {
+        grSettings.Visibility = System.Windows.Visibility.Collapsed;
+    }
+
+    private void cancel_btn_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        grSettings.Visibility = System.Windows.Visibility.Collapsed;
+    }
 }
